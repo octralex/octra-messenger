@@ -1,0 +1,13 @@
+{
+  "schema_columns": 24,
+  "data_rows": 52,
+  "positive_round_trip_rows": 46,
+  "unsupported_rows": 6,
+  "samples_per_measured_case": 5,
+  "cold_samples": 1,
+  "warm_samples": 4,
+  "utf8_fixture": "whole UTF-8 codepoints repeated, then ASCII fill; 128 bytes; never byte-sliced",
+  "negative_controls": "endpoint.txt only; no negative-control claim is made for size rows",
+  "deterministic_seal": "testkit RNG invokes the same production seal; production inputs expose no ID/ephemeral/nonce overrides",
+  "csv_sha256": "c6cb0baf0b416a444c01aa735c4c7e7529f8713406827b181051a50f7cc95511"
+}

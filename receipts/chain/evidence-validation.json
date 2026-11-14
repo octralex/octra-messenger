@@ -1,0 +1,36 @@
+{
+  "status": "publication_validation_pass",
+  "observed_at": "2026-11-14T19:32:16Z",
+  "binary_cases": 9,
+  "binary_wrong_shape_and_duplicate_rejections": "program_exec_exception; canonical recovery confirmed",
+  "storage_batches": 13,
+  "storage_checkpoints": 31,
+  "regression_samples": 14,
+  "retained_frames_verified_exactly": 100,
+  "size_markdown_rows_validated": 24,
+  "protocol_frames": 5001,
+  "source_pin_tests": 6,
+  "artifact_sha256": {
+    "octra_node": "8846d2a9f3240d2aedfecb49553f082c284c2b951a6ddb7a9b60afe09800ef18",
+    "chain_driver": "a86b7baf83c86ab813c3198bc0ed6fdb1f9b04bb1af7741a49f39220def8077e",
+    "prune_driver": "9caf61ecd134f406eb253edd7a6bc8a45e8048d75b26ab280b8f1ebb5082f2fa",
+    "binary_io": "e84387c75b354c53dc838fdbdb01ffe3d76e4c1afe36a8955738fe51b622d4c9",
+    "endpoint": "0cc6da2566e14606d4a9ec3e83ec857f8c22ef465df8825e9a5de8f8e1dba01b",
+    "size_sweep": "e17d7af08bf086f82ad3b752cffeacc0c3c7c84f74db85c00415e9a3a4a4a401",
+    "node_patch": "0f10cf5d5d0d58ccfc93351aec9dca466acd19d1142f6266c38cd4bb6dc42c07"
+  },
+  "evidence_sha256": {
+    "binary-controls.json": "efce3cb4144b813d71c9eada2e43a71ffb09f61fce23294d1ac9463ce8c81695",
+    "binary-io-unit.txt": "77b0430235bb69e18a0fbaaf920aea38000ac04dc8b80681f19c73482c653535",
+    "protocol-final.txt": "bdae7c2fe3098e736c0f0d2f005ae82f9696b996a648944a6ed753e22b961c55",
+    "review-environment.json": "9f90e285cca8b2188d7a39922dd5b35e312ce75531bb05951900d8fd4849e99a",
+    "source-pin-tests-binary-envelope.log": "cf207b3aab4b7de6c5e1f979b00289a5881dece0a0a128aa52ed63240797a366",
+    "storage-growth.json": "48a1d5c6a231630cc074841d0c28d81c6cd2bce5d83d760d6a4dc3590aa2ea10",
+    "storage-pack-gc-console.txt": "2818e16952df2de979485deef5ccb725986fa79da8741074e60dbbe0aae26ec2"
+  },
+  "limits": [
+    "Gate A and independent reviews remain open",
+    "B6 remains deferred to on-chain registration",
+    "No production readiness, large-message chunk storage, sustainable throughput or message-only amplification claim"
+  ]
+}

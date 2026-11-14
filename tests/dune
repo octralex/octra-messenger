@@ -1,0 +1,4 @@
+(test
+ (name test_protocol)
+ (modules test_protocol)
+ (libraries messenger_protocol digestif))

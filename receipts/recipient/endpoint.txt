@@ -1,0 +1,341 @@
+{"status":"recipient_initialized","view_public":"IDrAeXlljFI81ll/eFmdGZGzb0oxLM4ZhYflSWoLXlA=","key_version":1}
+positive=recipient_init_generated_dedicated_x25519_key
+{"status":"sealed","envelope_bytes":299,"ciphertext_bytes":61,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":33}
+positive=recipient_offline_secret_free_sender
+{"status":"sealed","envelope_bytes":299,"ciphertext_bytes":61,"recipient_secret_input":false}
+{"status":"sealed","envelope_bytes":299,"ciphertext_bytes":61,"recipient_secret_input":false}
+positive=default_rng_distinct_ids_ephemerals_nonces_envelopes
+{"status":"opened","plaintext_bytes":33}
+{"status":"opened","plaintext_bytes":33}
+{"status":"rejected"}
+control=uninitialized_rng_failed_closed receive_state_sha256=e9086691ddf9fd05e44d95623bc6b446c5a7b0f83a773282530b1dc3acd4c20b
+{"status":"sealed","envelope_bytes":299,"ciphertext_bytes":61,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":33}
+positive=production_sender_no_recipient_secret_access
+positive=production_seal_randomized_only_deterministic_material_testkit_only
+{"status":"sealed","envelope_bytes":291,"ciphertext_bytes":53,"recipient_secret_input":false}
+{"status":"sealed","envelope_bytes":292,"ciphertext_bytes":54,"recipient_secret_input":false}
+{"status":"messaging_key_generated","key_type":"x25519","independent_from_ed25519":true,"public_matches_secret":false}
+positive=dedicated_x25519_key_independent_from_ed25519
+{"status":"recipient_rotated","view_public":"sw6QIKtXtLUCaeYByB+GhkmnoL1NFFkZaHbwMKrwe18=","key_version":2}
+{"status":"sealed","envelope_bytes":288,"ciphertext_bytes":50,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":22}
+{"status":"opened","plaintext_bytes":25}
+positive=rotation_preserves_unread_previous_version
+{"status":"outbox_prepared","sequence":1}
+{"status":"outbox_retry","bytes":299}
+{"status":"outbox_marked","state":"submitted"}
+{"status":"outbox_marked","state":"finalized"}
+{"status":"outbox_retry","bytes":299}
+positive=outbox_retry_byte_identical
+{"status":"recipient_rotated","view_public":"nwqxRwONdlwDmVDgufpPC4JHJKvE0oBAZk0oaOu7BWo=","key_version":2}
+{"status":"sealed","envelope_bytes":304,"ciphertext_bytes":66,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":38}
+{"status":"sealed","envelope_bytes":308,"ciphertext_bytes":70,"recipient_secret_input":false}
+{"status":"sealed","envelope_bytes":308,"ciphertext_bytes":70,"recipient_secret_input":false}
+{"status":"error","reason":"Failure(\"ciphertext authentication failed\")"}
+{"status":"rejected"}
+control=wrong_recipient_coherent rejected guard=ciphertext authentication failed receive_state_sha256=3223f34a3ab15f6193e74784e6701b24187be6065eb238dc2b3ce497251a0958
+{"status":"sealed","envelope_bytes":295,"ciphertext_bytes":57,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":29}
+{"status":"sealed","envelope_bytes":299,"ciphertext_bytes":61,"recipient_secret_input":false}
+{"status":"error","reason":"Failure(\"recipient key replaced or unregistered\")"}
+{"status":"rejected"}
+control=config_mismatch rejected guard=recipient key replaced or unregistered receive_state_sha256=1fc85bd2eeb3662716af7a0be93f11a06870bbec76600fb5f23b9d2b6070997f
+{"status":"sealed","envelope_bytes":299,"ciphertext_bytes":61,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":33}
+{"status":"sealed","envelope_bytes":303,"ciphertext_bytes":65,"recipient_secret_input":false}
+{"status":"error","reason":"Failure(\"sender authentication failed\")"}
+{"status":"rejected"}
+control=modified_capability rejected guard=sender authentication failed receive_state_sha256=d6a2c8c889e1522e23b9878ea521dae7906d601ed0931caa23c5adab1022f200
+{"status":"sealed","envelope_bytes":299,"ciphertext_bytes":61,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":33}
+{"status":"sealed","envelope_bytes":303,"ciphertext_bytes":65,"recipient_secret_input":false}
+{"status":"error","reason":"Failure(\"sender authentication failed\")"}
+{"status":"rejected"}
+control=modified_message_id rejected guard=sender authentication failed receive_state_sha256=faa63a73abbd1ea7061452a93840d5e16a1ecc0b83c56c57d133ef51435aae3a
+{"status":"sealed","envelope_bytes":287,"ciphertext_bytes":49,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":21}
+{"status":"sealed","envelope_bytes":291,"ciphertext_bytes":53,"recipient_secret_input":false}
+{"status":"resigned_envelope","mode":"id"}
+{"status":"error","reason":"Failure(\"ciphertext authentication failed\")"}
+{"status":"rejected"}
+control=aead_id rejected guard=ciphertext authentication failed receive_state_sha256=5e23a26cada0a5e209e35469ca2493f75425b2e8e301fe7d265c32dd2d6e9560
+{"status":"sealed","envelope_bytes":292,"ciphertext_bytes":54,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":26}
+{"status":"sealed","envelope_bytes":296,"ciphertext_bytes":58,"recipient_secret_input":false}
+{"status":"resigned_envelope","mode":"version"}
+{"status":"error","reason":"Failure(\"ciphertext authentication failed\")"}
+{"status":"rejected"}
+control=aead_version rejected guard=ciphertext authentication failed receive_state_sha256=c915946eee14676f3a985f24cd1f618a329aeb9e2b959b48f3f79945e6d02526
+{"status":"sealed","envelope_bytes":292,"ciphertext_bytes":54,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":26}
+{"status":"sealed","envelope_bytes":296,"ciphertext_bytes":58,"recipient_secret_input":false}
+{"status":"resigned_envelope","mode":"context"}
+{"status":"error","reason":"Failure(\"ciphertext authentication failed\")"}
+{"status":"rejected"}
+control=aead_context rejected guard=ciphertext authentication failed receive_state_sha256=e3e3df4ac79c8c2fc0f0f47fa4492883f20bfc2010dae50772836d33b198905e
+{"status":"sealed","envelope_bytes":294,"ciphertext_bytes":56,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":28}
+{"status":"sealed","envelope_bytes":298,"ciphertext_bytes":60,"recipient_secret_input":false}
+{"status":"resigned_envelope","mode":"ephemeral"}
+{"status":"error","reason":"Failure(\"ciphertext authentication failed\")"}
+{"status":"rejected"}
+control=aead_ephemeral rejected guard=ciphertext authentication failed receive_state_sha256=37164c4ddaa02e6292d656e51da9bd2ec0c4d4d8ca948a1d509cadf04e1df4a2
+{"status":"sealed","envelope_bytes":294,"ciphertext_bytes":56,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":28}
+{"status":"sealed","envelope_bytes":298,"ciphertext_bytes":60,"recipient_secret_input":false}
+{"status":"resigned_envelope","mode":"zero-ephemeral"}
+{"status":"error","reason":"Failure(\"recipient key exchange failed\")"}
+{"status":"rejected"}
+control=zero-ephemeral rejected guard=recipient key exchange failed receive_state_sha256=10e4b334bb7202102cc519efdf1f5b4b390fb77f23a2fe4cc4074f09ee20fe70
+{"status":"sealed","envelope_bytes":303,"ciphertext_bytes":65,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":37}
+{"status":"sealed","envelope_bytes":307,"ciphertext_bytes":69,"recipient_secret_input":false}
+{"status":"resigned_envelope","mode":"ordinary-ones-ephemeral"}
+{"status":"error","reason":"Failure(\"ciphertext authentication failed\")"}
+{"status":"rejected"}
+control=ordinary-ones-ephemeral rejected guard=ciphertext authentication failed receive_state_sha256=77cc0d70d3c5deefcba31432cdf4137348a451e8946ca6cd6348d83203c30d7b
+{"status":"sealed","envelope_bytes":295,"ciphertext_bytes":57,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":29}
+{"status":"sealed","envelope_bytes":299,"ciphertext_bytes":61,"recipient_secret_input":false}
+{"status":"resigned_envelope","mode":"u-one-ephemeral"}
+{"status":"error","reason":"Failure(\"recipient key exchange failed\")"}
+{"status":"rejected"}
+control=u-one-ephemeral rejected guard=recipient key exchange failed receive_state_sha256=23d7108f559aada5283838c3b1fcf77d665ee84b336164825f8b942896746690
+{"status":"sealed","envelope_bytes":303,"ciphertext_bytes":65,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":37}
+{"status":"sealed","envelope_bytes":307,"ciphertext_bytes":69,"recipient_secret_input":false}
+{"status":"resigned_envelope","mode":"order-eight-a-ephemeral"}
+{"status":"error","reason":"Failure(\"recipient key exchange failed\")"}
+{"status":"rejected"}
+control=order-eight-a-ephemeral rejected guard=recipient key exchange failed receive_state_sha256=06435c96aff0272f7481809d9ce5757514d24e8d5f7f7bf8da0978e24d6ec5de
+{"status":"sealed","envelope_bytes":303,"ciphertext_bytes":65,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":37}
+{"status":"sealed","envelope_bytes":307,"ciphertext_bytes":69,"recipient_secret_input":false}
+{"status":"resigned_envelope","mode":"order-eight-b-ephemeral"}
+{"status":"error","reason":"Failure(\"recipient key exchange failed\")"}
+{"status":"rejected"}
+control=order-eight-b-ephemeral rejected guard=recipient key exchange failed receive_state_sha256=7f872ae85a083db4c5534cb346a884dadddff3595225405195cfefe82c1755af
+{"status":"sealed","envelope_bytes":299,"ciphertext_bytes":61,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":33}
+{"status":"sealed","envelope_bytes":303,"ciphertext_bytes":65,"recipient_secret_input":false}
+{"status":"resigned_envelope","mode":"low-order-ephemeral"}
+{"status":"error","reason":"Failure(\"recipient key exchange failed\")"}
+{"status":"rejected"}
+control=low-order-ephemeral rejected guard=recipient key exchange failed receive_state_sha256=00f3818923e7420147bae6327d7d96da9346f6464ff7a4d86af007f047a26a48
+{"status":"sealed","envelope_bytes":291,"ciphertext_bytes":53,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":25}
+{"status":"sealed","envelope_bytes":295,"ciphertext_bytes":57,"recipient_secret_input":false}
+{"status":"resigned_envelope","mode":"p-ephemeral"}
+{"status":"error","reason":"Failure(\"recipient key exchange failed\")"}
+{"status":"rejected"}
+control=p-ephemeral rejected guard=recipient key exchange failed receive_state_sha256=e0c740cca91d70bc17aee24fe950bb8bac5c4ca24cf887c3beec123a707ddb64
+{"status":"sealed","envelope_bytes":300,"ciphertext_bytes":62,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":34}
+{"status":"sealed","envelope_bytes":304,"ciphertext_bytes":66,"recipient_secret_input":false}
+{"status":"resigned_envelope","mode":"p-plus-one-ephemeral"}
+{"status":"error","reason":"Failure(\"recipient key exchange failed\")"}
+{"status":"rejected"}
+control=p-plus-one-ephemeral rejected guard=recipient key exchange failed receive_state_sha256=cb2c52d13b6361d68b38be758e0cf8493b970eb7213527878c2a00f494ee6618
+{"status":"sealed","envelope_bytes":302,"ciphertext_bytes":64,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":36}
+{"status":"sealed","envelope_bytes":306,"ciphertext_bytes":68,"recipient_secret_input":false}
+{"status":"resigned_envelope","mode":"noncanonical-ephemeral"}
+{"status":"error","reason":"Failure(\"ciphertext authentication failed\")"}
+{"status":"rejected"}
+control=noncanonical-ephemeral rejected guard=ciphertext authentication failed receive_state_sha256=1dfb2390e6a399d9970595eb95ca55f9e8b40995140019f161dee16f8f09e595
+{"status":"sealed","envelope_bytes":293,"ciphertext_bytes":55,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":27}
+{"status":"sealed","envelope_bytes":297,"ciphertext_bytes":59,"recipient_secret_input":false}
+{"status":"error","reason":"Failure(\"wrong chain, application or registry context\")"}
+{"status":"rejected"}
+control=wrong_context rejected guard=wrong chain, application or registry context receive_state_sha256=e85fd13ede7d734311b063e9a74cc1db99e59003535b261f2073aba9f1760151
+{"status":"sealed","envelope_bytes":293,"ciphertext_bytes":55,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":27}
+{"status":"sealed","envelope_bytes":297,"ciphertext_bytes":59,"recipient_secret_input":false}
+{"status":"error","reason":"Failure(\"sender authentication failed\")"}
+{"status":"rejected"}
+control=modified_body rejected guard=sender authentication failed receive_state_sha256=e706f7a81b9af0d196484f2048503738ae249df54da5d057c7dd63cf8e361236
+{"status":"sealed","envelope_bytes":295,"ciphertext_bytes":57,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":29}
+{"status":"sealed","envelope_bytes":299,"ciphertext_bytes":61,"recipient_secret_input":false}
+{"status":"error","reason":"Failure(\"recipient key version is not accepted\")"}
+{"status":"rejected"}
+control=modified_header rejected guard=recipient key version is not accepted receive_state_sha256=9380595af8b12d76515d17ac1b64e8cb9d87153a153c22d6814e803151cc8485
+{"status":"sealed","envelope_bytes":296,"ciphertext_bytes":58,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":30}
+{"status":"sealed","envelope_bytes":300,"ciphertext_bytes":62,"recipient_secret_input":false}
+{"status":"error","reason":"Failure(\"wrong chain, application or registry context\")"}
+{"status":"rejected"}
+control=modified_context rejected guard=wrong chain, application or registry context receive_state_sha256=65e51018699154509f3c50466571582945df6037a3a4771ad58dd3baf8171b64
+{"status":"sealed","envelope_bytes":290,"ciphertext_bytes":52,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":24}
+{"status":"sealed","envelope_bytes":294,"ciphertext_bytes":56,"recipient_secret_input":false}
+{"status":"error","reason":"Failure(\"envelope trailing or truncated bytes\")"}
+{"status":"rejected"}
+control=truncation rejected guard=envelope trailing or truncated bytes receive_state_sha256=9f4a32b23212362be46ca59e8a490f80b4236e79afcb36793fa75baa9f537d9b
+{"status":"sealed","envelope_bytes":288,"ciphertext_bytes":50,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":22}
+{"status":"sealed","envelope_bytes":292,"ciphertext_bytes":54,"recipient_secret_input":false}
+{"status":"error","reason":"Failure(\"envelope trailing or truncated bytes\")"}
+{"status":"rejected"}
+control=trailing rejected guard=envelope trailing or truncated bytes receive_state_sha256=195baa3b9720c98fcbc71687db5d3946e60de73c61ddc73158faf13b2aa1e46f
+{"status":"sealed","envelope_bytes":287,"ciphertext_bytes":49,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":21}
+{"status":"sealed","envelope_bytes":291,"ciphertext_bytes":53,"recipient_secret_input":false}
+{"status":"error","reason":"Failure(\"recipient key policy is stale\")"}
+{"status":"rejected"}
+control=revoked rejected guard=recipient key policy is stale receive_state_sha256=c27fb9df2fb9de302d0a54f66bb9950376ca6323eacc2b5da7ee27e2965f3243
+{"status":"sealed","envelope_bytes":286,"ciphertext_bytes":48,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":20}
+{"status":"sealed","envelope_bytes":290,"ciphertext_bytes":52,"recipient_secret_input":false}
+{"status":"error","reason":"Failure(\"recipient key policy is stale\")"}
+{"status":"rejected"}
+control=erased rejected guard=recipient key policy is stale receive_state_sha256=e3b9e9d71b164f383d69f41dcc9c32fc93deabc1a16287900beb2241265d5b6b
+{"status":"sealed","envelope_bytes":294,"ciphertext_bytes":56,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":28}
+{"status":"sealed","envelope_bytes":298,"ciphertext_bytes":60,"recipient_secret_input":false}
+{"status":"error","reason":"Failure(\"recipient key policy is stale\")"}
+{"status":"rejected"}
+control=not-yet-active rejected guard=recipient key policy is stale receive_state_sha256=da76cc6cd676e82d0cc6e1a2a8c052b61096b82def321b1725140ff8baab9162
+{"status":"sealed","envelope_bytes":299,"ciphertext_bytes":61,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":33}
+{"status":"sealed","envelope_bytes":303,"ciphertext_bytes":65,"recipient_secret_input":false}
+{"status":"error","reason":"Failure(\"recipient key policy is stale\")"}
+{"status":"rejected"}
+control=expiration-boundary rejected guard=recipient key policy is stale receive_state_sha256=2aee85cdde82260a564097a95cb8ea440d9f83fe17c8cdab355fb39e74cce2c7
+{"status":"sealed","envelope_bytes":299,"ciphertext_bytes":61,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":33}
+{"status":"sealed","envelope_bytes":303,"ciphertext_bytes":65,"recipient_secret_input":false}
+{"status":"sealed","envelope_bytes":294,"ciphertext_bytes":56,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":28}
+positive=policy_activation_boundary_allowed
+{"status":"sealed","envelope_bytes":292,"ciphertext_bytes":54,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":26}
+{"status":"sealed","envelope_bytes":296,"ciphertext_bytes":58,"recipient_secret_input":false}
+{"status":"error","reason":"Failure(\"recipient key policy is stale\")"}
+{"status":"rejected"}
+control=stale_policy rejected guard=recipient key policy is stale receive_state_sha256=c68730fce285a9398946afa4f3351c220470d40a8f561a5555418796553c6cec
+{"status":"sealed","envelope_bytes":300,"ciphertext_bytes":62,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":34}
+{"status":"sealed","envelope_bytes":304,"ciphertext_bytes":66,"recipient_secret_input":false}
+{"status":"resigned_envelope","mode":"body"}
+{"status":"error","reason":"Failure(\"ciphertext authentication failed\")"}
+{"status":"rejected"}
+control=malformed_ciphertext rejected guard=ciphertext authentication failed receive_state_sha256=37c2d2a0d59902fb9d9ef23f6770914c3fa769cb8bb01185ec04bce4d0f6526c
+{"status":"sealed","envelope_bytes":299,"ciphertext_bytes":61,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":33}
+{"status":"sealed","envelope_bytes":303,"ciphertext_bytes":65,"recipient_secret_input":false}
+{"status":"error","reason":"Failure(\"unsupported envelope version\")"}
+{"status":"rejected"}
+control=unsupported_version rejected guard=unsupported envelope version receive_state_sha256=e2af4467342b4cfe6a1591a7bd1fa928452d91abd4957c76ed6995bd832b0738
+{"status":"sealed","envelope_bytes":298,"ciphertext_bytes":60,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":32}
+{"status":"sealed","envelope_bytes":302,"ciphertext_bytes":64,"recipient_secret_input":false}
+{"status":"error","reason":"Failure(\"sender authentication failed\")"}
+{"status":"rejected"}
+control=modified_signature rejected guard=sender authentication failed receive_state_sha256=892f8f1cf541c840b98c4c58ea3892840d31b9e778bacca76af96f656edb8cd9
+{"status":"sealed","envelope_bytes":294,"ciphertext_bytes":56,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":28}
+{"status":"sealed","envelope_bytes":298,"ciphertext_bytes":60,"recipient_secret_input":false}
+{"status":"error","reason":"Failure(\"contact authorization failed\")"}
+{"status":"rejected"}
+control=contact_tamper rejected guard=contact authorization failed receive_state_sha256=d552b44dfe36870e20ae82c447aa93e569f04219afca3d014010f54d5fef3cac
+{"status":"sealed","envelope_bytes":299,"ciphertext_bytes":61,"recipient_secret_input":false}
+{"status":"error","reason":"Failure(\"unexpected sender identity\")"}
+{"status":"rejected"}
+control=unexpected_sender rejected guard=unexpected sender identity receive_state_sha256=0f246ea4e6a7f0346ddef5143418c9bbf4fe50a89a1d74daea1d42a254de97d2
+{"status":"sealed","envelope_bytes":306,"ciphertext_bytes":68,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":40}
+{"status":"sealed","envelope_bytes":310,"ciphertext_bytes":72,"recipient_secret_input":false}
+{"status":"error","reason":"Failure(\"recipient key version is not accepted\")"}
+{"status":"rejected"}
+control=old_version_after_rotation rejected guard=recipient key version is not accepted receive_state_sha256=a7a326ac1da11ba67fcb0d78f6c9c935ebc3cce2c8d98dee03c369612560dfc6
+{"status":"sealed","envelope_bytes":286,"ciphertext_bytes":48,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":20}
+{"status":"sealed","envelope_bytes":290,"ciphertext_bytes":52,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":24}
+{"status":"error","reason":"Failure(\"replay rejected\")"}
+{"status":"rejected"}
+control=replay_duplicate rejected guard=replay rejected receive_state_sha256=b201aa787d302cfa78033d03e7978fdf4d7b475120ee88737368b89b2d30782c
+{"status":"sealed","envelope_bytes":300,"ciphertext_bytes":62,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":34}
+{"status":"sealed","envelope_bytes":304,"ciphertext_bytes":66,"recipient_secret_input":false}
+{"status":"error","reason":"Failure(\"key version outside uint32\")"}
+control=key_version_overflow rejected guard=key_version_uint32 receive_state_sha256=3be401c8ce6788b4eb9b2195a60672b66c8c6eda37f843cde51d2fb1c6d5f7ff
+{"status":"sealed","envelope_bytes":2999565,"ciphertext_bytes":2999327,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":2999299}
+positive=plaintext_cap_exact_round_trip envelope_bytes=2999565 wire_bytes=3999422
+{"status":"error","reason":"Failure(\"plaintext outside limits\")"}
+control=plaintext_cap_plus_one rejected guard=plaintext_outside_limits receive_state_sha256=095641fc59e55701e9ee4fb4ead4e4c8d4b25c1b5205fc0de59f0b7f6c13e07d
+{"status":"sealed","envelope_bytes":290,"ciphertext_bytes":52,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":24}
+{"status":"sealed","envelope_bytes":294,"ciphertext_bytes":56,"recipient_secret_input":false}
+{"status":"error","reason":"Failure(\"replay rejected\")"}
+{"status":"opened","plaintext_bytes":28}
+positive=concurrent_duplicate_one_commit state_before_sha256=61e1b17e3548e0ea5947948e653bb25ed5e7cb2d0ea08042ab5f35cef75bc3de state_after_sha256=d3a2322d5c443130c7bc6259af88c98d2b4d2527d4fb3fab882c414cc671fb81
+{"status":"sealed","envelope_bytes":296,"ciphertext_bytes":58,"recipient_secret_input":false}
+{"status":"sealed","envelope_bytes":296,"ciphertext_bytes":58,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":30}
+{"status":"opened","plaintext_bytes":30}
+positive=concurrent_distinct_messages_no_lost_update
+{"status":"sealed","envelope_bytes":296,"ciphertext_bytes":58,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":30}
+{"status":"sealed","envelope_bytes":300,"ciphertext_bytes":62,"recipient_secret_input":false}
+{"status":"error","reason":"Failure(\"injected failure before rename\")"}
+{"status":"opened","plaintext_bytes":34}
+control=crash_after_temp_no_commit_then_restart_recover state_sha256=a1c8691edeccf54d498203ac7ee3b94df41e93559458b62e187d099e2bf81776
+{"status":"error","reason":"Failure(\"replay rejected\")"}
+{"status":"rejected"}
+control=crash_after_temp_replay rejected guard=replay rejected receive_state_sha256=fc61b911eddb9da7335f8aba3505ea2a319a41fad1b606b3cd5c514cd0a41c0d
+{"status":"sealed","envelope_bytes":298,"ciphertext_bytes":60,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":32}
+{"status":"sealed","envelope_bytes":302,"ciphertext_bytes":64,"recipient_secret_input":false}
+{"status":"error","reason":"Failure(\"injected crash after rename\")"}
+control=crash_after_rename_committed_before_restart state_before_sha256=6b2223f4a05acc46c1f721a0483611dc70e444e1429a7b182151087b2abafece state_after_sha256=fea22541cfa3b448a7be3df843eaa86710a1308e737ca9eef94ed374b3c40248
+{"status":"error","reason":"Failure(\"replay rejected\")"}
+{"status":"rejected"}
+control=crash_after_rename_replay rejected guard=replay rejected receive_state_sha256=fea22541cfa3b448a7be3df843eaa86710a1308e737ca9eef94ed374b3c40248
+{"status":"sealed","envelope_bytes":291,"ciphertext_bytes":53,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":25}
+{"status":"sealed","envelope_bytes":295,"ciphertext_bytes":57,"recipient_secret_input":false}
+{"status":"receive_seeded","records":10000}
+{"status":"opened","plaintext_bytes":29}
+positive=dedup_out_of_grace_pruning_allows_receive plaintext_files_fsynced state_has_pointers_only
+{"status":"sealed","envelope_bytes":296,"ciphertext_bytes":58,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":30}
+{"status":"sealed","envelope_bytes":300,"ciphertext_bytes":62,"recipient_secret_input":false}
+{"status":"receive_seeded","records":1000}
+{"status":"error","reason":"Failure(\"receive sender state capacity reached\")"}
+{"status":"rejected"}
+control=sender_dedup_cap rejected guard=receive sender state capacity reached receive_state_sha256=58c8d87286e8e7ff3c040216b924f359f96c21af07ef86f1559de8377b7e4e9c
+{"status":"sealed","envelope_bytes":300,"ciphertext_bytes":62,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":34}
+positive=sender_dedup_cap_does_not_block_other_sender
+{"status":"sealed","envelope_bytes":295,"ciphertext_bytes":57,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":29}
+{"status":"sealed","envelope_bytes":299,"ciphertext_bytes":61,"recipient_secret_input":false}
+{"status":"receive_seeded","records":1}
+{"status":"error","reason":"Failure(\"receive sender byte capacity reached\")"}
+{"status":"rejected"}
+control=sender_byte_cap rejected guard=receive sender byte capacity reached receive_state_sha256=e6d0c8649b0414d40819f3509e9a48c7e45d91fcc69dc9d01ab64ef92dbcb39d
+{"status":"sealed","envelope_bytes":299,"ciphertext_bytes":61,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":33}
+positive=sender_byte_cap_does_not_block_other_sender
+{"status":"sealed","envelope_bytes":289,"ciphertext_bytes":51,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":23}
+{"status":"sealed","envelope_bytes":293,"ciphertext_bytes":55,"recipient_secret_input":false}
+{"status":"receive_seeded","records":10000}
+{"status":"error","reason":"Failure(\"receive state capacity reached\")"}
+{"status":"rejected"}
+control=dedup_cap rejected guard=receive state capacity reached receive_state_sha256=2e9084d61c2de0544d920938d454c69599994b5cfdd268f62938f8e7f8ee243e
+{"status":"sealed","envelope_bytes":288,"ciphertext_bytes":50,"recipient_secret_input":false}
+{"status":"opened","plaintext_bytes":22}
+{"status":"sealed","envelope_bytes":292,"ciphertext_bytes":54,"recipient_secret_input":false}
+{"status":"receive_seeded","records":1}
+{"status":"error","reason":"Failure(\"receive byte capacity reached\")"}
+{"status":"rejected"}
+control=byte_cap rejected guard=receive byte capacity reached receive_state_sha256=4a0ba1099a6e008de7433e19982c38748d0b081a0e8f8969a076ed73adf7f3fe
+controls=all_failures_preserve_receive_state

@@ -1,0 +1,18 @@
+{
+  "closed_append_21": {
+    "status": "rejected",
+    "tx_hash": "910cadbe8876933337c28aedc83f06b39f3780461c03a57bc09734ab68b64635",
+    "epoch": 361,
+    "error": {
+      "type": "program_exec_failed",
+      "reason": "execution reverted [segment closed]"
+    },
+    "from": "octEvdckV3iWAR1mhTeDQznMfE6GC4RWVzGR54EnZyX39h2",
+    "to": "oct8nHaGVgB4VuT4F7V5UcGmsL4JvguBHFifvUCgMe8y3c9",
+    "amount": "0",
+    "nonce": 21,
+    "rejected_at": 1794673837.694676,
+    "source": "rejected_txs"
+  },
+  "info_after": "1|2048|100|204800|8388608|true"
+}

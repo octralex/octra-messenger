@@ -1,0 +1,4 @@
+(library
+ (name messenger_protocol)
+ (modules frame session_context cursor page)
+ (libraries digestif))

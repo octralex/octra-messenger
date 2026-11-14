@@ -1,0 +1,34 @@
+{
+  "status": "prune_complete_and_body_retained",
+  "prune_runs": [
+    {
+      "epoch": 160,
+      "floor": 100,
+      "tags_removed": 100,
+      "gc_seconds": 0.071,
+      "helper": "diagnostic build superseded"
+    },
+    {
+      "epoch": 462,
+      "floor": 171,
+      "tags_removed": 71,
+      "gc_seconds": 0.059,
+      "helper": "prune_driver.exe",
+      "helper_sha256": "9caf61ecd134f406eb253edd7a6bc8a45e8048d75b26ab280b8f1ebb5082f2fa"
+    }
+  ],
+  "state_root_equal": true,
+  "state_root": "49c2fae607b2a1b834297c2582da22aa8549593137fe3d2bc27140a4fee60e37",
+  "frame_sha256": "b9ad01c397f8b07609b744fca1a568f7a62b3914d92f77bee7b0cd85c188707c",
+  "epoch_tags_after_restart": {
+    "count": 301,
+    "min_epoch": 171,
+    "max_epoch": 471,
+    "keep_epochs": 8192,
+    "split_epoch": 462,
+    "pack_gc_enabled": true,
+    "pack_gc_running": false,
+    "pack_gc_need_bytes": null
+  },
+  "rollback_copy": "nodes/node6/data.pre-prune retained for this evidence run"
+}

@@ -1,0 +1,1 @@
+{"jsonrpc":"2.0","error":{"code":-32000,"message":"Program compile failed: Program admission: Program type flow: Program type flow exceeds 1048576 steps"},"id":"static-page"}

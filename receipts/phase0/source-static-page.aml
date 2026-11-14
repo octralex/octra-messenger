@@ -1,0 +1,23 @@
+program StaticPage {
+ state { count: int frames: map[string]bytes }
+ constructor() { self.count = 0 }
+ public fn append(frame: bytes): int {
+  require(len(frame) == 2048, "frame size")
+  let sequence = self.count
+  self.frames[to_string(sequence)] = frame
+  self.count = sequence + 1
+  return sequence
+ }
+ public view fn page(start: int, max_records: int): bytes {
+  require(start >= 0 && start < self.count, "empty")
+  require(max_records > 0 && max_records <= 64, "limit")
+  require(start + max_records <= self.count, "range")
+  let output = self.frames[to_string(start)]
+  let next = start + 1
+  let remaining = max_records - 1
+  for offset in 0..63 {
+   if offset < remaining { output = concat(output, self.frames[to_string(next + offset)]) }
+  }
+  return output
+ }
+}

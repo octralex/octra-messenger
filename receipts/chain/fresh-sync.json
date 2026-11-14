@@ -1,0 +1,38 @@
+{
+  "status": "fresh_sync_and_exact_read",
+  "initial_data_files": [
+    {
+      "name": "wallet.json",
+      "bytes": 169
+    }
+  ],
+  "after": {
+    "node1": {
+      "epoch": 148,
+      "current_epoch": 148,
+      "validator": "octEvdckV3iWAR1mhTeDQznMfE6GC4RWVzGR54EnZyX39h2",
+      "roots": 0,
+      "timestamp": 1794671306.887998,
+      "network_version": "v3.0.0-irmin",
+      "head_epoch": 147,
+      "state_root": "6615a1a1befc1fd9602d25c73907eb9410f0293fc739957163ebaa53a4bfa731",
+      "txid_hi": "1",
+      "irmin_commit": "ce2390a24e9b6391a8bdf8e6b9d0abbcb7889c21a948574eb0ccfcb28f905994f2e5e0409d6b4feabc739375d00636ebd65d5c8124f2a58c9940879f54d5bb6e"
+    },
+    "node7": {
+      "epoch": 148,
+      "current_epoch": 148,
+      "validator": "oct3HzdAKC4PJJBV8VqdsSyJhgUgu1PLoZ2vicsEt3MzCK2",
+      "roots": 0,
+      "timestamp": 1794671306.888949,
+      "network_version": "v3.0.0-irmin",
+      "head_epoch": 147,
+      "state_root": "6615a1a1befc1fd9602d25c73907eb9410f0293fc739957163ebaa53a4bfa731",
+      "txid_hi": "1",
+      "irmin_commit": "47cf6bbd54b32db210a1de76043932414882a370c485b58f5782a2dda8374b05dc09e990c12bcc890552f4c73e1799b4912aaea9c2fe56f95ae44b579fcbb2e9"
+    }
+  },
+  "state_root_equal": true,
+  "frame_sha256": "a14ce91cb79dca5faa913e7fdf3e40d8defd506344af1b8d6d0038d1755b8cdc",
+  "copied_chain_data": false
+}

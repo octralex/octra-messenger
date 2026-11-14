@@ -1,0 +1,75 @@
+program MailboxSegmentSpike {
+  state {
+    owner: address
+    count: int
+    used_bytes: int
+    closed: bool
+    frames: map[string]bytes
+  }
+
+  event Appended(sequence: int, content_hash: string)
+  event Closed()
+
+  constructor() {
+    self.owner = caller
+    self.count = 0
+    self.used_bytes = 0
+    self.closed = false
+  }
+
+  public fn append(frame: bytes): int {
+    require(!self.closed, "segment closed")
+    require(len(frame) == 2048, "frame must be 2048 bytes")
+    require(self.count < 1024, "segment record capacity reached")
+    require(self.used_bytes + len(frame) <= 8388608, "segment byte capacity reached")
+    let sequence = self.count
+    self.frames[to_string(sequence)] = frame
+    self.count = sequence + 1
+    self.used_bytes += len(frame)
+    emit Appended(sequence, sha256(frame))
+    return sequence
+  }
+
+  public fn close() {
+    require(caller == self.owner, "not segment publisher")
+    require(!self.closed, "segment already closed")
+    self.closed = true
+    emit Closed()
+  }
+
+  public view fn get(sequence: int): bytes {
+    require(sequence >= 0 && sequence < self.count, "sequence outside segment")
+    return self.frames[to_string(sequence)]
+  }
+
+  public view fn content_hash(sequence: int): string {
+    require(sequence >= 0 && sequence < self.count, "sequence outside segment")
+    return sha256(self.frames[to_string(sequence)])
+  }
+
+  public view fn page(start: int, max_records: int, max_bytes: int): bytes {
+    require(start >= 0 && start < self.count, "empty pages are not callable")
+    require(max_records > 0 && max_records <= 64, "record page limit")
+    require(max_bytes >= 2048 && max_bytes <= 262144, "byte page limit")
+    let available = self.count - start
+    let records = max_records
+    if available < records { records = available }
+    let byte_limit = max_bytes / 2048
+    if byte_limit < records { records = byte_limit }
+    let finish = start + records
+    let output = self.frames[to_string(start)]
+    let next = start + 1
+    for index in next..finish {
+      output = concat(output, self.frames[to_string(index)])
+    }
+    return output
+  }
+
+  public view fn info_count(): int { return self.count }
+  public view fn info_used_bytes(): int { return self.used_bytes }
+  public view fn info_closed(): bool { return self.closed }
+  public view fn format_version(): int { return 1 }
+  public view fn frame_bytes(): int { return 2048 }
+  public view fn max_records(): int { return 1024 }
+  public view fn capacity_bytes(): int { return 8388608 }
+}

@@ -1,0 +1,3 @@
+status = pass test = binary_input_shapes_and_canonical_base64
+status = pass test = byte_output_union_and_truncation
+limit = storage keys remain raw legacy strings and are not base64 envelope encoded

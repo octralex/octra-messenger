@@ -1,0 +1,45 @@
+program MailboxSegmentRegistry {
+  state {
+    owner: address
+    next_id: int
+    current: string
+    descriptors: map[string]string
+  }
+
+  event Published(segment_id: int, descriptor_hash: string)
+
+  constructor() {
+    self.owner = caller
+    self.next_id = 0
+    self.current = ""
+  }
+
+  public fn publish(segment: address, activation_epoch: int): int {
+    require(caller == self.owner, "not registry publisher")
+    require(activation_epoch >= 0, "invalid activation epoch")
+    let segment_id = self.next_id
+    let descriptor = concat("1|", to_string(segment))
+    descriptor = concat(descriptor, concat("|", to_string(activation_epoch)))
+    descriptor = concat(descriptor, "|1024|8388608|")
+    descriptor = concat(descriptor, to_string(segment_id - 1))
+    descriptor = concat(descriptor, "|1")
+    self.descriptors[to_string(segment_id)] = descriptor
+    self.current = to_string(segment)
+    self.next_id = segment_id + 1
+    emit Published(segment_id, sha256(descriptor))
+    return segment_id
+  }
+
+  public view fn current(): string {
+    return self.current
+  }
+
+  public view fn descriptor(segment_id: int): string {
+    require(segment_id >= 0 && segment_id < self.next_id, "segment descriptor outside registry")
+    return self.descriptors[to_string(segment_id)]
+  }
+
+  public view fn count(): int {
+    return self.next_id
+  }
+}

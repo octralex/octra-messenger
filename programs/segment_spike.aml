@@ -1,0 +1,83 @@
+program MailboxSegmentSpike {
+  state {
+    owner: address
+    count: int
+    used_bytes: int
+    closed: bool
+    frames: map[string]bytes
+    seen: map[string]bool
+  }
+
+  event Appended(sequence: int, content_hash: string)
+  event Closed()
+
+  constructor() {
+    self.owner = caller
+    self.count = 0
+    self.used_bytes = 0
+    self.closed = false
+  }
+
+  public fn append(frame: bytes): int {
+    require(!self.closed, "segment closed")
+    require(len(frame) == 2048, "frame must be 2048 bytes")
+    require(self.count < 1024, "segment record capacity reached")
+    require(self.used_bytes + len(frame) <= 8388608, "segment byte capacity reached")
+    let sequence = self.count
+    let content_hash = sha256(frame)
+    require(!self.seen[content_hash], "duplicate frame")
+    self.seen[content_hash] = true
+    self.frames[to_string(sequence)] = frame
+    self.count = sequence + 1
+    self.used_bytes += len(frame)
+    emit Appended(sequence, content_hash)
+    return sequence
+  }
+
+  public fn close() {
+    require(caller == self.owner, "not segment publisher")
+    require(!self.closed, "segment already closed")
+    self.closed = true
+    emit Closed()
+  }
+
+  public view fn get(sequence: int): bytes {
+    require(sequence >= 0 && sequence < self.count, "sequence outside segment")
+    return self.frames[to_string(sequence)]
+  }
+
+  public view fn content_hash(sequence: int): string {
+    require(sequence >= 0 && sequence < self.count, "sequence outside segment")
+    return sha256(self.frames[to_string(sequence)])
+  }
+
+  public view fn page(start: int): bytes {
+    require(start >= 0 && start + 15 < self.count, "full page exceeds segment")
+    let output = self.frames[to_string(start)]
+    let next = start + 1
+    output = concat(output, self.frames[to_string(next + 0)])
+    output = concat(output, self.frames[to_string(next + 1)])
+    output = concat(output, self.frames[to_string(next + 2)])
+    output = concat(output, self.frames[to_string(next + 3)])
+    output = concat(output, self.frames[to_string(next + 4)])
+    output = concat(output, self.frames[to_string(next + 5)])
+    output = concat(output, self.frames[to_string(next + 6)])
+    output = concat(output, self.frames[to_string(next + 7)])
+    output = concat(output, self.frames[to_string(next + 8)])
+    output = concat(output, self.frames[to_string(next + 9)])
+    output = concat(output, self.frames[to_string(next + 10)])
+    output = concat(output, self.frames[to_string(next + 11)])
+    output = concat(output, self.frames[to_string(next + 12)])
+    output = concat(output, self.frames[to_string(next + 13)])
+    output = concat(output, self.frames[to_string(next + 14)])
+    return output
+  }
+
+  public view fn info(): string {
+    let text = concat("1|2048|", to_string(self.count))
+    text = concat(text, concat("|", to_string(self.used_bytes)))
+    text = concat(text, "|8388608|")
+    text = concat(text, to_string(self.closed))
+    return text
+  }
+}

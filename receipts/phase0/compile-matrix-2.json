@@ -1,0 +1,20 @@
+{
+  "no-page": {
+    "error": null,
+    "size": 2642
+  },
+  "core-page": {
+    "error": {
+      "code": -32000,
+      "message": "Program compile failed: Program admission: Program type flow: Program type flow exceeds 1048576 steps"
+    },
+    "size": null
+  },
+  "simple-page": {
+    "error": {
+      "code": -32000,
+      "message": "Program compile failed: Program admission: Program type flow: Program type flow exceeds 1048576 steps"
+    },
+    "size": null
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "quotes": {
+    "deploy": {
+      "jsonrpc": "2.0",
+      "result": {
+        "minimum": "200000",
+        "base_fee": "200000",
+        "recommended": "200000",
+        "fast": "400000",
+        "staging_size": 0,
+        "staging_ou": "0",
+        "epoch_capacity": "10000000000",
+        "usage_pct": 0,
+        "stealth_class": false
+      },
+      "id": 1
+    },
+    "call": {
+      "jsonrpc": "2.0",
+      "result": {
+        "minimum": "1000",
+        "base_fee": "1000",
+        "recommended": "1000",
+        "fast": "2000",
+        "staging_size": 0,
+        "staging_ou": "0",
+        "epoch_capacity": "10000000000",
+        "usage_pct": 0,
+        "stealth_class": false
+      },
+      "id": 1
+    },
+    "program_deploy": {
+      "jsonrpc": "2.0",
+      "result": {
+        "minimum": "200000",
+        "base_fee": "200000",
+        "recommended": "200000",
+        "fast": "400000",
+        "staging_size": 0,
+        "staging_ou": "0",
+        "epoch_capacity": "10000000000",
+        "usage_pct": 0,
+        "stealth_class": false
+      },
+      "id": 1
+    }
+  },
+  "deploy": {
+    "tx_hash": "45cfb65e790b4cb86e026a00964fd4d8a09164e4da9ca6df42050e285b2b37c5",
+    "signed_json_bytes": 3078,
+    "rpc_request_bytes": 3138,
+    "ou": 200000,
+    "ou_cost": 200000,
+    "receipt_effort": 418,
+    "epoch": 7
+  },
+  "append": {
+    "tx_hash": "0bfe989a77e908a5e698206e078583c1656954dd0e53668d78c9a5453b199605",
+    "signed_json_bytes": 3174,
+    "rpc_request_bytes": 3234,
+    "ou": 1000,
+    "ou_cost": 1000,
+    "receipt_effort": 630,
+    "epoch": 52,
+    "envelope_bytes": 322,
+    "stored_frame_bytes": 2048
+  },
+  "note": "OU is the transaction fee field and ou_cost is the native base-cost calculation. Receipt effort is VM effort, not an OU-denominated fee or a separate measured burn. No fee is inferred from account balance changes."
+}

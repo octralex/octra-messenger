@@ -1,0 +1,6 @@
+opening
+opened
+collecting
+{"status":"started","floor":171,"tags_removed":71}
+2026-11-14T16:47:29.787Z INFO component = gc event = pack_gc status = complete epoch = 462 seconds = 0.059
+{"status":"complete"}

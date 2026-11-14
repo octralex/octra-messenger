@@ -1,0 +1,11 @@
+{
+  "status": "confirmed_and_exact_read",
+  "epoch": 52,
+  "frame_bytes": 2048,
+  "frame_sha256": "a14ce91cb79dca5faa913e7fdf3e40d8defd506344af1b8d6d0038d1755b8cdc",
+  "view_base64_exact": true,
+  "storage_page_base64_exact": true,
+  "storage_more": false,
+  "storage_limit": 64,
+  "strict_json": true
+}
