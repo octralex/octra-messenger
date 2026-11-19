@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# SPDX-License-Identifier: BSD-3-Clause
+# Copyright (c) 2023-2026 Octra Labs <dev@octra.org>
 set -euo pipefail
 
 ENDPOINT_EXE=$1
@@ -32,7 +34,7 @@ common={
   'webcli_executable_sha256':sha('/srv/octra-node/webcli/octra_wallet'),
   'lite_node_running_executable_sha256':sha('/srv/octra-node/artifacts/octra_node.devnet.exe'),
   'venue':os.environ['VENUE'],
-  'build_command':f"python3 {source}/controls/lib/gc_build.py -- dune build --root {source} --profile release -j 2 test/recipient_endpoint.exe test/size_sweep.exe",
+  'build_command':f"python3 {source}/controls/lib/gc_build.py -- dune build --root /home/kimi/workspace/octra-egregore/projects/onchain-messenger --build-dir {os.environ['VENUE']}/library-build --profile release -j 2 tests/recipient_endpoint.exe tests/size_sweep.exe",
   'ocaml':command(['ocamlc','-version']),
   'dune':command(['dune','--version']),
   'opam_lock_sha256':sha('/srv/octra-node/libv_litecore/octra_node.opam.locked'),

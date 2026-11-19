@@ -9,8 +9,8 @@
   "sender_recipient_secret_input": false,
   "recipient_offline_during_seal": true,
   "sender_strace": "sender.strace contains no recipient-secret, messaging-secret or contact-secret open",
-  "sender_strace_sha256": "80722a3603c3868da931b3d222f47fc7905544ebbfa3ecb2220e41b40365fe14",
-  "case_directory": "/srv/octra-node/fakenet-kimi-messenger/work/case-20261114T185053Z",
+  "sender_strace_sha256": "07fe138467d90200f5fefe0c2b1803f98889d4855714f4239439f4a7aa385d1f",
+  "case_directory": "/srv/octra-node/fakenet-kimi-messenger/work/case-20261119T173506Z",
   "secret_files": "Synthetic endpoint secrets and receive state remain in the isolated VPS case directory and are not published.",
   "key_custody": "Recipient messaging secrets are dedicated X25519 keys; Ed25519 is only the synthetic sender/contact identity. No wallet seed is used."
 }

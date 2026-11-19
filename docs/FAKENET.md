@@ -1,6 +1,10 @@
 # Isolated messenger fakenet runbook
 
-Status: all seven isolated nodes are active with the binary-envelope correction and final controls. Earlier
+This is the **historical older lab profile** at lite_node `3aab2d99`, not the current recipient library at
+`8f785a93`. `receipts/recipient/environment.json` and the new `receipts/chain/binary-io-environment.txt` keep those
+source and executable identities separate. Do not cite this older profile as evidence for the current native binary.
+
+Status: historical isolated-lab evidence with the binary-envelope correction and final controls. Earlier
 deployment, exact encrypted-body reads and recipient
 decryption, restart, fresh sync, pack GC, index rebuild, append-only registry rollover, common-feed rebuild and a
 100-frame batched load have passed. The feed contains 102 frames across two segments. This is not devnet, mainnet,
@@ -43,9 +47,12 @@ not used.
 
 - Venue: `/srv/octra-node/fakenet-kimi-messenger/` on Hetzner.
 - Chain ID: `octra-fakenet-kimi-msgnet`; no devnet peers or shared-fakenet state.
-- Base source: lite_node `3aab2d992035076dd216ad8808710d3a5a56063a`, the mandated review pin. The tracking
-  clone advanced to `a1ead4a1181c743bd136c7ddeca5a7ccfa60e430` during this follow-up; those broader upstream
-  changes were not incorporated or treated as reviewed. No upstream write is authorized.
+- Base source: lite_node `3aab2d992035076dd216ad8808710d3a5a56063a`, the mandated review pin. At
+  2026-11-14T21:51:44Z, upstream `main` was `8f785a93a4e7392a0f3e65674f9de89854d33dbc`. The lab patch applied
+  to that clean archive and every messenger-patched runtime path was identical to `3aab2d99`; the overlapping
+  `rule_graph.ml` change is a devnet activation epoch outside the lab registration hunk. This is only an apply and
+  source-identity check, not a whole-node review, build, deployment or upstream adoption. See
+  `receipts/chain/upstream-compatibility.json`. No upstream write is authorized.
 - Patch: `receipts/chain/fakenet-node.patch`, SHA-256
   `0f10cf5d5d0d58ccfc93351aec9dca466acd19d1142f6266c38cd4bb6dc42c07`.
   The change to `lib/core/transaction.ml` lets the release-off laboratory profile admit the existing

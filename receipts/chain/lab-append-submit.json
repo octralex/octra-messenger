@@ -1,0 +1,15 @@
+{
+  "status": "submitted",
+  "tx_hash": "02e034c77f9aa7c08ae5d7f58175ea4981556601ea794eeb91abd76c6f9b6acc",
+  "signed_json_bytes": 2461,
+  "rpc_request_bytes": 2521,
+  "signed_json_sha256": "71034c99bb6f8e420e7b22e7376a2c55f0be24f3dde94c3f590aaf52829e2cf2",
+  "ou": "1000",
+  "ou_cost": "1000",
+  "rpc_result": {
+    "tx_hash": "02e034c77f9aa7c08ae5d7f58175ea4981556601ea794eeb91abd76c6f9b6acc",
+    "status": "accepted",
+    "nonce": 2,
+    "ou_cost": "1000"
+  }
+}

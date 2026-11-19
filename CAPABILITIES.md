@@ -1,27 +1,22 @@
 # Capabilities and limits
 
-Status: Octra-native architecture correction adopted. Offline storage and native recipient controls pass. The
-isolated Phase 2 registry/segment spike has complete encrypted frames in finalized state, exact retrieval and
-recipient decryption, restart/prune/index-rebuild/fresh-sync evidence, and a 100-frame batched load measurement.
-This is not a deployed messenger, capacity proof, production candidate or readiness claim. Independent review,
-production policy/key integration, encrypted secret persistence and larger/interference benchmarks remain open.
+Status: maintainer v2 revision under design and independent review. The native recipient controls, protocol tests,
+binary I/O tests and disposable devnet circle feasibility are lab evidence only. The realtime demo, production
+messenger and external sync remain unapproved and unbuilt. Independent review, chain-integrated contact/policy,
+encrypted secret persistence and larger/interference benchmarks remain open.
 
-## Implementation and live pins
+## Implementation and native pins
 
 - Implementation: `projects/onchain-messenger/` in `octralex/octra-egregore`, built and tested only on Hetzner.
-- Devnet source and deployed commit at 2026-11-14T10:54:54Z:
-  `3aab2d992035076dd216ad8808710d3a5a56063a`.
-- Running devnet executable: SHA-256 `c56f152ba4eb2372c1ecde446f1ac7feb932b8b3adc900e3701258e0a02ea208`.
-- Devnet RPC at that observation: head epoch 1,836,733, state root
-  `63b92440629001be43746da5a3a60fc9118aaa48a68c93cba8c5269966556945`.
-- Deployed webcli source `28208507bf704b9d2726dd48cb6597319c594688`, executable SHA-256
-  `93702748d072725ebebf564c55bf35b38ecb481bad4c09f02fef6520e3e6db3a`, PVAC library SHA-256
-  `fc72588467f5e84f34323de51b50b83bd8cb74c7b91b2cbfb7c150a365984357`.
-- OCaml 4.14.2 and dune 3.23.0 from the node switch. No OCaml 5 migration or external messaging dependency.
-
-The validator identity, wallet, live binary, updater and devnet accounts were not used. The approved isolated
-venue is `/srv/octra-node/fakenet-kimi-messenger/`, RPC 18171-18177 and consensus 19161-19167, with a separate
-lock, 2 vCPU/4 GiB slice and 50 GiB cap. Seven synthetic lab nodes are provisioned; the shared fakenet was not modified.
+- lite_node review/build pin: `8f785a93a4e7392a0f3e65674f9de89854d33dbc`.
+- Webcli source pin: `28208507bf704b9d2726dd48cb6597319c594688`; deployed executable SHA-256
+  `93702748d072725ebebf564c55bf35b38ecb481bad4c09f02fef6520e3e6db3a`.
+- PVAC library reference hash `fc72588467f5e84f34323de51b50b83bd8cb74c7b91b2cbfb7c150a365984357`.
+  The same-key PVAC message path is removed; this artifact is not a recipient-encryption substitute.
+- OCaml 4.14.2, dune 3.23.0 and Mirage 2.1.0 from the node switch. No external messaging dependency, browser UI,
+  WebSocket service or non-OCaml messenger service is used.
+- Isolated venue `/srv/octra-node/fakenet-kimi-messenger/`, with synthetic identities only. The live validator,
+  updater, shared fakenet, fleet identities and production wallets are not used by the library tests.
 
 ## Measured source limits at the pin
 
@@ -29,138 +24,96 @@ lock, 2 vCPU/4 GiB slice and 50 GiB cap. Seven synthetic lab nodes are provision
 | --- | ---: | --- |
 | Ordinary transfer message | 256 bytes | Not a messenger transport. |
 | Program message field | 10,000,000 bytes | Not an end-to-end payload guarantee. |
-| Transaction gossip JSON | 5,000,000 bytes | JSON and encoding overhead must be included. |
-| Program execution lane | 128 transactions, 4 MiB, 10,000,000 OU per budget | Capacity needs multi-node measurement. |
-| Contract storage value | 4,194,304 bytes | A native-size ciphertext fits; the 8 MiB segment is split across keys. |
-| PVAC public key registration | 5,000,000 bytes | Measured 3,128,595-byte key fits, with material bootstrap cost. |
+| Transaction gossip JSON | 5,000,000 bytes | JSON and signature overhead must be included. |
+| Program execution lane | 128 transactions, 4 MiB, 10,000,000 OU per budget | Requires multi-node measurement. |
+| Contract storage value | 4,194,304 bytes | A whole large envelope is not one accepted frame. |
+| Circle inline value | 65,536 bytes | The selected app frame is smaller; this is not an absolute write benchmark. |
+| Circle stable storage | 33,554,432 bytes | Requires retention and rollover tests before scale claims. |
 | View call | 10 second RPC deadline, singleton busy guard | Feed paging needs explicit budgets and backpressure. |
-| Storage dump RPC | Disabled; explicit keys only | The client uses `get`/`page`, not a full-state dump. |
+| Storage snapshot RPC | Owner-authorized; public circle view is separate | Cross-device public history uses `octra_circleView`, not an owner secret. |
 
 Source anchors: `lib/core/tx_payload.ml`, `net/p2p_tx_gossip.ml`, `lib/core/resource_lanes.ml`,
-`lib/core/pvac_registry.ml`, `lib/vm/runtime/contract_vm.ml`, `lib/vm/rpc/contract_rpc.ml` and
-`node_runtime/program_read_rpc.ml`.
+`lib/core/circles.ml`, `lib/vm/runtime/contract_vm.ml`, `lib/vm/rpc/contract_rpc.ml` and
+`node_runtime/circle_read_rpc.ml`.
 
-## Historical storage spike (c49de45c)
+## Native v2 implementation
 
-`programs/segment_spike.aml` appends exactly 2,048 opaque bytes with at most 1,024 records and 8,388,608 frame
-bytes. It provides single-record reads, recomputed SHA-256, unrolled 16-record pages, publisher-only close and
-hash/sequence events without a second body copy.
+- One `octra_messenger` library depends on `octra_net` and `octra_core`; the core is private and the testkit is a
+  separate test-only library. Public modules have `.mli` interfaces and SPDX headers. No modules are copied into
+  `lite_node/test`.
+- `Oce1` supplies canonical fields and bounded reads; `Hash_domain` supplies tagged SHA-256 for signatures, AD,
+  replay, storage and fixtures. HMAC-SHA256 is used only for key derivation.
+- A 194-byte header carries explicit codec version, sender sequence, sender epoch and a 16-byte sender instance.
+  Only v2 readers and writers exist; v1 rewraps and old tags reject. One application-bearing `Session_context`
+  preserves version and uses OCE1, giving 86-byte context and 308-byte overhead including nonce/tag.
+- Expected sender keys are resolved by contact wallet address before signature verification. Messages use the
+  wallet Ed25519 key and `octra:msg:sig:v2`, not transaction serialization. The default receive cap is 64 KiB;
+  the encoding cap is 3,000,000 bytes and is not safe chat parsing or large-message storage.
+- Per-contact monotonic sequences and random sender instances prevent cross-contact and same-wallet device replay
+  collisions. Any forward jump advances a permanent 1,024-bit channel window. Outbox allocations persist before
+  sealing and record IDs disambiguate retries. Sequences are positive signed 64-bit values with an explicit
+  `exhausted` terminal state; invalid counters cannot wrap or rotate. Verified-high-water recovery only advances
+  the counter while preserving the instance and pending records. Windows are never pruned; growth across
+  channels/rotations requires an operational migration policy.
+- Live acceptance is at most 64 epochs old and two ahead. Archive uses the frame's commit epoch and rejects only a
+  later sender epoch, while retaining signature, replay and atomic-persistence checks.
+- Per-user segment and registry bytecode embed the owner because native circle deployment does not run the AML
+  constructor. Appends accept that owner or granted writers and store `caller`; the client binds it to the contact
+  wallet and fixed-header sender key before full decoding. Non-owner writes reject without mutation.
+- Tagged typed-key loading and atomic writes live in `Recipient_keys`; raw construction is not exported. Secret
+  files and per-message plaintext are mode 0600 but not encrypted at rest.
 
-Both historical and scoped compiler profiles pass 20 binary frames, page/tail reads, rejection atomicity,
-unauthorized-close rejection, closed-append rejection and two Irmin restarts. Earlier loop/type-flow failures
-are retained in receipts. The devnet compiler artifact is 3,900 bytes, 483 instructions, SHA-256
-`dd175e71733eb547cb4ca5a375aff87174d4ead184d3d43639fcb38102e3d282`.
+## Evidence
 
-This proves disposable-store behavior only. It does not prove consensus inclusion, pruning recovery, fresh sync,
-a complete page proof, registry immutability or chain-level deduplication. Whole-contract load/save remains
-linear in retained history, so bounded append cost is not established.
-
-## Historical same-key HFHE-PVAC spike (c49de45c)
-
-The detailed requirement/source/trust matrix is [`NATIVE-STACK.md`](NATIVE-STACK.md). The active implementation
-uses `Pvac_ffi` and existing Octra Ed25519, not an external messaging protocol.
-
-`lib/crypto/pvac_message.ml` creates and opens a bounded signed test envelope. `tests/native_spike_driver.ml`
-and `tests/run_native_spike.sh` demonstrate:
-
-- a 7-byte synthetic plaintext recovered by the intended key holder;
-- wrong-recipient, tampering, wrong-context, replay and trailing-byte rejection;
-- no replay-state advancement on those failed controls;
-- ciphertext 43,168 bytes, signed envelope 43,357 bytes and public key 3,128,595 bytes;
-- five-round seal median 154.201 ms, maximum 157.715 ms; decrypt median 0.152 ms, maximum 0.163 ms;
-- whole-process maximum RSS 71,444 KiB (69.77 MiB).
-
-The receipt is `receipts/native/spike.txt`. This is same-key-holder PVAC encryption plus an Ed25519 test envelope,
-not an AEAD or a final messaging composition. `enc_value_seeded` requires the secret key used for the mask, so
-a separate sender cannot encrypt to a recipient using only the registered public key. This remains a same-key
-baseline only. The separate recipient profile below uses the existing X25519 path; no PVAC KEM/key-wrap is invented.
-
-The existing 2/4 KiB frame buckets cannot hold this native envelope. A 64 KiB bucket is a candidate, and bounded
-native chunking is another, but neither is frozen. Revisit storage fees, scanner bandwidth and public-key
-bootstrap size before choosing.
-
-## Genuine recipient path and size evidence
-
-`docs/RECIPIENT-ENCRYPTION.md` selects the existing stealth-derived X25519/AES-GCM route through a thin binding,
-with `docs/NATIVE-RECIPIENT-EXTENSION.md` as its experimental profile. Separate processes prove secret-free
-sender sealing, offline recipient recovery, rotation and all required negative controls; `strace` shows no
-recipient-secret input. This is distinct from the same-key PVAC representation above.
-
-The recipient envelope has 161-byte header + 77-byte context + 28-byte nonce/tag. At 1, 2, 4 and 16 KiB,
-envelopes are 1,290, 2,314, 4,362 and 16,650 bytes; base64/JSON sizes are 1,722, 3,090, 5,818 and 22,202.
-`docs/CIPHERTEXT-SIZES.md` and `receipts/recipient/sizes.csv` record every length, fixture, timing and allocation.
-For the selected legacy append route, a 322-byte envelope produced a 3,174-byte signed transaction (3,234-byte
-RPC request) with 1,000 OU. Legacy deployment was 3,078 bytes and 200,000 OU; registry deployment was 1,447 bytes
-and 200,000 OU. Receipt effort is VM effort, not an OU-denominated burn. The public sender signature is non-deniable
-and transferable, and `sender_public` is clear metadata. A leaked view secret exposes all retained ciphertext for
-that version, including harvest-now archives; rotation supplies neither forward secrecy nor post-compromise recovery.
-
-## Isolated chain evidence
-
-The disclosed fakenet uses source `3aab2d99…`, exact-ID registration, release-off program-operation admission, and
-the canonical base64 I/O/compiler profile `6eb1af82…`. The current isolated node SHA-256 is
-`8846d2a9f3240d2aedfecb49553f082c284c2b951a6ddb7a9b60afe09800ef18`; patch SHA-256 is
-`0f10cf5d5d0d58ccfc93351aec9dca466acd19d1142f6266c38cd4bb6dc42c07`. The file-backed test signer is SHA-256
-`a86b7baf83c86ab813c3198bc0ed6fdb1f9b04bb1af7741a49f39220def8077e`. Binary-envelope and byte-union controls
-include wrong shapes, duplicates, empty/ASCII/invalid bytes and split-multibyte truncation; storage keys remain raw
-legacy strings. See `docs/FAKENET.md` for the build/stop contract and `receipts/chain/` for evidence.
-
-- First legacy segment deployed at epoch 7; a 322-byte recipient envelope finalized at epoch 52 and decrypted
-  after exact retrieval. Short/malformed frames reject without changing state.
-- Deduplicating segment deployed at epoch 276; 100 unique encrypted frames finalized in 13 bounded `MultiExec`
-  batches. Median finalization latency 7.078 s, p95 7.368 s, 113,000 OU, 77,100 receipt effort. Duplicate,
-  closed and closed-append guards reject without changing state. The segment closed at epoch 325.
-- Successor deployed at epoch 361 and accepts unique frames while the closed segment remains readable. The
-  append-only registry deployed at epoch 396 and published both immutable descriptors at epoch 400.
-- Node restart, a fresh node starting with only its wallet, native pack GC, chaindata index rebuild, and common-feed
-  index deletion/rebuild all preserve exact frame bytes and state roots. Two prune runs complete and preserve the
-  encrypted body; index rebuild recovered two transactions over 221 epochs.
-- The original 2,729,368-byte first-batch sample and derived 29,667-byte figure are not a storage slope.
-  `receipts/chain/storage-growth.json` records every batch, regression over all 100 frames, apparent and allocated
-  bytes, post-pack-GC state, restart and exact-read checkpoints. Final slopes are 9,812.67 apparent and 10,763.12
-  allocated bytes/frame over 14 points. Pack GC reclaimed 5,439,877 apparent bytes while collecting older history;
-  restart added 409,600 and 100 exact reads added zero in this run. Whole-directory growth includes consensus, WAL,
-  indexes and view-call writes. This is not 10,000/100,000-frame acceptance or sustainable-load evidence.
+- The endpoint covers expected-sender failure, low-order/malformed points, typed keys, RNG failure, wrong recipients,
+  modified header/body/signature, v1 rewraps, replay after pruning, large forward jumps, out-of-order and
+  outside-window sequences, restart rollback, stale/future epochs, archive commit epochs, concurrent duplicates,
+  two-device identity, 1,025 other-contact sends, incomplete outbox allocations, malformed state and downgrade
+  rejection.
+- Standalone protocol: 5,001 frame cases plus native tagged split digests, canonical context/cursor versions and
+  bounded pages. Binary I/O: both ABI routes, wrong shapes, duplicates, canonical pad bits, empty/ASCII/invalid
+  output and split-multibyte truncation. That older lab profile is separate from the current recipient evidence;
+  storage keys remain raw strings.
+- Segment and registry controls cover both compiler profiles, owner/granted writers, non-owner publish/append,
+  exact deduplication, descriptors, restart and close. Native circle deployment does not run the AML constructor,
+  so owner-specific bytecode is required and tested.
+- Historical devnet feasibility at `815afb913` confirms an owner-specific deployment and a 2,048-byte base64-text
+  write. Public views return the embedded owner, matching stored caller and exact 372-byte v2 envelope; archive
+  decryption recovers the 64-byte plaintext using the frame's commit epoch, without an owner-secret read or lab patch.
+  A 2,050-byte append rejects; an earlier note mislabelled that control as 2,049 bytes. Signed JSON sizes are 4,021
+  deploy and 2,462 write; RPC requests are 4,081 and 2,522. OU base costs are 200,000/1,000, not explicit fee burn
+  or throughput. See `receipts/chain/devnet-feasibility.json` and the separate OCPG revision evidence.
+- Historical isolated registry rollover, pruning, index rebuild, fresh sync and 100-frame results remain bound to
+  their original layout. They are not silently rebound to the new segment, context or recipient profile. The prior
+  100-frame whole-node growth was about 9.8–10.8 KB per frame across 14 points, not a message-only amplification
+  factor or sustainable-rate result.
 
 ## Current native gaps
 
-1. Independent specialist review of the new message-domain/profile, expected-contact registry, static-recipient
-   compromise, nonce/replay handling and rotation/revocation. The selected native route is demonstrated but not
-   a production cryptographic audit.
-2. Encrypted local key persistence, production recovery and chain-integrated submission. The prototype has
-   per-message fsynced plaintext files, atomic dedup-plus-pointer state and a durable exact-byte outbox with crash
-   injection, but secret files and plaintext inbox contents are not encrypted at rest. Global 10,000-record and
-   512,000,000-byte caps need an operational migration policy; per-sender quotas are 1,000 records and 51,200,000
-   bytes. Pruned erased/out-of-grace rows lose replay history while archived plaintext remains. No chain nonce
-   allocation or power-loss certification is established.
-3. Committed feed-page completeness proofs, production cursor/finality semantics, larger retained-body tests and
-   explicit fee-burn measurement. Binary I/O and signed sizes/OU are demonstrated only in the isolated profile.
-4. Production contact/key registration and recovery behavior. **B6 is deferred to on-chain registration.** The
-   test contact-root secret comes from a public constant and sits beside the config it signs, so the signature is
-   only a fixture. Dedicated opaque X25519 messaging keys are implemented and tested separately from Ed25519
-   identities; chain registration and secure backup remain open. Existing lifecycle rows do not by themselves
-   prove forward secrecy or secure recovery.
-5. Production registry/code-upgrade immutability, client suite pinning and native contact/policy object integration.
-   The append-only registry is a small prototype, not a production authorization boundary.
-6. Linear contract storage, malformed-input resource bounds, 10,000/100,000-frame runs, sustained offered-load
-   and multi-client interference. Storage growth and the disclosed VM I/O extension need independent review.
-7. Forward secrecy, post-compromise recovery and post-quantum guarantees remain unestablished. Native rotation
-   or revocation does not change that.
+1. **Design and independent review.** `docs/SCHEME.md` needs the maintainer design read before the demo is built
+   on it.
+2. **Contact and policy authority.** Contact registration is deferred to on-chain registration. Demo contact cards and local policy
+   are not production trust roots. Client custody needs encrypted backup.
+3. **Persistence and recovery.** Secret files and per-message plaintext are mode 0600 but not encrypted at rest.
+   Secure backup, chain nonce allocation, production recovery and power-loss certification remain open. Crash
+   orphans count against the byte cap until retried; ten authorized contacts can exhaust the global cap, and the
+   receive path scans the whole directory.
+4. **Chain format and completeness.** Large-message chunking, committed feed proofs, production cursor/finality
+   semantics, registry/code-upgrade authorization and sustained client behavior remain unimplemented. Exact frame
+   bodies are retained once; dedup uses the matching `octra:msg:frame:v2` digest. Registry descriptors use bounded
+   OCE1 fields. The lab-only `\xHH` compiler-literal patch is pinned in `native/byte-literals.patch`; it adds no VM
+   opcode or state-rule change and has not been accepted upstream. The separate
+   `native/circle-typed-storage.patch` is also lab-only: it corrects typed storage initialization independently of
+   nested-call permission. Unpatched Circle execution and devnet compatibility are not established.
+5. **Retention and measurement.** Replay windows are permanent and grow across channels/rotations. A migration
+   policy is required. 10,000/100,000-frame retention, revised pruning/fresh-sync evidence, sustained 1/10/100 fps,
+   multi-client interference, explicit fee burn and storage/scheduler optimization remain open. Kernel/I/O
+   experiments require separately measured isolated bottlenecks, not speculation.
+6. **Security properties.** Forward secrecy, post-compromise recovery, recipient anonymity and post-quantum
+   confidentiality are not established. Wallet signatures are public and non-deniable; leaked view secrets expose
+   harvested ciphertext permanently. Stronger anonymity needs unlinkable authorization/fees and network anonymity.
 
-## New APIs and resource estimate
-
-New application work comprises the native binding, signed test envelope, registry/segment/bootstrap designs,
-OCaml client/store/feed modules and recovery receipts. No consensus opcode, state-root rule or fee change is
-proposed. The first node optimization candidate remains bounded lazy/delta contract storage. The selected recipient message profile is a thin native binding requiring independent security review; no
-consensus-visible extension is currently proposed. No writes to octra-labs repositories are authorized.
-
-Order-of-magnitude estimate, excluding independent review and activation: Phase 1 about 5-8 focused engineering
-days, Phase 2 about 4-7, and Phase 3 about 5-10. The recipient operation and atomic crash boundary are the largest
-uncertainties. The approved initial venue budget is 2 vCPU, 4 GiB RAM and 50 GiB. A 100,000-frame run needs
-retained-store measurement first; a 1,000,000-frame run is outside this budget.
-
-## Superseded investigation
-
-The earlier libsignal/X3DH/PQXDH/Double Ratchet/MLS dependency search is historical and superseded by the
-2026-11-14 owner correction. It is not a blocker or implementation dependency. Historical reports and receipts
-remain for audit; active development uses Octra-native HFHE-PVAC and the closest existing core primitives.
+New application work is limited to the v2 native binding, storage/replay, registry/segment/bootstrap and the
+minimal demo client/relay after the design gate. No consensus opcode, state-root rule, fee change, external
+messaging stack or upstream write is proposed. The first optimization candidate remains measured storage
+allocation/serialization/scheduling; no kernel change is implied.

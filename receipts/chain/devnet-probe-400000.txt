@@ -1,0 +1,15 @@
+{"status":"pass","address":"octGERsqWEPv8YmNDTFKwSvG22qE5UTHxoG39hmdp5rpQTx","code_hash":"ec3b8538f7307c93f2cf038ba7c8d048bed1144acb77911c44fed346d823257b","frames":21,"frame_bytes":2048,"page_records":16,"restart_reads":true,"closed":true}
+{"status":"pass","address":"oct4pyDXZ7zqourpK3yzf6S3GLrooHAgErj5PvoDVhHWcKF","code_hash":"6723c64f0631e32eaee10a5f3afbbda1f996ef5743ed72fa1cd5a87e297025c5","frames":21,"frame_bytes":2048,"page_records":16,"restart_reads":true,"closed":true}
+Traceback (most recent call last):
+  File "<stdin>", line 10, in <module>
+  File "/home/kimi/workspace/octra-egregore/projects/onchain-messenger/tests/run_devnet_feasibility.py", line 149, in main
+    append_submission, append = submit("circle-exec", wallet, next_nonce(address), 1000, circle, "append",
+                                ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                       "@" + str(WORK / "append-params.json"), "signed-append.json")
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<stdin>", line 8, in submit_with_probe_ou
+  File "/home/kimi/workspace/octra-egregore/projects/onchain-messenger/tests/run_devnet_feasibility.py", line 69, in submit
+    transaction = wait_final(submission["tx_hash"])
+  File "/home/kimi/workspace/octra-egregore/projects/onchain-messenger/tests/run_devnet_feasibility.py", line 52, in wait_final
+    raise RuntimeError(("transaction did not finalize within 360 seconds", tx_hash))
+RuntimeError: ('transaction did not finalize within 360 seconds', '3bf317fd0dfbfdc8a74d6aa0291bdf13825fd2119aef7843a2b5f727176d4c49')

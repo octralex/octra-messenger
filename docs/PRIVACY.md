@@ -1,72 +1,65 @@
-# Privacy statement
+# Privacy statement — experimental v2
 
-Target product language, valid only after the corresponding behavior is implemented and tested:
+Target product language, valid only after the corresponding behavior is implemented and independently reviewed:
 
 > Messages are end-to-end encrypted and stored on Octra. Sending accounts and transaction activity are public.
 > Initial contact setup may reveal who is contacting whom.
 
-A genuine recipient-only native path is now demonstrated through a thin binding: the sender uses an ephemeral
-X25519 key and recipient public view material, while the recipient opens later with its own view secret. That is
-not a deployed messenger, a chain-availability proof or an independent security audit.
-
-## Native direction
-
-- HFHE-PVAC and the closest existing Octra primitives remain mandatory. The selected route uses existing
-  X25519, AES-GCM and Ed25519, with OCaml orchestration. No external messaging protocol is imported.
-- Complete message ciphertext and required bootstrap/control records must remain in Octra state. A hash, relay
-  body or external object-store pointer is not fully on-chain storage.
-- Plaintext, private keys and recovery material remain with authorized endpoints. The sender never receives the
-  recipient view secret. Validators and relays must not acquire endpoint decryption secrets.
-- PVAC arithmetic encryption is measured separately as a same-key representation. It is not presented as a KEM
-  or a substitute for the selected recipient path.
-- Bounded common-feed scanning is demonstrated for 102 frames across two segments, with identical index rebuild
-  and local recipient decryption. Production polling schedules, jitter, finality/completeness proofs and scale are
-  not completed. Public view keys, bootstrap, grants, contact versions and policies may reveal recipients.
+A recipient-only native path is demonstrated in the lab through a thin X25519/AES-GCM/Ed25519 binding. The sender
+uses an ephemeral X25519 key and public recipient view material; the recipient opens later with a typed view secret.
+That is not a deployed messenger, independent security acceptance or anonymity guarantee. The same-key PVAC spike
+is removed from the active message path.
 
 ## Public and observable information
 
-- Sending account, Ed25519 key/signature, account nonce, fee, target program, inclusion order and funding trail.
-- Recipient view-key registration, key versions, initial contact setup, rotation and reply timing.
-- Padded bucket or chunk count, native serialization size, timing, retries and account-linked ordering.
-- RPC provider IP, submission origin, connection times, scan ranges and byte counts. Fresh/intermittent clients
-  have distinctive catch-up patterns even without recipient-specific queries.
-- A public view key or policy row can link a known recipient to ciphertext and accounts. No recipient-hiding
-  claim follows merely from omitting a recipient field.
+- Sending account, on-chain writer address, wallet Ed25519 key/signature, account nonce, fee, target circle,
+  inclusion order and funding trail. Signatures make messages non-deniable and transferable to a third party.
+- Recipient view-key registration, key versions, initial contact setup, rotation, reply timing and traffic volume.
+- The random 16-byte sender instance, sequence and sender epoch. A stable instance per outbox contact links messages
+  on that channel and distinguishes devices using one wallet; it is not an unlinkable authorization mechanism.
+- Padded bucket/chunk count, native serialization size, retries, commit epochs and account-linked ordering. Archive
+  reads do not hide these values or provide a freshness guarantee by themselves.
+- Relay/RPC provider IP, submission origin, connection times, long-poll ranges and byte counts. Fresh/intermittent
+  clients have distinctive catch-up patterns even without recipient-specific queries.
+- Public view keys, contact cards and policies can link a known recipient to ciphertext and accounts. Omitting a
+  recipient field or stable recipient-key hash does not provide recipient anonymity.
+
+## Cryptographic and replay boundaries
+
+The sender never receives the recipient view secret. Validators and relays must not acquire endpoint decryption
+secrets. The receiver resolves the expected wallet key from its contact registry by address and verifies that binding
+and the signature before context, version, policy, ECDH or AEAD runs. `octra:msg:sig:v2` is a labelled digest of the
+exact header and ciphertext, not a transaction serialization.
+
+Replay identity is a tagged OCE1/SHA-256 digest of the full channel, sequence and epoch, not the random message ID or
+a sender/message-ID pair. Each outbox contact has an independent monotonic sequence and sender instance, so other
+contacts and same-wallet devices do not consume one shared counter. Any forward jump advances the permanent window;
+duplicates and old out-of-window sequences reject. Pruning inbox rows cannot erase replay history, but permanent
+windows grow across channels and rotations and require an operational migration policy.
+
+Live delivery uses bounded age and a two-epoch future tolerance. Archive reads use the frame's on-chain commit
+epoch and reject only a sender epoch after that commit. Archive mode is not a replay bypass and does not make
+ciphertext, sender metadata, timing or traffic private.
+
+Cross-device history and relayed messages can have different commit states. A relayed message that never commits
+must remain marked `uncommitted`; delivery is not proof of chain inclusion. A relay restart does not erase
+already-committed history, but an offline mailbox is not a durability guarantee. An uncommitted message can be
+lost if the sender's only device dies.
 
 ## Security properties still unestablished
 
-Forward secrecy, post-compromise recovery and post-quantum confidentiality are not demonstrated. Static view
-keys do not become forward-secret through rotation. Revocation/erasure does not retract copied keys or plaintext.
-Native lifecycle objects can cancel future delivery without proving secure recovery or historical deletion.
+Forward secrecy, post-compromise recovery and post-quantum confidentiality are not demonstrated. Static view keys
+do not become forward-secret through rotation. Revocation/erasure cannot retract copied keys, plaintext or history.
+A leaked view secret decrypts every retained ciphertext for that version, including harvest-now archives.
 
-Origin and integrity are implemented for the signed recipient envelope and AES-GCM body, not for PVAC arithmetic
-ciphertext alone or a final production profile. The recipient-local receive store commits a dedup row and inbox
-pointer after writing a per-message fsynced plaintext file, the outbox preserves exact retry bytes, and the
-isolated segment rejects exact duplicate frames before mutation. Per-sender quotas prevent one sender from
-exhausting the entire local allocation, but global caps can still be exhausted by multiple senders. Pruning
-erased/out-of-grace rows forgets their replay history; such versions must not be reactivated in the same dedup
-domain. Archived plaintext remains and counts toward the global byte cap.
-
-Independent review of the new profile, contact registry, nonce handling and rotation is still required. B6 is
-deferred to on-chain registration: the test contact-root secret is derived from a public constant and stored beside
-its config, so the test signature is not production contact authentication. Secret key files and per-message
-plaintext inbox files are mode 0600 but not encrypted at rest.
-
-Messages are non-deniable and transferable: anyone with an envelope can show its public sender signature to a third
-party. A leaked view secret decrypts every retained message for that version, including ciphertext harvested before
-the leak and kept permanently on chain. Rotation does not provide forward secrecy or post-compromise recovery.
-
-## Size and metadata evidence
-
-The current recipient envelope has 161-byte header + 77-byte context + 28-byte nonce/tag. At 1, 2, 4 and 16 KiB,
-envelopes are 1,290, 2,314, 4,362 and 16,650 bytes. The recipient view public key is 32 bytes, versus a
-3,128,595-byte PVAC public key in the same-key representation. Full measurements are in
-`docs/CIPHERTEXT-SIZES.md`; selected signed sizes and OU are measured in `receipts/chain/fees-and-sizes.json`.
+Contact registration is deferred to on-chain registration. Demo contact cards are public-constant-derived test fixtures, not
+a production trust root. Local policy acquisition is not a finalized chain authority. Secret key files and
+per-message plaintext inbox files are mode 0600 but not encrypted at rest. Crash injection is not power-loss
+certification, and an orphan plaintext file can remain after a crash before state rename.
 
 HFHE does not hide sending accounts, transaction metadata or network timing. No anonymous sender, private social
 graph, global traffic-analysis resistance, censorship immunity, guaranteed deletion or Signal-equivalent security
 is claimed. Stronger anonymity needs separately reviewed unlinkable authorization/fees and network anonymity.
-
 Accepted ciphertext and copies held by recipients, nodes, archives, backups or attackers cannot be erased later.
-Local reporting and block lists affect display, not chain storage. Endpoint compromise, local plaintext history,
-retained keys, swap, crash dumps and recipient disclosure remain outside chain confidentiality.
+Local reporting and block lists affect display, not chain storage. Endpoint compromise, retained keys, swap,
+crash dumps and recipient disclosure remain outside chain confidentiality.

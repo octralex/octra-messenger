@@ -1,0 +1,16 @@
+; SPDX-License-Identifier: BSD-3-Clause
+; Copyright (c) 2023-2026 Octra Labs <dev@octra.org>
+
+(include_subdirs unqualified)
+
+(library
+ (name octra_messenger)
+ (public_name octra_messenger)
+ (modules
+  frame session_context cursor page freshness message_channel
+  recipient_message recipient_message_core recipient_keys
+  receive_store outbox_journal sender_binding)
+ (private_modules recipient_message_core)
+ (libraries
+  octra_net octra_core digestif base64 yojson
+  mirage-crypto mirage-crypto-ec mirage-crypto-rng unix))

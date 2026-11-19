@@ -1,3 +1,6 @@
+(* SPDX-License-Identifier: BSD-3-Clause *)
+(* Copyright (c) 2023-2026 Octra Labs <dev@octra.org> *)
+
 type bucket = Bucket_2K | Bucket_4K
 
 type t = {
@@ -18,7 +21,9 @@ let to_bytes frame = frame.bytes
 let bucket frame = frame.bucket
 let size frame = bucket_bytes frame.bucket
 let equal left right = String.equal left.bytes right.bytes
-let hash frame = Digestif.SHA256.(digest_string frame.bytes |> to_hex)
+let hash frame =
+  Octra_net.Hash_domain.hash_encoded_hex "octra:msg:frame:v2" (fun buffer ->
+    Octra_net.Oce1.put_bytes buffer frame.bytes)
 let dedup_key = hash
 
 let for_ciphertext_size size =

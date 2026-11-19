@@ -1,0 +1,155 @@
+{
+  "status": "devnet_circle_feasibility_pass",
+  "source": "8f785a93a4e7392a0f3e65674f9de89854d33dbc",
+  "control_commit": "815afb91327c9ba0688ead5f346d509df45634af",
+  "messenger_tree_hash": "1909d1bb536325cc9ad779d7c27c35278d35fdab",
+  "circle_activation_epoch": 1299000,
+  "circle": "octEpHemsweffbWsRpFyUn8i7SY3BT3fuBTWXu6HqjxF5o5",
+  "message_profile": {
+    "codec": "recipient-x25519-aes-gcm",
+    "codec_version": 2,
+    "plaintext_bytes": 64,
+    "envelope_bytes": 372,
+    "envelope_sha256": "feed3d6eb1352441e58c339e1af0a42e94f0e9ec5cb003de2765927ca35f5566",
+    "fresh_public_retrieval_and_decryption": true,
+    "sender_binding": "fixed-header sender bytes bound to contact wallet and on-chain caller before full decode"
+  },
+  "deploy": {
+    "transaction": {
+      "status": "confirmed",
+      "tx_hash": "d6e95b2699b04520e2f491f2985037bcdd74e182fcbba7e5f548c3cc2b4eeb27",
+      "epoch": 1843743,
+      "from": "oct3JwTPt2hCWB4YUHaET2XPou9QM5azvu3yuzJBtWGDvqz",
+      "to": "octEpHemsweffbWsRpFyUn8i7SY3BT3fuBTWXu6HqjxF5o5",
+      "amount": "0",
+      "amount_raw": "0",
+      "nonce": 10,
+      "ou": "200000",
+      "timestamp": 1794744399.956982,
+      "op_type": "deploy_circle",
+      "message": "{\"runtime\":\"octb\",\"privacy_class\":\"public\",\"browser_mode\":\"native_sealed\",\"resource_mode\":\"public_resources\",\"code_b64\":\"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\",\"policy_hash\":null,\"members_root\":null,\"export_policy\":null,\"limits\":{\"max_stable_bytes\":\"33554432\",\"max_assets_bytes\":\"33554432\",\"max_inline_value\":\"65536\",\"max_wasm_bytes\":\"33554432\"}}"
+    },
+    "submission": {
+      "status": "submitted",
+      "tx_hash": "d6e95b2699b04520e2f491f2985037bcdd74e182fcbba7e5f548c3cc2b4eeb27",
+      "signed_json_bytes": 4021,
+      "rpc_request_bytes": 4081,
+      "signed_json_sha256": "223d9705fa46090bf0671c61e63f5415b809277243c278453c8692044bf89d98",
+      "ou": "200000",
+      "ou_cost": "200000",
+      "rpc_result": {
+        "tx_hash": "d6e95b2699b04520e2f491f2985037bcdd74e182fcbba7e5f548c3cc2b4eeb27",
+        "status": "accepted",
+        "nonce": 10,
+        "ou_cost": "200000"
+      }
+    }
+  },
+  "write": {
+    "transaction": {
+      "status": "confirmed",
+      "tx_hash": "308eeade9abd07c2d3f0cd0a9f9966fbd747cd6419642ed8583754cf7221ccc0",
+      "epoch": 1843744,
+      "from": "oct3JwTPt2hCWB4YUHaET2XPou9QM5azvu3yuzJBtWGDvqz",
+      "to": "octEpHemsweffbWsRpFyUn8i7SY3BT3fuBTWXu6HqjxF5o5",
+      "amount": "0",
+      "amount_raw": "0",
+      "nonce": 11,
+      "ou": "1000",
+      "timestamp": 1794744409.531143,
+      "op_type": "circle_call",
+      "message": null
+    },
+    "submission": {
+      "status": "submitted",
+      "tx_hash": "308eeade9abd07c2d3f0cd0a9f9966fbd747cd6419642ed8583754cf7221ccc0",
+      "signed_json_bytes": 2462,
+      "rpc_request_bytes": 2522,
+      "signed_json_sha256": "b341842cf5041f6c8ca5af6bf04ca0f8233642e84bc50619649518cc82f0fa71",
+      "ou": "1000",
+      "ou_cost": "1000",
+      "rpc_result": {
+        "tx_hash": "308eeade9abd07c2d3f0cd0a9f9966fbd747cd6419642ed8583754cf7221ccc0",
+        "status": "accepted",
+        "nonce": 11,
+        "ou_cost": "1000"
+      }
+    }
+  },
+  "public_circle_view": {
+    "result_bytes": 2048,
+    "trimmed_base64_bytes": 496,
+    "decoded_envelope_bytes": 372,
+    "info": "1|2048|1|2048|8388608|0",
+    "owner": "oct3JwTPt2hCWB4YUHaET2XPou9QM5azvu3yuzJBtWGDvqz",
+    "sender": "oct3JwTPt2hCWB4YUHaET2XPou9QM5azvu3yuzJBtWGDvqz",
+    "owner_secret_required": false,
+    "lab_base64_patch_required": false
+  },
+  "largest_write": {
+    "accepted_frame_bytes": 2048,
+    "rejected_frame_bytes": 2049,
+    "rejection": {
+      "status": "rejected",
+      "tx_hash": "8d463578a077ec965ce3f6aafaa965793814aacf7aeb0a79362faae8d684c754",
+      "epoch": 1843745,
+      "error": {
+        "type": "circle_call_failed",
+        "reason": "execution reverted [frame must be 2048 bytes]"
+      },
+      "from": "oct3JwTPt2hCWB4YUHaET2XPou9QM5azvu3yuzJBtWGDvqz",
+      "to": "octEpHemsweffbWsRpFyUn8i7SY3BT3fuBTWXu6HqjxF5o5",
+      "amount": "0",
+      "nonce": 12,
+      "rejected_at": 1794744426.416497,
+      "source": "rejected_txs"
+    },
+    "scope": "selected 2048-byte base64-text-frame layout; not an absolute chain maximum",
+    "native_max_inline_value_bytes": 65536,
+    "native_max_stable_bytes": 33554432
+  },
+  "ou": {
+    "circle_deploy_base": "200000",
+    "circle_write_base": "1000",
+    "note": "OU is the transaction fee field and native base-cost calculation, not a receipt-effort or explicit fee-burn measurement"
+  },
+  "devnet_epochs": {
+    "chain_id": "octra-devnet-9871-cluster",
+    "start_epoch": 1839574,
+    "end_epoch": 1839594,
+    "epochs_observed": 20,
+    "interval_seconds": [
+      6.838781833648682,
+      11.49338412284851,
+      9.740210771560669,
+      15.518024921417236,
+      7.7482404708862305,
+      11.796003341674805,
+      9.784613132476807,
+      17.776329517364502,
+      6.709343433380127,
+      16.074970722198486,
+      9.64240288734436,
+      15.624418497085571,
+      13.824539422988892,
+      8.999955654144287,
+      13.081961154937744,
+      6.543099880218506,
+      14.447382688522339,
+      9.103477954864502,
+      12.906349420547485,
+      6.645557165145874
+    ],
+    "elapsed_seconds": 224.29904699325562,
+    "mean_seconds": 11.21495234966278,
+    "min_seconds": 6.543099880218506,
+    "max_seconds": 17.776329517364502
+  },
+  "driver_sha256": "1f56ad21ff8dfdd4a72efee417e93fb82c1bde301ec3ded71b3db42b4bfad1af",
+  "endpoint_executable_sha256": "6f6426ee06b989c7f0233f6d076ace804161807fa44e362fc787fd1889730838",
+  "segment_driver_sha256": "61d8405d4ce2c96e4dccdd52f1630ae190b3bd9e5234cdb29da206c7cd419300",
+  "segment_owner_source_sha256": "3efa9b02cedc5d7c1b70b9ab29c81b5593bd7ab6c5819cc2afb633dfe2175640",
+  "segment_bytecode_sha256": "c687f7dcb931c79b7cee9bc3b9c04d4f7eb7e6db145df4b72db4d820e82843bc",
+  "test_script_sha256": "2982a9ba9d42d31146a1c14b608e04a30589d1f00f38f0f9cffa1e1c481f5c57",
+  "synthetic_only": true
+}

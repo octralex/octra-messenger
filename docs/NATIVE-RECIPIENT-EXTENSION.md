@@ -1,146 +1,134 @@
-# Native recipient message profile — experimental, open review
+# Native recipient message profile v2 — experimental, open review
 
-Status: thin native message profile over existing Octra X25519/Ed25519/AES-GCM primitives. Independent
-cryptographic and implementation review is required. This is not a new PVAC KEM, a production security claim or
-a deployed profile.
+Status: a thin OCaml profile over existing Octra X25519, Ed25519, AES-GCM, `Oce1` and `Hash_domain` primitives.
+Independent cryptographic and implementation review is required. This is not a PVAC KEM, a production security claim
+or a deployed profile. The same-key PVAC spike is deleted from the active library; no other messaging protocol or
+package is introduced.
 
-## Missing operation and selected boundary
+## Selected native boundary
 
-Octra already demonstrates recipient-offline amount encryption: an ephemeral sender secret and the recipient's
-public view key derive shared material, and AES-GCM encrypts the amount. The missing operation is a canonical
-arbitrary-byte message profile with explicit application context, expected-sender authorization, key versions,
-replay state and measured framing. It needs a thin OCaml binding, not a new cryptographic primitive or recipient-
-secret input.
+Octra already has recipient-offline stealth encryption: an ephemeral X25519 sender secret and a public recipient
+view key derive shared material. `Recipient_message` adds a canonical arbitrary-byte profile with expected-sender
+authorization, per-channel replay state, live/archive epoch rules and measured framing. The production library is
+`octra_messenger`, built against `octra_net` and `octra_core`; the core is private and the testkit is separate.
 
 ```text
-seal(recipient_public_view_key, sender_signing_secret, context, key_version,
-     policy, current_epoch, plaintext) -> randomized envelope
-open(recipient_view_secret: Recipient_keys.t, expected_sender, context, key_version,
-     policy, current_epoch, replay_state, envelope) -> plaintext or bounded rejection
+seal(recipient_public_view_key, sender_wallet_secret, context, key_version,
+     sequence, sender_epoch, sender_instance, policy, current_epoch, plaintext)
+  -> randomized v2 envelope
+
+open(recipient_view_secret: Recipient_keys.t,
+     expected_sender_address, sender_public_for_address,
+     context, key_version, policy, freshness, atomic_receive, envelope)
+  -> plaintext or bounded rejection
 ```
 
-The production `seal` accepts no message ID, ephemeral secret or nonce. It generates all three through Octra's
-native RNG. Deterministic variants exist only in `recipient_message_testkit`: a bounded test generator supplies
-the fixed ID/ephemeral/nonce byte stream while invoking the same production seal implementation, then unsets that
-generator. No production caller can supply those values. Production messaging keys come from
-`Recipient_keys.generate`, a dedicated X25519 generator with an opaque type; no Ed25519 wallet seed or
-PVAC secret is accepted. `open_envelope` accepts only that typed secret and derives the public key itself; secret
-JSON must declare `key_type: octra-x25519-recipient-message-v1`. Positive endpoint flows use generated keys, not
-seed-derived testkit keys. Ed25519 is used only for sender/contact authorization.
+Production `seal` accepts no message ID, ephemeral secret or nonce. Those values come from Octra's native RNG.
+`Recipient_keys.generate` creates dedicated X25519 keys. The public open API accepts only the typed secret and derives
+its public key. Tagged key loading and atomic writes live in `Recipient_keys`; raw construction is not exported.
 
-The sender receives only its own signing secret, authenticated public recipient material and plaintext. The
-recipient can remain offline during sealing. No recipient secret, recipient-secret-derived handle or recipient
-online helper is accepted by `seal`.
+The sender receives only its own wallet signing secret, public recipient material and plaintext. The recipient is
+offline for sealing. No recipient secret or online recipient helper is accepted by `seal`.
 
-## Construction
+## Construction and opening order
 
-- `StealthAddress.generate_ephemeral` supplies an X25519 ephemeral key in production. `ecdh_shared_secret`
-  combines it with the recipient public view key. The recipient later uses its view secret and the public
-  ephemeral key.
-- The AES key is `SHA256(shared || "OCTRA_MESSAGE_V1\000" || recipient_key_hash || ephemeral_public ||
-  view_public || context)`. `recipient_key_hash` is derived independently by each endpoint and never serialized
-  in the routine envelope.
-- AES-GCM uses a fresh 12-byte nonce and the header-only associated payload as associated data. Ciphertext is
-  plaintext plus 12 nonce bytes and 16 tag bytes.
-- Ed25519 signs the header plus exact ciphertext, covering context, key version, message ID, ephemeral public key,
-  sender public key and ciphertext bytes. Expected-sender equality is checked against independently configured
-  contact material before signature verification; a self-supplied key is not sufficient.
-- Context is `OCMRCV1\000` followed by length-bounded chain, application and registry fields, format version and
-  suite. The envelope starts with `OCMMSG1`; associated data is domain-prefixed with `OCMMSG-AUTH1\000`.
-- Message IDs are opaque random 16-byte values, independent of plaintext. Reusing the production send path for
-  equal plaintexts produces distinct IDs, ephemerals, nonces and envelopes. An uninitialized RNG fails closed with
-  no output or state change.
-- Recipient key versions and mandatory activation/expiry/revocation/erasure policy are selected per key version,
-  with mandatory current epoch. The signed contact binds the current view key and every accepted previous version
-  to its own view public key. A previous version must appear in both the accepted and grace lists; an unregistered
-  or substituted key is rejected before decryption. Expiry and activation use exact boundary tests. No default live
-  policy or epoch 0 is accepted.
-- The envelope has a fixed 161-byte header plus context and ciphertext. Current overhead is
-  `161 + context_length + 28` bytes. No stable recipient-key hash is transmitted; registration/contact material
-  can still identify the recipient.
+- `StealthAddress.generate_ephemeral` and `ecdh_shared_secret` supply the X25519 exchange. HMAC-SHA256
+  extract-and-expand uses the shared secret and OCE1-encoded recipient/ephemeral/view/context/sequence/epoch/instance
+  fields. No custom parallel encoder exists.
+- AES-GCM uses a fresh 12-byte nonce and 16-byte tag. `Hash_domain.hash_encoded "octra:msg:sig:v2"` hashes the exact
+  header and ciphertext for the wallet signature; `octra:msg:ad:v2` authenticates the header-only associated payload.
+- The 194-byte header contains explicit codec version, u64 sender sequence, u64 sender epoch and a 16-byte sender
+  instance. The current OCE1 context is 86 bytes and nonce/tag adds 28, for 308 bytes overhead. No recipient-key hash
+  is on the routine wire, although registration and traffic can identify recipients.
+- Opening enforces structural checks and the receive-size cap, resolves the expected Ed25519 key from the contact
+  registry by wallet address, verifies the address binding and signature, then checks sender equality, context,
+  recipient key version and policy. Only then does ECDH and AEAD run. The default receive cap is 64 KiB; the
+  3,000,000-byte encoding cap is raised explicitly for large tests.
+- Only v2 readers and writers exist. Unknown versions, v1 rewraps, old `OCMMSG1`/`OCMCTX`/`OCMCUR` forms and trailing
+  bytes reject. `Session_context` is the single context codec and preserves version in the decoded value.
 
-## Contact and policy authority
+## Replay, outbox and persistence
 
-The public contact file is 0644 because it is not secret. Its test signature is checked against the pinned test
-root, but the root secret is derived from a public constant and stored beside the config it signs. This is a test
-fixture, not authenticated contact custody or a security boundary. **B6 is deferred to on-chain registration.**
-The current epoch and per-`(recipient key, key_version)` policies also come from the local test authority;
-chain-finalized contact and policy acquisition are not completed.
+Each channel is `(codec, context, recipient key/version, sender key, sender instance)`. The random 16-byte instance
+is generated and persisted per outbox contact, so two devices using one wallet do not collide and activity on other
+contacts does not skip this channel's sequence. It is not a forward-secrecy or anonymity mechanism.
 
-## Replay and persistence
+The outbox persists the next positive signed-64-bit sequence and an `allocating` record before calling the sealer
+with that exact sequence and instance. Sequences 1 through `Int64.max_int` are usable, followed by an explicit
+`exhausted` state. Invalid or exhausted counters refuse allocation before sealing or journal mutation; no wrap,
+reset or instance rotation occurs. Sealed records retain byte-identical retry, and valid old integer journals resume
+without ID or pending-receipt changes. Recovery takes a verified observed channel high-water, never lowers the
+counter or rotates the instance, and sets `max(local_next, observed + 1)` (or `exhausted` at the maximum). A failed
+seal leaves a gap and an incomplete record, never reuse. Record IDs bind channel, instance and sequence for
+byte-identical retry and status transitions; an incomplete allocation cannot be returned as an empty envelope or
+marked submitted.
 
-`Receive_store.commit_receive` serializes one lock-protected state replacement containing the dedup row and an
-inbox pointer. Each plaintext is stored separately in an fsynced mode-0600 file; the state file contains no
-plaintext. Duplicate detection rechecks under the lock. A temporary-file failure before the state rename leaves
-the old state unchanged; a crash after rename leaves the committed message, so the next open rejects replay.
+The receive window is a permanent per-channel 1,024-bit bitmap keyed by `octra:msg:replay-window:v2`.
+`octra:msg:replay:v2` additionally includes sequence and epoch. Stored high-water values must be positive and
+bitmaps exactly 128 bytes. All stored windows are validated before mutation. Forward distance is bounded in `int64`
+before host-`int` conversion; at or beyond the window width it clears the bitmap before marking the new high-water.
+Any forward jump advances the high-water mark;
+duplicates and sequences at or below `high_water - 1024` reject. Out-of-order delivery inside the window is allowed.
+High-water marks are never pruned, so retention grows across channels and key rotations and needs migration.
 
-Dedup and inbox each have a global 10,000-record cap and a 1,000-record per-sender cap. Plaintext storage has a
-512,000,000-byte global cap and a 51,200,000-byte per-sender cap. One sender reaching either per-sender quota does
-not prevent a different authorized sender from receiving; global exhaustion still requires an operational
-migration. Rows for erased or out-of-grace key versions are pruned from both dedup and inbox. Their replay history
-is intentionally forgotten: such a version must not be reactivated in the same dedup domain. Archived plaintext
-files are retained and still count toward the global byte cap.
+After AEAD succeeds, one lock-protected state replacement writes a per-message fsynced plaintext file, updated window
+and pointer-only inbox record. Concurrent duplicates have one acceptance. Per-sender caps are 1,000 records and
+51,200,000 bytes; global caps are 10,000 records and 512,000,000 bytes. Ten authorized contacts can exhaust the
+global cap. Crash-before-rename may leave an orphan plaintext file counted until that path is retried, and each
+receive scans the whole message directory.
 
-`Outbox_journal.prepare` durably records the exact randomized envelope before submission. Retry returns those exact
-bytes after restart, never a re-encryption. Submitted/finalized transitions preserve the bytes. Chain nonce
-allocation and actual submission/finality are later integration work.
+Previous view secrets remain available during the signed grace window for unread old key versions. Rotation does
+not erase history or establish forward secrecy. Test contact signatures use a public-constant-derived root secret:
+**contact registration is deferred to on-chain registration**, not production contact authentication. Current per-version policies come
+from a local test authority until chain integration.
 
-Previous view secrets are retained during the grace window for unread old-version messages. Rotation does not erase
-unread history and is not forward secrecy. An explicit later deletion policy must state when old secrets and unread
-ciphertext become inaccessible.
+## Live and archive epochs
 
-Public opens return only `{"status":"rejected"}`. Detailed local test errors are JSON encoded and stay out of the
-public boundary to avoid an error oracle. Prototype secret files and plaintext inbox contents are mode 0600 but
-not encrypted at rest; secure key backup and encrypted secret persistence remain integration work.
+Live mode uses the receiver's finalized epoch: at most 64 epochs old and at most two epochs ahead. Archive mode uses
+the frame's on-chain commit epoch and accepts any age when `sender_epoch <= commit_epoch`; a later sender epoch
+rejects. Policy is evaluated at the corresponding reference epoch. Signature, replay and atomic persistence checks
+apply in both modes, so archive access cannot re-admit a replay.
 
-## Size and admission cap
+Public opens return only `{"status":"rejected"}`. Detailed local test errors stay separate. Prototype secret and
+plaintext files are mode 0600 but not encrypted at rest. Storage failures remain distinct from decryption failures;
+unexpected exceptions are not normalized into a generic decryption error.
 
-`max_envelope_bytes` is 3,000,000 bytes. With the maximum 512-byte context, ciphertext is capped at 2,999,327
-bytes and plaintext at 2,999,299 bytes. With the current 77-byte context, the exact-cap envelope is 2,999,565
-bytes and base64 plus JSON quotes is 3,999,422 bytes. The separate `transaction_overhead_budget` is 194,302
-bytes, reserving room below the 4,194,304-byte target for transaction encoding. These are conservative local
-caps, not permission to store a whole maximum envelope as one contract value. The existing chain segment accepts
-only 2,048-byte frames, so a complete large envelope requires an implemented chunk format and multiple accepted
-transactions; no production limit is raised.
+## On-chain binding
 
-At the current 77-byte context, total overhead is 266 bytes. At 1, 2, 4 and 16 KiB, envelopes are 1,290, 2,314,
-4,362 and 16,650 bytes. Selected signed sizes and OU are measured in `receipts/chain/fees-and-sizes.json`.
-The exact-cap 77-byte-context envelope produced 3,999,863 signed JSON bytes and a 3,999,923-byte RPC request. RPC
-accepted it, and the VM rejected the whole envelope at the 2,048-byte frame guard without changing state. This is
-transport evidence, not large-message storage. Chunking and bucket choices are not frozen or implemented.
+Native `CircleDeploy` does not execute the AML constructor, so segment and registry templates embed the owner before
+compilation. `append` and `publish` compare `to_string(caller)` with that constant; no race-prone initialization call
+exists. Segment frames store `caller`, and clients require it to match the contact wallet and fixed-header sender key
+before full decoding. Non-owner writes reject without state mutation. Registry and segment tests cover owner-only
+publish/append, granted writers, descriptors, exact dedup and restart reads in both compiler profiles.
 
-## Rejected alternatives
+The tested frame is 2,048 bytes of base64 text, so large-message chunking is still open. Exact frame bodies are
+retained once and deduplicated by the `octra:msg:frame:v2` digest used by `Frame.hash`. Registry descriptors use
+bounded OCE1 fields with truncation and trailing-byte rejection. The lab-only `\xHH` lexer patch supplies binary
+prefixes without a new VM opcode.
 
-- PVAC same-key encryption requires the secret mask key and cannot satisfy the secret-free sender boundary.
-- A custom PVAC KEM/key wrap or an assertion that arithmetic ciphertext is an AEAD is not established or reviewed.
-- Recipient-secret sharing, an online recipient service, shared Circle-owner credentials or grant-only access
-  violates the boundary or confuses delivery with decryption.
-- Reusing the amount-specific stealth domain without message/application separation is rejected.
-- Deterministic production message IDs, plaintext-derived IDs, caller-supplied nonces/ephemerals and wallet signing
-  seeds are rejected.
-- External messaging protocols or a parallel relay stack are outside the owner direction.
+## Sizes and evidence
 
-## Security limits and review questions
+At 1, 2, 4 and 16 KiB, envelopes are 1,332, 2,356, 4,404 and 16,692 bytes: 194-byte header, 86-byte context and
+28-byte nonce/tag overhead. The exact-cap 86-byte-context envelope is 2,999,574 bytes and its base64-plus-quotes
+form is 3,999,434 bytes. The production receive default is 65,536 bytes; this context allows 65,228 plaintext bytes
+and rejects the 65,537-byte envelope produced by one more byte.
 
-Messages are non-deniable and transferable because the sender signature is public. `sender_public` is clear
-metadata. A leaked view secret decrypts every message for that version, including permanently archived ciphertext.
-Forward secrecy, post-compromise recovery and post-quantum confidentiality are not established. Rotation/revocation
-does not erase copied keys, plaintext or history. Recipient anonymity is not established.
+Fresh receipts bind source, executables, compiler/dependencies and commands. Measurements cover v1 rewrap rejection,
+wrong senders, low-order points, modified signatures, replay after pruning, large forward jumps, restart rollback,
+out-of-order and outside-window sequences, live future tolerance, stale/future archive epochs, concurrent duplicates,
+multi-device identity, 1,025 other-contact sends, cap-plus-one and downgrade rejection. They are lab controls, not
+production acceptance.
 
-The expected-sender-signed controls record actual Mirage 2.1.0 behavior. All-zero, true `u = 1` (`01 00…00`),
-both order-8 points (`e0eb…` and `5f9c…`), `p - 1`, `p`, and `p + 1` fail key exchange. The separate ordinary
-all-`0x01` point and non-canonical all-`0xff` encoding reach AEAD and fail there. Fixed-width framing has no
-separate short-ephemeral field. No claim is made that every non-canonical encoding is rejected by the native point
-decoder. Executable/library/source identities are bound in the environment receipt.
+## Security limits
 
-Review must cover key custody, X25519 conversion and low-order/malformed points, static-recipient compromise,
-domain separation, contact/key substitution, chosen-ciphertext/oracle behavior, replay atomicity, nonce and RNG
-handling, key rotation/revocation, contact-store integrity and exact size/admission accounting. Small code changes
-do not imply a small security change. Independent specialist review is required before calling this a secure mode.
+Messages are non-deniable and transferable because the wallet signature is public. `sender_public` and
+`sender_instance` are clear metadata. A leaked view secret decrypts every retained message for that version,
+including permanently archived ciphertext. Forward secrecy, post-compromise recovery, recipient anonymity and
+post-quantum confidentiality are not established. Rotation/revocation does not erase copied keys, plaintext or
+history. Stronger anonymity needs separately reviewed unlinkable authorization/fees and network anonymity; FHE does
+not supply that.
 
-## Prototype and rollback
-
-Prototype only with independent synthetic endpoint keys in the approved isolated venue. No upstream write,
-production promotion, validator change, shared-fakenet change or real-value transaction is authorized. Rollback is
-removal of the app-local profile and test artifacts; there is no deployed chain state or modified primitive.
-Unknown envelope versions and oversized inputs are rejected rather than downgraded.
+Independent specialist review must cover key custody, low-order/malformed points, static-recipient compromise,
+KDF/signature composition, channel allocation, replay atomicity, nonce/RNG behavior, version negotiation, contact
+registration, on-chain sender binding and exact size/admission accounting. No upstream write, production promotion,
+validator change, shared-fakenet change or real-value transaction is authorized.

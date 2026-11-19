@@ -1,0 +1,91 @@
+// SPDX-License-Identifier: BSD-3-Clause
+// Copyright (c) 2023-2026 Octra Labs <dev@octra.org>
+
+program MailboxSegmentSpike {
+  state {
+    count: int
+    used_bytes: int
+    closed: bool
+    frames: map[string]bytes
+    senders: map[string]address
+    writers: map[string]bool
+    seen: map[string]bool
+  }
+
+  event Appended(sequence: int)
+  event Closed()
+
+  public fn grant_writer(writer: address) {
+    require(to_string(caller) == "oct3JwTPt2hCWB4YUHaET2XPou9QM5azvu3yuzJBtWGDvqz", "not segment owner")
+    require(!self.closed, "segment closed")
+    self.writers[writer] = true
+  }
+
+  public fn append(frame: bytes): int {
+    require(!self.closed, "segment closed")
+    require(to_string(caller) == "oct3JwTPt2hCWB4YUHaET2XPou9QM5azvu3yuzJBtWGDvqz" || self.writers[caller], "not segment writer")
+    require(len(frame) == 2048, "frame must be 2048 bytes")
+    require(self.count < 1024, "segment record capacity reached")
+    require(self.used_bytes + len(frame) <= 8388608, "segment byte capacity reached")
+    let sequence = self.count
+    require(!self.seen[frame], "duplicate frame")
+    self.seen[frame] = true
+    self.frames[to_string(sequence)] = frame
+    self.senders[to_string(sequence)] = caller
+    self.count = sequence + 1
+    self.used_bytes += len(frame)
+    emit Appended(sequence)
+    return sequence
+  }
+
+  public fn close() {
+    require(to_string(caller) == "oct3JwTPt2hCWB4YUHaET2XPou9QM5azvu3yuzJBtWGDvqz", "not segment publisher")
+    require(!self.closed, "segment already closed")
+    self.closed = true
+    emit Closed()
+  }
+
+  public view fn owner(): string {
+    return "oct3JwTPt2hCWB4YUHaET2XPou9QM5azvu3yuzJBtWGDvqz"
+  }
+
+  public view fn get(sequence: int): bytes {
+    require(sequence >= 0 && sequence < self.count, "sequence outside segment")
+    return self.frames[to_string(sequence)]
+  }
+
+  public view fn sender(sequence: int): address {
+    require(sequence >= 0 && sequence < self.count, "sequence outside segment")
+    return self.senders[to_string(sequence)]
+  }
+
+  public view fn page(start: int): bytes {
+    require(start >= 0 && start + 15 < self.count, "full page exceeds segment")
+    let output = self.frames[to_string(start)]
+    let next = start + 1
+    output = concat(output, self.frames[to_string(next + 0)])
+    output = concat(output, self.frames[to_string(next + 1)])
+    output = concat(output, self.frames[to_string(next + 2)])
+    output = concat(output, self.frames[to_string(next + 3)])
+    output = concat(output, self.frames[to_string(next + 4)])
+    output = concat(output, self.frames[to_string(next + 5)])
+    output = concat(output, self.frames[to_string(next + 6)])
+    output = concat(output, self.frames[to_string(next + 7)])
+    output = concat(output, self.frames[to_string(next + 8)])
+    output = concat(output, self.frames[to_string(next + 9)])
+    output = concat(output, self.frames[to_string(next + 10)])
+    output = concat(output, self.frames[to_string(next + 11)])
+    output = concat(output, self.frames[to_string(next + 12)])
+    output = concat(output, self.frames[to_string(next + 13)])
+    output = concat(output, self.frames[to_string(next + 14)])
+    return output
+  }
+
+  public view fn info(): string {
+    let text = concat("1|2048|", to_string(self.count))
+    text = concat(text, concat("|", to_string(self.used_bytes)))
+    text = concat(text, "|8388608|")
+    text = concat(text, to_string(self.closed))
+    return text
+  }
+}

@@ -27,7 +27,9 @@ The node admits existing program operations only in the disclosed release-off la
 small base64 I/O profile. This is not an upstream or production activation. `review-environment.json` binds the
 recipient, node-profile, full-submission, read-only-resume and storage source commits separately, plus executables,
 compiler/dependency versions and commands. `evidence-validation.json` records publication-time receipt, regression,
-size-table and artifact-hash checks. See `docs/FAKENET.md` for every patch, port, build command and stop command.
+size-table and artifact-hash checks. `upstream-compatibility.json` separately records the limited `8f785a93`
+apply/source-identity check and matching webcli/PVAC pins; it is not a whole-node or runtime review. See
+`docs/FAKENET.md` for every patch, port, build command and stop command.
 
 ## Main results
 

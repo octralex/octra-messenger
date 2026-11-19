@@ -1,3 +1,6 @@
+(* SPDX-License-Identifier: BSD-3-Clause *)
+(* Copyright (c) 2023-2026 Octra Labs <dev@octra.org> *)
+
 let read_file path =
   let channel = open_in_bin path in
   Fun.protect ~finally:(fun () -> close_in_noerr channel) (fun () ->
@@ -68,7 +71,8 @@ let submit_raw ~url raw =
     "tx_hash", `String (Octra_core.Transaction.hash tx);
     "signed_json_bytes", `Int (String.length raw);
     "rpc_request_bytes", `Int (String.length body);
-    "signed_json_sha256", `String Digestif.SHA256.(digest_string raw |> to_hex);
+    "signed_json_sha256", `String (Octra_net.Hash_domain.hash_encoded_hex "octra:msg:signed-json:v2"
+  (fun buffer -> Octra_net.Oce1.put_bytes buffer raw));
     "ou", `String (Z.to_string tx.Octra_core.Transaction.ou);
     "ou_cost", `String (Z.to_string (Octra_core.Transaction.ou_cost tx));
     "rpc_result", result;
@@ -90,6 +94,7 @@ let operation = function
   | "deploy" -> Octra_core.Transaction.ProgramDeploy
   | "legacy-exec" -> Octra_core.Transaction.ContractCall
   | "exec" -> Octra_core.Transaction.ProgramExec
+  | "circle-exec" -> Octra_core.Transaction.CircleCall
   | "multi" -> Octra_core.Transaction.MultiExec
   | _ -> failwith "unsupported operation"
 
@@ -123,6 +128,25 @@ let deploy kind url wallet_path nonce ou payload_path params output_path =
     ~public_key ~message:(parameter_text params) ~encrypted_data:(Some payload) in
   submit_tx ~url ~output_path tx priv
 
+let circle_deploy url wallet_path nonce ou payload_path output_path =
+  let from, public_key, priv = load_wallet wallet_path in
+  let payload = match Octra_core.Circles.deploy_payload_of_yojson
+    (Yojson.Safe.from_string (read_file payload_path)) with
+    | Ok value -> value
+    | Error reason -> failwith reason in
+  let target = Octra_core.Circles.circle_id_of_deploy ~deployer:from ~nonce payload in
+  let message = Yojson.Safe.to_string (Octra_core.Circles.yojson_of_deploy_payload payload) in
+  let tx = base_tx ~op:Octra_core.Transaction.CircleDeploy ~from ~to_:target ~nonce ~ou
+    ~public_key ~message ~encrypted_data:None in
+  submit_tx ~url ~output_path tx priv
+
+let circle_view url target method_name params =
+  let params = Yojson.Safe.from_string (parameter_text params) in
+  let result = Lwt_main.run (rpc ~url ~method_name:"octra_circleView"
+    ~params:[`String target; `String method_name; params]) in
+
+  print_endline (Yojson.Safe.to_string result)
+
 let exec kind url wallet_path nonce ou target method_name params output_path =
   let from, public_key, priv = load_wallet wallet_path in
   let tx = base_tx ~op:(operation kind) ~from ~to_:target ~nonce ~ou
@@ -140,8 +164,11 @@ let () =
   match Array.to_list Sys.argv with
   | [_; (("deploy" | "legacy-deploy") as kind); url; wallet; nonce; ou; payload; params; output] ->
     deploy kind url wallet (int_of_string nonce) ou payload params output
-  | [_; (("exec" | "legacy-exec") as kind); url; wallet; nonce; ou; target; method_name; params; output] ->
+  | [_; (("exec" | "legacy-exec" | "circle-exec") as kind); url; wallet; nonce; ou; target; method_name; params; output] ->
     exec kind url wallet (int_of_string nonce) ou target method_name params output
+  | [_; "circle-deploy"; url; wallet; nonce; ou; payload; output] ->
+    circle_deploy url wallet (int_of_string nonce) ou payload output
+  | [_; "circle-view"; url; target; method_name; params] -> circle_view url target method_name params
   | [_; "multi"; url; wallet; nonce; ou; params; output] ->
     multi url wallet (int_of_string nonce) ou params output
   | [_; "resubmit"; url; signed] -> submit_raw ~url (read_file signed)

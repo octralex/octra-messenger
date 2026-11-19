@@ -1,0 +1,11 @@
+control_commit=be51d4b350e4cc7935bebcbd791bed6419ce72f1
+messenger_tree_hash=6191d87ba4bf70917edb48d375e41e2f47d1dafa
+base_source_commit=3aab2d992035076dd216ad8808710d3a5a56063a
+driver_sha256=f8071737d6b92da7dc530cf22414523d976f7253bc72e96499cc8130a95779b3
+runner_sha256=e8ccfc5a7ec3363b765e7f4ee71d7ae950f8b030dca458681e5832c24313c363
+b76df867078e4353ce5c77b12fb1830eda05c8ba273e6d90fbd9a30673f7cbc1  /srv/octra-node/fakenet-kimi-messenger/node-src/lite_node/test/test_messenger_binary_io.ml
+817bf0933158d546f0b9c195b89899237f3414591e821a0593ed0b95d742eff0  /srv/octra-node/fakenet-kimi-messenger/node-src/lite_node/lib/vm/runtime/program_input.ml
+04bd84407ad1a12e6c3510e8262eca0844f629c6cb175785dbab50213a048372  /srv/octra-node/fakenet-kimi-messenger/node-src/lite_node/lib/vm/runtime/contract.ml
+c4416ef44a38163fd38cf89491d2b49122008218684dc80c18c3c18b03316f02  /srv/octra-node/fakenet-kimi-messenger/node-src/lite_node/lib/vm/runtime/receipt_view.ml
+aaa40430a4329ce5be526cec3dc4a67919316204ea1dc044a28e097c6cb89a4b  /srv/octra-node/fakenet-kimi-messenger/node-src/lite_node/lib/vm/rpc/contract_rpc.ml
+4c735deefa63456bf07093ba9556628b3aef82d18144ffd74c5d7873960d585a  /srv/octra-node/fakenet-kimi-messenger/node-src/lite_node/node_runtime/rpc_view.ml

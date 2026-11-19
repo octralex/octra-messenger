@@ -1,44 +1,53 @@
+// SPDX-License-Identifier: BSD-3-Clause
+// Copyright (c) 2023-2026 Octra Labs <dev@octra.org>
+
 program MailboxSegmentSpike {
   state {
-    owner: address
     count: int
     used_bytes: int
     closed: bool
     frames: map[string]bytes
+    senders: map[string]address
+    writers: map[string]bool
     seen: map[string]bool
   }
 
-  event Appended(sequence: int, content_hash: string)
+  event Appended(sequence: int)
   event Closed()
 
-  constructor() {
-    self.owner = caller
-    self.count = 0
-    self.used_bytes = 0
-    self.closed = false
+  public fn grant_writer(writer: address) {
+    require(to_string(caller) == "__OWNER__", "not segment owner")
+    require(!self.closed, "segment closed")
+    self.writers[writer] = true
   }
 
   public fn append(frame: bytes): int {
     require(!self.closed, "segment closed")
+    require(to_string(caller) == "__OWNER__" || self.writers[caller], "not segment writer")
     require(len(frame) == 2048, "frame must be 2048 bytes")
     require(self.count < 1024, "segment record capacity reached")
     require(self.used_bytes + len(frame) <= 8388608, "segment byte capacity reached")
     let sequence = self.count
-    let content_hash = sha256(frame)
-    require(!self.seen[content_hash], "duplicate frame")
-    self.seen[content_hash] = true
+    let dedup = sha256(concat("octra:msg:frame:v2", concat("\x00\x00\x00\x08\x00", frame)))
+    require(!self.seen[dedup], "duplicate frame")
+    self.seen[dedup] = true
     self.frames[to_string(sequence)] = frame
+    self.senders[to_string(sequence)] = caller
     self.count = sequence + 1
     self.used_bytes += len(frame)
-    emit Appended(sequence, content_hash)
+    emit Appended(sequence)
     return sequence
   }
 
   public fn close() {
-    require(caller == self.owner, "not segment publisher")
+    require(to_string(caller) == "__OWNER__", "not segment publisher")
     require(!self.closed, "segment already closed")
     self.closed = true
     emit Closed()
+  }
+
+  public view fn owner(): string {
+    return "__OWNER__"
   }
 
   public view fn get(sequence: int): bytes {
@@ -46,9 +55,14 @@ program MailboxSegmentSpike {
     return self.frames[to_string(sequence)]
   }
 
-  public view fn content_hash(sequence: int): string {
+  public view fn sender(sequence: int): address {
     require(sequence >= 0 && sequence < self.count, "sequence outside segment")
-    return sha256(self.frames[to_string(sequence)])
+    return self.senders[to_string(sequence)]
+  }
+
+  public view fn dedup_key(frame: bytes): string {
+    require(len(frame) == 2048, "frame must be 2048 bytes")
+    return sha256(concat("octra:msg:frame:v2", concat("\x00\x00\x00\x08\x00", frame)))
   }
 
   public view fn page(start: int): bytes {

@@ -1,3 +1,6 @@
+(* SPDX-License-Identifier: BSD-3-Clause *)
+(* Copyright (c) 2023-2026 Octra Labs <dev@octra.org> *)
+
 type t = {
   epoch : int64;
   sequence : int;
@@ -5,8 +8,10 @@ type t = {
   state_root : string;
 }
 
+let ( let* ) = Result.bind
+let current_version = 2
 let magic = "OCMCUR"
-let encoded_length = 6 + 1 + 8 + 4 + 47 + 64
+let encoded_length = 6 + 2 + 8 + 4 + 47 + 64
 
 let valid_root root =
   String.length root = 64
@@ -20,58 +25,35 @@ let validate cursor =
   else if not (valid_root cursor.state_root) then Error "cursor state root invalid"
   else Ok ()
 
-let add_u32 buffer value =
-  for shift = 24 downto 0 do
-    if shift mod 8 = 0 then Buffer.add_char buffer (Char.chr ((value lsr shift) land 255))
-  done
-
-let add_u64 buffer value =
-  for index = 7 downto 0 do
-    let shift = index * 8 in
-    Buffer.add_char buffer (Char.chr Int64.(to_int (logand (shift_right_logical value shift) 255L)))
-  done
-
 let encode cursor =
-  match validate cursor with
-  | Error _ as error -> error
-  | Ok () ->
-    let buffer = Buffer.create encoded_length in
-    Buffer.add_string buffer magic;
-    Buffer.add_char buffer (Char.chr 1);
-    add_u64 buffer cursor.epoch;
-    add_u32 buffer cursor.sequence;
-    Buffer.add_string buffer cursor.segment;
-    Buffer.add_string buffer cursor.state_root;
-    Ok (Buffer.contents buffer)
-
-let u64 text offset =
-  let value = ref 0L in
-  for index = 0 to 7 do
-    value := Int64.logor (Int64.shift_left !value 8)
-      (Int64.of_int (Char.code text.[offset + index]))
-  done;
-  !value
-
-let u32 text offset =
-  let value = ref 0L in
-  for index = 0 to 3 do
-    value := Int64.logor (Int64.shift_left !value 8)
-      (Int64.of_int (Char.code text.[offset + index]))
-  done;
-  !value
+  let* () = validate cursor in
+  let buffer = Buffer.create encoded_length in
+  Buffer.add_string buffer magic;
+  Octra_net.Oce1.put_u16 buffer current_version;
+  Octra_net.Oce1.put_u64 buffer cursor.epoch;
+  Octra_net.Oce1.put_u32_int buffer cursor.sequence;
+  Buffer.add_string buffer cursor.segment;
+  Buffer.add_string buffer cursor.state_root;
+  Ok (Buffer.contents buffer)
 
 let decode text =
-  if String.length text <> encoded_length then Error "cursor length invalid"
-  else if not (String.equal (String.sub text 0 6) magic) then Error "cursor magic mismatch"
-  else if Char.code text.[6] <> 1 then Error "cursor version unsupported"
+  let length = String.length text in
+  if length < 8 then Error "cursor length invalid"
+  else if not (String.equal (String.sub text 0 6) magic) then Error "unsupported cursor type"
   else
-    let sequence64 = u32 text 15 in
-    if sequence64 > Int64.of_int max_int then Error "cursor sequence overflows host int"
-    else
-      let cursor = {
-        epoch = u64 text 7;
-        sequence = Int64.to_int sequence64;
-        segment = String.sub text 19 47;
-        state_root = String.sub text 66 64;
-      } in
-      validate cursor |> Result.map (fun () -> cursor)
+    let cursor = Octra_net.Oce1.make_cursor text in
+    ignore (Octra_net.Oce1.get_raw cursor 6);
+    match Octra_net.Oce1.get_u16 cursor with
+    | 2 when length <> encoded_length -> Error "cursor length invalid"
+    | 2 ->
+      let epoch = Octra_net.Oce1.get_u64 cursor in
+      let sequence64 = Int64.logand (Int64.of_int (Octra_net.Oce1.get_u32_int cursor)) 0xffff_ffffL in
+      if Int64.compare sequence64 (Int64.of_int max_int) > 0 then Error "cursor sequence overflows host int"
+      else
+        let segment = Octra_net.Oce1.get_raw cursor 47 in
+        let state_root = Octra_net.Oce1.get_raw cursor 64 in
+        if Octra_net.Oce1.remaining cursor <> 0 then Error "cursor length invalid"
+        else
+          let value = { epoch; sequence = Int64.to_int sequence64; segment; state_root } in
+          validate value |> Result.map (fun () -> value)
+    | version -> Error (Printf.sprintf "unsupported version %d" version)

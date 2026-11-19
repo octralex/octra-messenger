@@ -6,6 +6,9 @@ let check reason value = if not value then failwith reason
 let binary ?(encoding = "base64") data =
   `Assoc ["encoding", `String encoding; "data", `String data]
 
+(* SPDX-License-Identifier: BSD-3-Clause *)
+(* Copyright (c) 2023-2026 Octra Labs <dev@octra.org> *)
+
 let expect_legacy_rejection reason json =
   match V.Contract.parse_param json with
   | exception Invalid_argument _ -> ()

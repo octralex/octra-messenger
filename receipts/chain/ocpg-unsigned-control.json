@@ -1,0 +1,7 @@
+{
+  "status": "unsigned_ocpg_rejected_before_submission",
+  "guard": "AssertionError: an accepted OCPG requires the configured compiler attestation",
+  "submission_file_unchanged": true,
+  "account_nonce_unchanged": true,
+  "nonce": 13
+}
