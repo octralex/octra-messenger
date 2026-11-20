@@ -1,0 +1,15 @@
+{
+  "status": "rejected",
+  "tx_hash": "5235d3d2f9ed2b112132ec1b0af5fb34e2be87e40d0f9d7c4da2b7d1020cf989",
+  "epoch": 1878481,
+  "error": {
+    "type": "program_exec_failed",
+    "reason": "execution reverted [segment closed]"
+  },
+  "from": "octGrhFvFFvaeVTzkGn87UyA8ZzZm9vTXgnbuiLiFBS5iUE",
+  "to": "octJBtrVxiDLw93CwXkemEVwjq9GaZXNTs5785uVMXacozY",
+  "amount": "0",
+  "nonce": 86,
+  "rejected_at": 1795134763.567155,
+  "source": "rejected_txs"
+}

@@ -12,5 +12,4 @@ val bucket : t -> bucket
 val size : t -> int
 val equal : t -> t -> bool
 val hash : t -> string
-val dedup_key : t -> string
 val for_ciphertext_size : int -> (bucket, string) result

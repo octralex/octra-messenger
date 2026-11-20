@@ -1,0 +1,234 @@
+{
+  "call_ou": 100000,
+  "chain_id": "octra-devnet-9871-cluster",
+  "controls": {
+    "close": {
+      "append_after_close": {
+        "error": {
+          "reason": "execution reverted [segment closed]",
+          "type": "program_exec_failed"
+        },
+        "status": "rejected",
+        "tx": "5235d3d2f9ed2b112132ec1b0af5fb34e2be87e40d0f9d7c4da2b7d1020cf989"
+      },
+      "close_tx": "654667efac8579f40197c32403c31468f462796479847c5a61d12bc94e8477bb",
+      "non_owner_close": {
+        "status": "rejected",
+        "tx": "a96388d7b48d48c9cda0d47a77cac3c3f02f9859afb318c00f7476b94a4a2874"
+      }
+    },
+    "duplicate_frame": {
+      "error": {
+        "reason": "execution reverted [duplicate frame]",
+        "type": "program_exec_failed"
+      },
+      "status": "rejected",
+      "tx": "6be986683eca29db7f2d978d148ec31dffedc7f5d63fe8b17344dd4d592c4a42"
+    },
+    "frame_and_count_unchanged_after_rejections": true,
+    "granted_writer": {
+      "append_tx": "6e5e5f5d8ff46f15fd29e85c63e5149a02471cab90e50aa2eb895b264b3b7663",
+      "client_binding_rejects_signer_writer_mismatch": true,
+      "grant_tx": "4789402071b523c9d3efe597f4d3fb8a6a14f17f8f20a7e64e0baf683a140850",
+      "stored_sender": "oct16CXeJRsxyqYeJJeLVVpoiSnQuRJBJYTHybFQQbevie3"
+    },
+    "non_owner_grant": {
+      "error": {
+        "reason": "execution reverted [not segment owner]",
+        "type": "program_exec_failed"
+      },
+      "status": "rejected",
+      "tx": "55aa846b0578b5f6f41c81093339266bc07cb546a14c69170980fa99679204dc"
+    },
+    "non_writer_append": {
+      "error": {
+        "reason": "execution reverted [not segment writer]",
+        "type": "program_exec_failed"
+      },
+      "status": "rejected",
+      "tx": "1682c261146903ad41759134ff837183c6ad477f4ac95f5c096f7ca004c635d8"
+    },
+    "oversize_2049": {
+      "argument_bytes": 2049,
+      "error": {
+        "reason": "execution reverted [frame must be 2048 bytes]",
+        "type": "program_exec_failed"
+      },
+      "status": "rejected",
+      "tx": "a0e210d8712b06cb6be4826fd28058f1a8204918e09abe50860e2c0e7b17dcfd"
+    }
+  },
+  "deploy_ou": 1000000,
+  "end_epoch": 1878484,
+  "message": {
+    "append_epoch": 1878471,
+    "append_tx": "642336e79bc8323e7ac533db08128367d85b809b3c6f82afc64ae29ca1c80e98",
+    "archive_decryption_equals_plaintext": true,
+    "envelope_bytes": 381,
+    "envelope_sha256": "163aa8e34c15654554ec66614a87e20ea9d75ad67ec15c0ed42b58ef19040f5f",
+    "frame_bytes": 2048,
+    "frame_dedup_key": "c6de022d3cf3b64ba1ac68c507861c1fd8c98a7dd96cadaadb862e3c3fe50e8a",
+    "plaintext_bytes": 73,
+    "public_read_equals_frame": true,
+    "stored_sender_equals_signer": true
+  },
+  "network_kind": "devnet",
+  "other": "oct16CXeJRsxyqYeJJeLVVpoiSnQuRJBJYTHybFQQbevie3",
+  "owner": "octGrhFvFFvaeVTzkGn87UyA8ZzZm9vTXgnbuiLiFBS5iUE",
+  "registry": {
+    "address": "octGLRE3TU9Zk4xPj38eLRotCaixvC7UQUaPGJqWfdQ774N",
+    "deploy_tx": "9c202fe50933d143cd804caf893d864366801716635f4214d3b3bc5c69ccc208",
+    "non_owner_publish": {
+      "error": {
+        "reason": "execution reverted [not registry owner]",
+        "type": "program_exec_failed"
+      },
+      "status": "rejected",
+      "tx": "644a3ebdeef7a0ff264f63df33f12185f6a5a9b72fbaaf62d33407cfbc45b942"
+    },
+    "publish_tx": "737e34bf4708669d8972f76ffed2158ed655881a0802f13a743f3c8f3e238d65"
+  },
+  "registry_package": {
+    "bytecode_bytes": 2358,
+    "compiler_version": "2.0 AML-preview",
+    "instructions": 178,
+    "package_base64_bytes": 5108,
+    "package_sha256": "fa31bc1167404e9f84160f67d00b07dbf99109afa3eef191c7b89093659b52ea",
+    "source_sha256": "94dc3a4652208b4c7632cf025cf975219349d9ed7581527ebe987fe6708112e9"
+  },
+  "rpc_url": "http://127.0.0.1:18080/rpc",
+  "runtime": {
+    "binary_hash": "edacd044c3d2a362f3c317656b28c1d39af02c328dd68b711a92ee2c4b59773a",
+    "source_commit": "0c8ff3ba57102e3217c73fc9733b78cfc9ee45c8",
+    "version": null
+  },
+  "segment": {
+    "address": "octJBtrVxiDLw93CwXkemEVwjq9GaZXNTs5785uVMXacozY",
+    "deploy_epoch": 1878470,
+    "deploy_tx": "c2c3c7e005ec56fc58132c0fc64ac86d20798999683da261ebbc58cb83d48496"
+  },
+  "segment_package": {
+    "bytecode_bytes": 3616,
+    "compiler_version": "2.0 AML-preview",
+    "instructions": 339,
+    "package_base64_bytes": 7976,
+    "package_sha256": "6e31ebb2ef3af6beb9fd3c0bb73cd0b83f06a605459ba57958f641e0d460d857",
+    "source_sha256": "1521e84a8f990a88b4d2f2970a9d366debae08cb51bd37e877fe1d4bf599657e"
+  },
+  "start_epoch": 1878468,
+  "status": "devnet_program_pass",
+  "transactions": {
+    "append": {
+      "effort_used": null,
+      "epoch": 1878471,
+      "fee": null,
+      "ou": "100000",
+      "status": "confirmed",
+      "tx_hash": "642336e79bc8323e7ac533db08128367d85b809b3c6f82afc64ae29ca1c80e98"
+    },
+    "append-after-close": {
+      "effort_used": null,
+      "epoch": 1878481,
+      "fee": null,
+      "ou": null,
+      "status": "rejected",
+      "tx_hash": "5235d3d2f9ed2b112132ec1b0af5fb34e2be87e40d0f9d7c4da2b7d1020cf989"
+    },
+    "close": {
+      "effort_used": null,
+      "epoch": 1878480,
+      "fee": null,
+      "ou": "100000",
+      "status": "confirmed",
+      "tx_hash": "654667efac8579f40197c32403c31468f462796479847c5a61d12bc94e8477bb"
+    },
+    "duplicate": {
+      "effort_used": null,
+      "epoch": 1878473,
+      "fee": null,
+      "ou": null,
+      "status": "rejected",
+      "tx_hash": "6be986683eca29db7f2d978d148ec31dffedc7f5d63fe8b17344dd4d592c4a42"
+    },
+    "grant": {
+      "effort_used": null,
+      "epoch": 1878477,
+      "fee": null,
+      "ou": "100000",
+      "status": "confirmed",
+      "tx_hash": "4789402071b523c9d3efe597f4d3fb8a6a14f17f8f20a7e64e0baf683a140850"
+    },
+    "non-owner-close": {
+      "effort_used": null,
+      "epoch": 1878479,
+      "fee": null,
+      "ou": null,
+      "status": "rejected",
+      "tx_hash": "a96388d7b48d48c9cda0d47a77cac3c3f02f9859afb318c00f7476b94a4a2874"
+    },
+    "non-owner-grant": {
+      "effort_used": null,
+      "epoch": 1878476,
+      "fee": null,
+      "ou": null,
+      "status": "rejected",
+      "tx_hash": "55aa846b0578b5f6f41c81093339266bc07cb546a14c69170980fa99679204dc"
+    },
+    "non-owner-publish": {
+      "effort_used": null,
+      "epoch": 1878483,
+      "fee": null,
+      "ou": null,
+      "status": "rejected",
+      "tx_hash": "644a3ebdeef7a0ff264f63df33f12185f6a5a9b72fbaaf62d33407cfbc45b942"
+    },
+    "non-writer": {
+      "effort_used": null,
+      "epoch": 1878475,
+      "fee": null,
+      "ou": null,
+      "status": "rejected",
+      "tx_hash": "1682c261146903ad41759134ff837183c6ad477f4ac95f5c096f7ca004c635d8"
+    },
+    "oversize": {
+      "effort_used": null,
+      "epoch": 1878474,
+      "fee": null,
+      "ou": null,
+      "status": "rejected",
+      "tx_hash": "a0e210d8712b06cb6be4826fd28058f1a8204918e09abe50860e2c0e7b17dcfd"
+    },
+    "publish": {
+      "effort_used": null,
+      "epoch": 1878484,
+      "fee": null,
+      "ou": "100000",
+      "status": "confirmed",
+      "tx_hash": "737e34bf4708669d8972f76ffed2158ed655881a0802f13a743f3c8f3e238d65"
+    },
+    "registry-deploy": {
+      "effort_used": null,
+      "epoch": 1878482,
+      "fee": null,
+      "ou": "1000000",
+      "status": "confirmed",
+      "tx_hash": "9c202fe50933d143cd804caf893d864366801716635f4214d3b3bc5c69ccc208"
+    },
+    "segment-deploy": {
+      "effort_used": null,
+      "epoch": 1878470,
+      "fee": null,
+      "ou": "1000000",
+      "status": "confirmed",
+      "tx_hash": "c2c3c7e005ec56fc58132c0fc64ac86d20798999683da261ebbc58cb83d48496"
+    },
+    "writer-append": {
+      "effort_used": null,
+      "epoch": 1878478,
+      "fee": null,
+      "ou": "100000",
+      "status": "confirmed",
+      "tx_hash": "6e5e5f5d8ff46f15fd29e85c63e5149a02471cab90e50aa2eb895b264b3b7663"
+    }
+  }
+}

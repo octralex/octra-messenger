@@ -1,7 +1,7 @@
-# Messenger scheme v2 — experimental, for design review
+# Messenger scheme v2
 
-**Status:** experimental native library, not secure messaging or a production profile. The same-key PVAC path is
-removed. This page is for the maintainer's design read; the demo is not built until that read is done.
+**Status:** experimental. The library passes its suites and the full path runs on devnet (`receipts/devnet/`). It
+is not a production messenger; the limits are listed at the end. The same-key PVAC path is removed.
 
 ## Encryption and sender authentication
 
@@ -56,50 +56,40 @@ u16 version, u64 sequence, u64 epoch and sender instance. `Session_context` is t
 application and preserves version in decoded values. OCE1 context is 86 bytes for the test profile; nonce/tag adds
 28, giving 308 bytes overhead. Unknown versions and trailing bytes reject.
 
-## Library and on-chain binding
+## Library
 
 `octra_messenger` builds in place against `octra_net` and `octra_core`; the core remains private and the testkit is
 a separate test-only library. Public modules have `.mli` interfaces and SPDX headers. Tagged typed-key loading and
 atomic secret-file writes live in the library; raw key construction and deterministic fixtures are not exported.
 
-Native circle deployment does not run the AML constructor. Segment and registry bytecode therefore embed the owner
-address at deployment. Segment append accepts that owner or an owner-granted writer; registry publication is
-owner-only. Each frame stores its caller. Before full envelope decoding, the client binds that caller to the contact
-wallet and fixed-header sender key. Non-owner writes reject without state mutation. Exact frame bodies are retained
-once. Their dedup key is the
-64-character hex `octra:msg:frame:v2` digest over the domain separator, OCE1 length prefix and exact frame bytes,
-identical to `Frame.hash`.
+## On-chain store and sender binding
 
-Registry descriptors are bounded OCE1: `u16` format version, length-prefixed segment address, `u64` activation epoch,
-`u32` record cap, `u64` byte cap, tagged optional previous `u64` segment ID and `u8` flags. Decoders reject trailing
-bytes and every truncation. The registry descriptor format is version 1, independent of envelope codec version 2.
+Messages are stored by two source-admitted programs, `programs/segment.aml` and `programs/registry.aml`. They are
+deployed with `ProgramDeploy` as a source package: the node compiles the source itself and compares the result, so
+no release signature and no node change is involved. The constructor records the deployer as owner.
 
-The pinned VM has no binary string escape or OCE1 instruction. The lab therefore tests the minimal
-`native/byte-literals.patch`: `\xHH` parsing in the two existing lexer profiles and the corresponding compiler
-fingerprint. It introduces no opcode, host primitive or state-rule change. Upstream acceptance is not claimed.
+Segment `append` accepts the owner or an owner-granted writer and exactly 2,048 bytes of base64 text per frame, up to
+1,024 frames. Each frame stores its caller. A frame is stored once: the program keeps
+`sha256("octra:msg:segment-dedup:v1:" ‖ frame)` for every accepted frame and rejects a repeat. The frame length is
+fixed, so the label prefix is unambiguous. Views return the frame, its caller, the owner and the counters to anyone.
+The registry maps a segment id to a segment address and activation epoch; only its owner publishes.
 
-The isolated Circle test also requires `native/circle-typed-storage.patch`. At the pinned source,
-`Circle_exec.prepare_octb_call` enables certified storage declarations only when nested calls are enabled, causing
-unset typed fields to reject before method guards. The two-line correction always uses those declarations and leaves
-nested-call authorization unchanged. It is a lab-only runtime correction, not accepted upstream behavior or evidence
-of devnet compatibility. It needs separate native review before a devnet deployment can be proposed.
+Before decoding an envelope, the client checks that the stored caller is the contact's wallet and that the
+envelope's sender key derives that address. An envelope signed by one wallet and written by another is rejected at
+that step.
 
-Circle deployment uses the supported `Program_package.compile_sources_at` route to produce an `OCPG` package with
-embedded bytecode and certificate. The package also needs a compiler attestation from the configured release key;
-source-only validation is not deployment acceptance. Preflight checks both embedded values against the compiler
-result and calls `Code_check.decode_deploy`. The declared deployment OU covers the final base64 package's load work
-plus its static integer cost, alongside the normal minimum. Raw legacy `OCTB` is not an admissible Circle package
-once scalar work is active.
+On devnet at `8f785a93`, one run deploys both programs, appends, reads the frame back through the public view,
+binds the caller and decrypts in archive mode at the append's commit epoch. The same run shows terminal rejections
+for a duplicate frame, a 2,049-byte frame, a non-writer append, a non-owner grant, close and publish, and an append
+after close, with the stored frame and counters unchanged. `tests/run_devnet_program.py` produces
+`receipts/devnet/devnet-program.json`.
 
-## Open packing question for the maintainer
+## Open packing question
 
-An hourly single-transaction commit is not yet an established eight-append Circle batch. The demonstrated path is
-one `circle_call` with one 2,048-byte frame; lite_node's configurable eight-call `MultiExec` limit does not prove a
-Circle batching API. At the measured 372-byte envelope size, five raw envelopes occupy 1,860 bytes before packing
-framing; four base64 envelopes occupy 1,984 bytes before framing. Raw-byte transport and a packing format need their
-own evidence. Should David prefer several raw envelopes per frame, or a hash-only commitment? Hash-only commitment
-moves bodies off-chain and changes availability. An aggregate transaction across wallets also needs a new reviewed
-sender-binding model; the current frame has one caller bound to the envelope signer.
+One append carries one 2,048-byte frame, and one envelope with 64 plaintext bytes is 372 bytes, or 496 base64
+characters. Four base64 envelopes fit in a frame before any packing framing. Packing several envelopes per frame, or
+committing only a hash and keeping bodies elsewhere, are both undecided. A hash-only commitment changes
+availability, and one transaction carrying frames from several wallets would need a new sender-binding rule.
 
 ## Not provided
 

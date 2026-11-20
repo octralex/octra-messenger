@@ -1,5 +1,0 @@
-{"baseline_submission": {"status": "submitted", "tx_hash": "af47c8d11f77d52860d18f0022ee3477306734c26f5121b1ee9f37a1d2f2a508", "signed_json_bytes": 4021, "rpc_request_bytes": 4081, "signed_json_sha256": "fb8ec483b6b142a09630b39bfd1a16f14fccef0c973bc5643450ff6b2d5d31b4", "ou": "200000", "ou_cost": "200000", "rpc_result": {"tx_hash": "af47c8d11f77d52860d18f0022ee3477306734c26f5121b1ee9f37a1d2f2a508", "status": "accepted", "nonce": 13, "ou_cost": "200000"}}}
-Traceback (most recent call last):
-  File "<stdin>", line 25, in <module>
-  File "<stdin>", line 18, in rpc
-KeyError: 'result'

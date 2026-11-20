@@ -1,5 +1,0 @@
-2026-11-13T19:13:45.147Z INFO component = program event = deploy_start addr = octDAb48xSsRDk62fKsGHqgCeW5VmVnTibsRkAZ6ob77hNz deployer = oct111111111 size = 1489 hash = f2abacfea09e1a5c
-2026-11-13T19:13:45.148Z INFO component = program event = constructor_start addr = octDAb48xSsRDk62fKsGHqgCeW5VmVnTibsRkAZ6ob77hNz params = 0
-2026-11-13T19:13:45.148Z INFO component = program event = constructor_done addr = octDAb48xSsRDk62fKsGHqgCeW5VmVnTibsRkAZ6ob77hNz effort = 418 persistence = deferred
-2026-11-13T19:13:45.149Z INFO component = program event = call_start addr = octDAb48xSsRDk62fKsGHqgCeW5VmVnTibsRkAZ6ob77hNz method = append depth = 0 limit = 1000000
-Fatal error: exception Failure("result is not int")

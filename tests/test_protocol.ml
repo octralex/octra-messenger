@@ -16,8 +16,7 @@ let test_frames () =
     check "frame round trip" (String.equal (Frame.to_bytes frame) raw);
     check "frame size" (Frame.size frame = size);
     check "frame hash" (String.equal (Frame.hash frame)
-      (Hash_domain.hash_encoded_hex "octra:msg:frame:v2" (fun buffer -> Oce1.put_bytes buffer raw)));
-    check "frame dedup" (String.equal (Frame.dedup_key frame) (Frame.hash frame)))
+      (Hash_domain.hash_encoded_hex "octra:msg:frame:v2" (fun buffer -> Oce1.put_bytes buffer raw))))
     [2048; 4096];
   for size = 0 to 5000 do
     let raw = String.make size '\255' in

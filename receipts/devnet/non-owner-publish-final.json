@@ -1,0 +1,15 @@
+{
+  "status": "rejected",
+  "tx_hash": "644a3ebdeef7a0ff264f63df33f12185f6a5a9b72fbaaf62d33407cfbc45b942",
+  "epoch": 1878483,
+  "error": {
+    "type": "program_exec_failed",
+    "reason": "execution reverted [not registry owner]"
+  },
+  "from": "oct16CXeJRsxyqYeJJeLVVpoiSnQuRJBJYTHybFQQbevie3",
+  "to": "octGLRE3TU9Zk4xPj38eLRotCaixvC7UQUaPGJqWfdQ774N",
+  "amount": "0",
+  "nonce": 29,
+  "rejected_at": 1795134784.422009,
+  "source": "rejected_txs"
+}

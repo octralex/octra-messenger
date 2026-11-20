@@ -1,0 +1,15 @@
+{
+  "status": "rejected",
+  "tx_hash": "1682c261146903ad41759134ff837183c6ad477f4ac95f5c096f7ca004c635d8",
+  "epoch": 1878475,
+  "error": {
+    "type": "program_exec_failed",
+    "reason": "execution reverted [not segment writer]"
+  },
+  "from": "oct16CXeJRsxyqYeJJeLVVpoiSnQuRJBJYTHybFQQbevie3",
+  "to": "octJBtrVxiDLw93CwXkemEVwjq9GaZXNTs5785uVMXacozY",
+  "amount": "0",
+  "nonce": 25,
+  "rejected_at": 1795134700.016521,
+  "source": "rejected_txs"
+}

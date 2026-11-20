@@ -6,11 +6,12 @@ set -euo pipefail
 ENDPOINT_EXE=$1
 SIZE_EXE=$2
 VENUE=$3
-CONTROL_COMMIT=${CONTROL_COMMIT:-$(git -C /home/kimi/workspace/octra-egregore rev-parse HEAD)}
-TREE=$(git -C /home/kimi/workspace/octra-egregore rev-parse HEAD:projects/onchain-messenger)
+PROJECT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+CONTROL_COMMIT=${CONTROL_COMMIT:-$(git -C "$PROJECT" rev-parse HEAD)}
+TREE=$(git -C "$PROJECT" rev-parse HEAD:./)
 SOURCE=${OCTRA_NODE_SOURCE:-$VENUE/src/lite_node}
 SWITCH=${OCTRA_OPAM_SWITCH:-/srv/octra-node/libv_litecore/runtime_data/toolchains/ocaml}
-export CONTROL_COMMIT TREE VENUE ENDPOINT_EXE SIZE_EXE SOURCE SWITCH
+export PROJECT CONTROL_COMMIT TREE VENUE ENDPOINT_EXE SIZE_EXE SOURCE SWITCH
 
 python3 - <<'PY'
 import hashlib,json,os,subprocess
@@ -34,7 +35,7 @@ common={
   'webcli_executable_sha256':sha('/srv/octra-node/webcli/octra_wallet'),
   'lite_node_running_executable_sha256':sha('/srv/octra-node/artifacts/octra_node.devnet.exe'),
   'venue':os.environ['VENUE'],
-  'build_command':f"python3 {source}/controls/lib/gc_build.py -- dune build --root /home/kimi/workspace/octra-egregore/projects/onchain-messenger --build-dir {os.environ['VENUE']}/library-build --profile release -j 2 tests/recipient_endpoint.exe tests/size_sweep.exe",
+  'build_command':f"python3 {source}/controls/lib/gc_build.py -- dune build --root {os.environ['PROJECT']} --build-dir {os.environ['VENUE']}/library-build --profile release -j 2 tests/recipient_endpoint.exe tests/size_sweep.exe",
   'ocaml':command(['ocamlc','-version']),
   'dune':command(['dune','--version']),
   'opam_lock_sha256':sha('/srv/octra-node/libv_litecore/octra_node.opam.locked'),
@@ -60,12 +61,12 @@ common={
 }
 endpoint=common | {
   'endpoint_executable_sha256':sha(os.environ['ENDPOINT_EXE']),
-  'endpoint_command':'/home/kimi/workspace/octra-egregore/projects/onchain-messenger/tests/run_recipient_spike.sh',
+  'endpoint_command':'tests/run_recipient_spike.sh',
   'receipt':'receipts/recipient/endpoint.txt',
 }
 sizes=common | {
   'size_sweep_executable_sha256':sha(os.environ['SIZE_EXE']),
-  'size_command':'/home/kimi/workspace/octra-egregore/projects/onchain-messenger/tests/run_size_sweep.sh',
+  'size_command':'tests/run_size_sweep.sh',
   'receipt':'receipts/recipient/sizes.csv',
   'samples_per_case':5,
   'cold_samples_per_case':1,

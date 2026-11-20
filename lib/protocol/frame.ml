@@ -24,7 +24,6 @@ let equal left right = String.equal left.bytes right.bytes
 let hash frame =
   Octra_net.Hash_domain.hash_encoded_hex "octra:msg:frame:v2" (fun buffer ->
     Octra_net.Oce1.put_bytes buffer frame.bytes)
-let dedup_key = hash
 
 let for_ciphertext_size size =
   if size < 0 then Error "negative ciphertext size"

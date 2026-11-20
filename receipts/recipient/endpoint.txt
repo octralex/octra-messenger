@@ -1,4 +1,4 @@
-{"status":"recipient_initialized","view_public":"YR+8OQSNBtEzVAiKyxonvwweLH6l7o/J8+IErnNzTmI=","key_version":1}
+{"status":"recipient_initialized","view_public":"CDI/OWbhi8dkV0BuX6PHCF3Vkro2zxEfs+v/zebtoT4=","key_version":1}
 positive=recipient_init_generated_dedicated_x25519_key
 positive=key_loader_returns_expected_errors_without_throwing cases=6 valid_control=pass
 {"status":"sealed","envelope_bytes":341,"ciphertext_bytes":61,"recipient_secret_input":false}
@@ -10,12 +10,12 @@ positive=default_rng_distinct_ids_ephemerals_nonces_envelopes
 {"status":"opened","plaintext_bytes":33}
 {"status":"opened","plaintext_bytes":33}
 {"status":"rejected"}
-control=uninitialized_rng_failed_closed receive_state_sha256=2adc5877948baa82f37cea62e2d9f4eb8a1d42fbae2cf34b90cdc93274de3ac2
+control=uninitialized_rng_failed_closed receive_state_sha256=dce123fb8657fff117a724d91b9ee9091a10c642c6b1ca400bf6f7c920ef64e7
 {"status":"sealed","envelope_bytes":341,"ciphertext_bytes":61,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":33}
 positive=production_sender_no_recipient_secret_access
 positive=production_seal_randomized_only_deterministic_material_testkit_only
-{"status":"recipient_initialized","view_public":"tFycuVC1Wj3C/Q+e+aq1gu3RAwK1GGcqkm7if3JXm20=","key_version":1}
+{"status":"recipient_initialized","view_public":"pTmj7PHoIcq08/C96Jv95PR6TjaniOrFs8NaUbtQIHk=","key_version":1}
 {"status":"sealed","envelope_bytes":341,"ciphertext_bytes":61,"recipient_secret_input":false}
 {"status":"sealed","envelope_bytes":341,"ciphertext_bytes":61,"recipient_secret_input":false}
 {"status":"sealed","envelope_bytes":341,"ciphertext_bytes":61,"recipient_secret_input":false}
@@ -1051,12 +1051,12 @@ positive=per_contact_counter_survives_1025_other_channel_sends
 {"status":"messaging_key_generated","key_type":"x25519","independent_from_ed25519":true,"public_matches_secret":false}
 positive=dedicated_x25519_key_independent_from_ed25519
 {"status":"onchain_sender_binding_pass","mismatch_rejected_before_decode":true}
-{"status":"recipient_rotated","view_public":"NT1M9W+y0LvkuPFbE8/hdAM25dQKqJAcdx9mZozqujI=","key_version":2}
+{"status":"recipient_rotated","view_public":"el3b7UfF+uYsH/ZrbizYOH7EviqjtRstf/09qZDLCAE=","key_version":2}
 {"status":"sealed","envelope_bytes":330,"ciphertext_bytes":50,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":22}
 {"status":"opened","plaintext_bytes":25}
 positive=rotation_preserves_unread_previous_version
-{"status":"outbox_prepared","record_id":"6cba191b74820503d2aa63a1045154eaca8a2eb10d7fcf09eef6c04529154283","sequence":"1"}
+{"status":"outbox_prepared","record_id":"90b0e198a4944829edc10472a75b0c279cd6c47c358523eba16d422949683a67","sequence":"1"}
 {"status":"outbox_retry","bytes":341}
 {"status":"outbox_marked","state":"submitted"}
 {"status":"outbox_marked","state":"finalized"}
@@ -1066,20 +1066,20 @@ positive=outbox_retry_byte_identical
 {"status":"opened","plaintext_bytes":38}
 {"status":"sealed","envelope_bytes":350,"ciphertext_bytes":70,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"injected outbox crash before sealing\")"}
-control=outbox_crash_before_seal rejected guard=injected outbox crash before sealing receive_state_sha256=48696c0d08c9f9cede9a9c8b2e74ea1408d4e9ab017d2ba82a581c004ae4737f
+control=outbox_crash_before_seal rejected guard=injected outbox crash before sealing receive_state_sha256=c32797fb2d6effc854b8a095fa01a8b0997b820601fac780f411aa7fb3fe3c8a
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"outbox sequence is not sealed\")"}
-control=outbox_incomplete_retry rejected guard=outbox sequence is not sealed receive_state_sha256=48696c0d08c9f9cede9a9c8b2e74ea1408d4e9ab017d2ba82a581c004ae4737f
+control=outbox_incomplete_retry rejected guard=outbox sequence is not sealed receive_state_sha256=c32797fb2d6effc854b8a095fa01a8b0997b820601fac780f411aa7fb3fe3c8a
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"outbox sequence is not sealed\")"}
-control=outbox_incomplete_mark rejected guard=outbox sequence is not sealed receive_state_sha256=48696c0d08c9f9cede9a9c8b2e74ea1408d4e9ab017d2ba82a581c004ae4737f
-{"status":"outbox_prepared","record_id":"4b15ba54aa81277bdf1dd16f204d911b4905275b82b3adfd9eb33fe01f1c4675","sequence":"2"}
+control=outbox_incomplete_mark rejected guard=outbox sequence is not sealed receive_state_sha256=c32797fb2d6effc854b8a095fa01a8b0997b820601fac780f411aa7fb3fe3c8a
+{"status":"outbox_prepared","record_id":"99ef75aa603c18a66836fd7cf06ccabee0993acfeb0c4e353be908df7d3179cd","sequence":"2"}
 {"status":"opened","plaintext_bytes":42}
 positive=outbox_allocation_durable_before_seal_crash_no_sequence_reuse
 {"status":"sealed","envelope_bytes":335,"ciphertext_bytes":55,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":27}
 {"status":"sealed","envelope_bytes":339,"ciphertext_bytes":59,"recipient_secret_input":false}
-{"status":"outbox_prepared","record_id":"a1cfd0f8f79af80e872e041b6567374811042746683eaa22f492f8139b70575a","sequence":"1"}
-{"status":"outbox_prepared","record_id":"3930db049849cbcef92e927de7d57546e760fc50a2a0fba0c5896c04ec45e5c8","sequence":"9223372036854775806"}
-{"status":"outbox_prepared","record_id":"586b7a6783a88fb2efe84d7a09a6f2f316fadca28930630c9eaad182505b86fc","sequence":"9223372036854775807"}
+{"status":"outbox_prepared","record_id":"866f9aabcd6f16cd563bec40f7d410333892b9b202370f4f814b260d977ebd92","sequence":"1"}
+{"status":"outbox_prepared","record_id":"3d6d6ec06e40b6065d10d625d4dea9592115a7c6230681e3105a243807a1050b","sequence":"9223372036854775806"}
+{"status":"outbox_prepared","record_id":"4eab96c47b1e0baa4f3e05d23090d77dd225765bbc19b03391afd74b1711a281","sequence":"9223372036854775807"}
 positive=outbox_last_usable_allocation_then_explicit_exhaustion
 {"status":"error","reason":"Invalid_argument(\"outbox channel exhausted\")"}
 control=outbox_exhausted_1 rejected guard=outbox channel exhausted receive_state_sha256=missing
@@ -1100,199 +1100,199 @@ control=invalid_outbox_counters_refused_before_seal_or_mutation cases=4
 {"status":"sealed","envelope_bytes":335,"ciphertext_bytes":55,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":27}
 {"status":"sealed","envelope_bytes":339,"ciphertext_bytes":59,"recipient_secret_input":false}
-{"status":"outbox_prepared","record_id":"6894f6d3d67e5fc23f655e89ee3832a271981257ad0d2295ef893fe437b6b141","sequence":"1"}
-{"status":"outbox_prepared","record_id":"31a9082f9453278a9eeb577e511fd7b9b56957a3688c89b63db8c1e2196a0ca6","sequence":"2"}
+{"status":"outbox_prepared","record_id":"943b181d58544264e824ac84bc8e0a257adfae4a32198d0db8f0e7a13ec598e8","sequence":"1"}
+{"status":"outbox_prepared","record_id":"afdac585f5d01d2dc7dc16c14431ebe79d23dd17369973ab2c113e9818d8d858","sequence":"2"}
 {"status":"outbox_retry","bytes":339}
 positive=old_integer_journal_resumes_without_id_or_pending_receipt_changes
 {"status":"sealed","envelope_bytes":337,"ciphertext_bytes":57,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":29}
 {"status":"sealed","envelope_bytes":341,"ciphertext_bytes":61,"recipient_secret_input":false}
-{"status":"outbox_prepared","record_id":"dc3e96b593c8b402a205be4fc8ba86de107c623bf1abf5b73e9d203002f80b01","sequence":"1"}
+{"status":"outbox_prepared","record_id":"68e6868f52b74245466936eaea90191a35b0310602b3627b3a2307ddacee1374","sequence":"1"}
 {"status":"opened","plaintext_bytes":33}
 {"status":"outbox_recovered","observed_high_water":"1"}
 {"status":"outbox_recovered","observed_high_water":"0"}
-{"status":"outbox_prepared","record_id":"3eee61e5f2f7549d57e10a0a22a0fb8f144d575a1eaa12c3ac2351845a318203","sequence":"2"}
+{"status":"outbox_prepared","record_id":"c1dbf27baef76bee51e7048d962fb77a50d756b5f91a6b9d4f1ef03864e7cdf7","sequence":"2"}
 {"status":"opened","plaintext_bytes":33}
 positive=restored_backup_recovers_observed_high_water_without_instance_reset_or_replay
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"outbox recovery high-water outside limits\")"}
 control=outbox_recovery_negative rejected guard=outbox recovery high-water outside limits receive_state_sha256=missing
-{"status":"recipient_rotated","view_public":"yaZqomIBDElkWjmWhTE5uNJrtaX7z1eXHwv2hVCPZy8=","key_version":2}
+{"status":"recipient_rotated","view_public":"ePCCKZC2batBCy+TBXLb+5HeYpP6MS1J6JdQWt+FjBY=","key_version":2}
 {"status":"sealed","envelope_bytes":346,"ciphertext_bytes":66,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":38}
 {"status":"sealed","envelope_bytes":350,"ciphertext_bytes":70,"recipient_secret_input":false}
 {"status":"sealed","envelope_bytes":350,"ciphertext_bytes":70,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"ciphertext authentication failed\")"}
 {"status":"rejected"}
-control=wrong_recipient_coherent rejected guard=ciphertext authentication failed receive_state_sha256=3b854147d0bbf88636a7f7165cfea6ef23715a87e757325e1fc126db7844438f
+control=wrong_recipient_coherent rejected guard=ciphertext authentication failed receive_state_sha256=f70c3ea54e3ed664ba2b404a8df1c0a57cb7073fca7e663a5fb8a4c69b53a4a9
 {"status":"sealed","envelope_bytes":337,"ciphertext_bytes":57,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":29}
 {"status":"sealed","envelope_bytes":341,"ciphertext_bytes":61,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"recipient key replaced or unregistered\")"}
 {"status":"rejected"}
-control=config_mismatch rejected guard=recipient key replaced or unregistered receive_state_sha256=5e25c2055eade58f84ad1d2b10a1703a7bd646f3eea2adcbcde02958200a8a82
+control=config_mismatch rejected guard=recipient key replaced or unregistered receive_state_sha256=81bd67a110b6bab2c7ce1399f026107593d78243d3b72bb218e9bdbbbe0c6053
 {"status":"sealed","envelope_bytes":341,"ciphertext_bytes":61,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":33}
 {"status":"sealed","envelope_bytes":345,"ciphertext_bytes":65,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"sender authentication failed\")"}
 {"status":"rejected"}
-control=modified_capability rejected guard=sender authentication failed receive_state_sha256=913a750ea42feae567fc08f481ba0a798238f339c20674459a1ac3bc0850e0f5
+control=modified_capability rejected guard=sender authentication failed receive_state_sha256=c7c629746c8b3ca52e51e6a1c7f8ece9115f04c8bd588ac825abd797bd26f2be
 {"status":"sealed","envelope_bytes":341,"ciphertext_bytes":61,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":33}
 {"status":"sealed","envelope_bytes":345,"ciphertext_bytes":65,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"sender authentication failed\")"}
 {"status":"rejected"}
-control=modified_message_id rejected guard=sender authentication failed receive_state_sha256=97b9af4605d9038584451e09e020a3dca07a032b4ed82cb2b7fa398e5cddf410
+control=modified_message_id rejected guard=sender authentication failed receive_state_sha256=b7ab5c4ccb6664170f3df08e80ce1afb35651e941fccc83446fe59a7f989bc47
 {"status":"sealed","envelope_bytes":329,"ciphertext_bytes":49,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":21}
 {"status":"sealed","envelope_bytes":333,"ciphertext_bytes":53,"recipient_secret_input":false}
 {"status":"resigned_envelope","mode":"id"}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"ciphertext authentication failed\")"}
 {"status":"rejected"}
-control=aead_id rejected guard=ciphertext authentication failed receive_state_sha256=97034a3c3a2ebdbe87f61c67da3019a979c67c3e1f6492ceb2eae3f980f17c0f
+control=aead_id rejected guard=ciphertext authentication failed receive_state_sha256=31405e89f67b173247c7ae7392c3d593d6b4957a54e019c3c2253d652b481664
 {"status":"sealed","envelope_bytes":334,"ciphertext_bytes":54,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":26}
 {"status":"sealed","envelope_bytes":338,"ciphertext_bytes":58,"recipient_secret_input":false}
 {"status":"resigned_envelope","mode":"version"}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"ciphertext authentication failed\")"}
 {"status":"rejected"}
-control=aead_version rejected guard=ciphertext authentication failed receive_state_sha256=359480e0a0b438bb9256fee3729bcdcb7686a38e70138fc4f7f3f2dc0d7f02a2
+control=aead_version rejected guard=ciphertext authentication failed receive_state_sha256=d3c3b395ea6664f202e9cf3aab2e8d09e7de232856595c1f75df4264a651592f
 {"status":"sealed","envelope_bytes":334,"ciphertext_bytes":54,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":26}
 {"status":"sealed","envelope_bytes":338,"ciphertext_bytes":58,"recipient_secret_input":false}
 {"status":"resigned_envelope","mode":"context"}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"ciphertext authentication failed\")"}
 {"status":"rejected"}
-control=aead_context rejected guard=ciphertext authentication failed receive_state_sha256=d7fd1a63fc311ea3ecb8abbec238d2d5df0e363ad639e613775b305199adc981
+control=aead_context rejected guard=ciphertext authentication failed receive_state_sha256=bd267595d2947442f76d22f1d7612dd53373731f5ee61f69d09477494ff3eddf
 {"status":"sealed","envelope_bytes":336,"ciphertext_bytes":56,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":28}
 {"status":"sealed","envelope_bytes":340,"ciphertext_bytes":60,"recipient_secret_input":false}
 {"status":"resigned_envelope","mode":"ephemeral"}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"ciphertext authentication failed\")"}
 {"status":"rejected"}
-control=aead_ephemeral rejected guard=ciphertext authentication failed receive_state_sha256=aa767cc3c2c78b4a568d8a9a8f1e1a111fff1c088099388664f83187a88bd986
+control=aead_ephemeral rejected guard=ciphertext authentication failed receive_state_sha256=75a294f7b9bf43b3527978e027c90f651cfbf2b2c2314f15b4ca9829e34944db
 {"status":"sealed","envelope_bytes":336,"ciphertext_bytes":56,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":28}
 {"status":"sealed","envelope_bytes":340,"ciphertext_bytes":60,"recipient_secret_input":false}
 {"status":"resigned_envelope","mode":"zero-ephemeral"}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"recipient key exchange failed\")"}
 {"status":"rejected"}
-control=zero-ephemeral rejected guard=recipient key exchange failed receive_state_sha256=bbeecab1a68a42cce2d96ade9adc92555fdf51c9698cfef8effcfe54f64f6586
+control=zero-ephemeral rejected guard=recipient key exchange failed receive_state_sha256=e2d18831ce9974af4a5c4a16542af9fe79fdfc68f78b184ecff6340115c38e1f
 {"status":"sealed","envelope_bytes":345,"ciphertext_bytes":65,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":37}
 {"status":"sealed","envelope_bytes":349,"ciphertext_bytes":69,"recipient_secret_input":false}
 {"status":"resigned_envelope","mode":"ordinary-ones-ephemeral"}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"ciphertext authentication failed\")"}
 {"status":"rejected"}
-control=ordinary-ones-ephemeral rejected guard=ciphertext authentication failed receive_state_sha256=127730c6bbce505d4e1331af93f3977d7d6ccbbe18a3adf9f69d3a877e5f986a
+control=ordinary-ones-ephemeral rejected guard=ciphertext authentication failed receive_state_sha256=1df3f1c676d275bc5a81eb755caec3d6065b39e86112c584b80e3e184f84270f
 {"status":"sealed","envelope_bytes":337,"ciphertext_bytes":57,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":29}
 {"status":"sealed","envelope_bytes":341,"ciphertext_bytes":61,"recipient_secret_input":false}
 {"status":"resigned_envelope","mode":"u-one-ephemeral"}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"recipient key exchange failed\")"}
 {"status":"rejected"}
-control=u-one-ephemeral rejected guard=recipient key exchange failed receive_state_sha256=5afa704f3b4ab59b1c8376de8be5c73cc6066743c94630b24b60eb275b68211d
+control=u-one-ephemeral rejected guard=recipient key exchange failed receive_state_sha256=0193881c4fe39bfa5be3b45713e723d134cc465f5efacc941babed21a1e91428
 {"status":"sealed","envelope_bytes":345,"ciphertext_bytes":65,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":37}
 {"status":"sealed","envelope_bytes":349,"ciphertext_bytes":69,"recipient_secret_input":false}
 {"status":"resigned_envelope","mode":"order-eight-a-ephemeral"}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"recipient key exchange failed\")"}
 {"status":"rejected"}
-control=order-eight-a-ephemeral rejected guard=recipient key exchange failed receive_state_sha256=6bfe35248efe293a60a2827f2f3658de58c29ff7b771bc8d23826b05b85b65a4
+control=order-eight-a-ephemeral rejected guard=recipient key exchange failed receive_state_sha256=aebf331167bef2772942d8b720efd734624efca28bf864e6ece703bf0cad59a6
 {"status":"sealed","envelope_bytes":345,"ciphertext_bytes":65,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":37}
 {"status":"sealed","envelope_bytes":349,"ciphertext_bytes":69,"recipient_secret_input":false}
 {"status":"resigned_envelope","mode":"order-eight-b-ephemeral"}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"recipient key exchange failed\")"}
 {"status":"rejected"}
-control=order-eight-b-ephemeral rejected guard=recipient key exchange failed receive_state_sha256=51dce256c4e3b0760480f5c7bd2a40baa1bcb504bec13ac3357fa24fc93870e8
+control=order-eight-b-ephemeral rejected guard=recipient key exchange failed receive_state_sha256=e0d929e8eea1138d5271c1416cc73aa483a29f98f6f62fd5bfd5b7fd1db95a50
 {"status":"sealed","envelope_bytes":341,"ciphertext_bytes":61,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":33}
 {"status":"sealed","envelope_bytes":345,"ciphertext_bytes":65,"recipient_secret_input":false}
 {"status":"resigned_envelope","mode":"low-order-ephemeral"}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"recipient key exchange failed\")"}
 {"status":"rejected"}
-control=low-order-ephemeral rejected guard=recipient key exchange failed receive_state_sha256=22326b8136da3b2dddf02d52e2b452d8610306eb33a948972fbbdb31bd75036e
+control=low-order-ephemeral rejected guard=recipient key exchange failed receive_state_sha256=bf8d005f637b65cd541a2380779306e1e1306e4c49ddbbd2262287a6546560ef
 {"status":"sealed","envelope_bytes":333,"ciphertext_bytes":53,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":25}
 {"status":"sealed","envelope_bytes":337,"ciphertext_bytes":57,"recipient_secret_input":false}
 {"status":"resigned_envelope","mode":"p-ephemeral"}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"recipient key exchange failed\")"}
 {"status":"rejected"}
-control=p-ephemeral rejected guard=recipient key exchange failed receive_state_sha256=b6705d313c132dd9538139e7f84d8dfd65375b4d9296e2a35deaa4e3aedff0d8
+control=p-ephemeral rejected guard=recipient key exchange failed receive_state_sha256=9fbfbc8f1edf5724f74146817cd58bc8ed80be5642b67c6513bf3f20a3d9b7a2
 {"status":"sealed","envelope_bytes":342,"ciphertext_bytes":62,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":34}
 {"status":"sealed","envelope_bytes":346,"ciphertext_bytes":66,"recipient_secret_input":false}
 {"status":"resigned_envelope","mode":"p-plus-one-ephemeral"}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"recipient key exchange failed\")"}
 {"status":"rejected"}
-control=p-plus-one-ephemeral rejected guard=recipient key exchange failed receive_state_sha256=9335c46c460bce4fcdc2dbfc54ba9ccc3316d5caf3ef364a854bf945392aa0a7
+control=p-plus-one-ephemeral rejected guard=recipient key exchange failed receive_state_sha256=8292594ff8db6b8e8c11191453c8fb4f2f104a5f07a056fac7447f36d8bf4f93
 {"status":"sealed","envelope_bytes":344,"ciphertext_bytes":64,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":36}
 {"status":"sealed","envelope_bytes":348,"ciphertext_bytes":68,"recipient_secret_input":false}
 {"status":"resigned_envelope","mode":"noncanonical-ephemeral"}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"ciphertext authentication failed\")"}
 {"status":"rejected"}
-control=noncanonical-ephemeral rejected guard=ciphertext authentication failed receive_state_sha256=7acae2c2e7882c4bf554aa059f8bdef0de088dae78080e4a5f55e9b0b2ed02a4
+control=noncanonical-ephemeral rejected guard=ciphertext authentication failed receive_state_sha256=db6eaafec27efaef38fc1741536a90b25ed13c1980d129f5b524bc8fd5774002
 {"status":"sealed","envelope_bytes":335,"ciphertext_bytes":55,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":27}
 {"status":"sealed","envelope_bytes":339,"ciphertext_bytes":59,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"wrong chain, application or registry context\")"}
 {"status":"rejected"}
-control=wrong_context rejected guard=wrong chain, application or registry context receive_state_sha256=29df782e08dfc1393ffa373317fdd65cf62440d1cee20c93646f6d93838fdd9a
+control=wrong_context rejected guard=wrong chain, application or registry context receive_state_sha256=644d2ed05c3d314e39783d2021444d435d08ca80d95224e4980ace06a6911541
 {"status":"sealed","envelope_bytes":335,"ciphertext_bytes":55,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":27}
 {"status":"sealed","envelope_bytes":339,"ciphertext_bytes":59,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"sender authentication failed\")"}
 {"status":"rejected"}
-control=modified_body rejected guard=sender authentication failed receive_state_sha256=a313cbb7ee5209538c98c6df4dcb8ae2ea832260f673a2109882e9e798f1a706
+control=modified_body rejected guard=sender authentication failed receive_state_sha256=ff6eafa00e4856e0e95e21a803d6fca48e07b92f8b20b16a35454fde207fed40
 {"status":"sealed","envelope_bytes":337,"ciphertext_bytes":57,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":29}
 {"status":"sealed","envelope_bytes":341,"ciphertext_bytes":61,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"recipient key version is not accepted\")"}
 {"status":"rejected"}
-control=modified_header rejected guard=recipient key version is not accepted receive_state_sha256=f175652d473db14ea91d107cd79f5e73523c7877d0a4e4a0a78f8be49f23ae26
+control=modified_header rejected guard=recipient key version is not accepted receive_state_sha256=402438b84a62310fd6e15edcaa467c6a4bf1e5c561520309b570fad7c178b24f
 {"status":"sealed","envelope_bytes":338,"ciphertext_bytes":58,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":30}
 {"status":"sealed","envelope_bytes":342,"ciphertext_bytes":62,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"sender authentication failed\")"}
 {"status":"rejected"}
-control=modified_context rejected guard=sender authentication failed receive_state_sha256=f15f17fa6624613ba68ab61acbbd79a78de67560a7db5c3429ac7919e54d2faa
+control=modified_context rejected guard=sender authentication failed receive_state_sha256=6626e2966e38e5e4bfec8c0511578284f13a5b6f3143c1e206eb1f522f793643
 {"status":"sealed","envelope_bytes":332,"ciphertext_bytes":52,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":24}
 {"status":"sealed","envelope_bytes":336,"ciphertext_bytes":56,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"envelope trailing or truncated bytes\")"}
 {"status":"rejected"}
-control=truncation rejected guard=envelope trailing or truncated bytes receive_state_sha256=e40f9994b3c1fbe1d4c3c745b143f70aa6d4f4a4655d0fd3c445c34266fbcb55
+control=truncation rejected guard=envelope trailing or truncated bytes receive_state_sha256=887e3b6a59346b0c7a6e69951e79ae9f53b86f2ba3a9c229c7edd03fdf361ac0
 {"status":"sealed","envelope_bytes":330,"ciphertext_bytes":50,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":22}
 {"status":"sealed","envelope_bytes":334,"ciphertext_bytes":54,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"envelope trailing or truncated bytes\")"}
 {"status":"rejected"}
-control=trailing rejected guard=envelope trailing or truncated bytes receive_state_sha256=7819d298ea3f6c336fcdec77a5d151b2b151ab157c0b7d0fd9d50ef8ab397b95
+control=trailing rejected guard=envelope trailing or truncated bytes receive_state_sha256=c63f276d5bd8550829d088b03773a7635008f31f66a7d3b26e35366245c00a63
 {"status":"sealed","envelope_bytes":329,"ciphertext_bytes":49,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":21}
 {"status":"sealed","envelope_bytes":333,"ciphertext_bytes":53,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"recipient key policy is stale\")"}
 {"status":"rejected"}
-control=revoked rejected guard=recipient key policy is stale receive_state_sha256=e5680bac49dd44715af4c70ff54a0d861c53c1ad6a4aa1013c1d50374c67564d
+control=revoked rejected guard=recipient key policy is stale receive_state_sha256=d3105a992c709caeaac60dd2d92c2a6b52b67c3452b91baf4887764edeaaa878
 {"status":"sealed","envelope_bytes":328,"ciphertext_bytes":48,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":20}
 {"status":"sealed","envelope_bytes":332,"ciphertext_bytes":52,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"recipient key policy is stale\")"}
 {"status":"rejected"}
-control=erased rejected guard=recipient key policy is stale receive_state_sha256=453be19298f87338f634918eb8dea664f006e273f133442c7124da9c59392e8d
+control=erased rejected guard=recipient key policy is stale receive_state_sha256=0aac5693b9aed0aa6b586ee434d94ce384115c316689237ff302d7ff77556e26
 {"status":"sealed","envelope_bytes":336,"ciphertext_bytes":56,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":28}
 {"status":"sealed","envelope_bytes":340,"ciphertext_bytes":60,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"recipient key policy is stale\")"}
 {"status":"rejected"}
-control=not-yet-active rejected guard=recipient key policy is stale receive_state_sha256=11427be427d7daf49e75509faf07a7cc5d34649556ec4baa6ea90af0485eb62e
+control=not-yet-active rejected guard=recipient key policy is stale receive_state_sha256=ac02ed910b8c1743bc71595ca694a5c2b63a5b947385f062d4fbd693617435c9
 {"status":"sealed","envelope_bytes":341,"ciphertext_bytes":61,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":33}
 {"status":"sealed","envelope_bytes":345,"ciphertext_bytes":65,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"recipient key policy is stale\")"}
 {"status":"rejected"}
-control=expiration-boundary rejected guard=recipient key policy is stale receive_state_sha256=1d399068b9a7724d0b6a924fe9f6398e8927f5f2215a9f44e466bb50b047bf30
+control=expiration-boundary rejected guard=recipient key policy is stale receive_state_sha256=c492219782ff844b518fbd622363deade66ce8a372b7742fca9d7bda1c007638
 {"status":"sealed","envelope_bytes":341,"ciphertext_bytes":61,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":33}
 {"status":"sealed","envelope_bytes":345,"ciphertext_bytes":65,"recipient_secret_input":false}
@@ -1304,71 +1304,71 @@ positive=policy_activation_boundary_allowed
 {"status":"sealed","envelope_bytes":338,"ciphertext_bytes":58,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"recipient key policy is stale\")"}
 {"status":"rejected"}
-control=stale_policy rejected guard=recipient key policy is stale receive_state_sha256=d7a7eb60056ed50efed851d7d15a5659a2d09a1153e41aa8f87f8f8163c6fa11
+control=stale_policy rejected guard=recipient key policy is stale receive_state_sha256=e16ecb45824694bce541565fd14c8da5eeee378409d8313ac99af604b8bbef4f
 {"status":"sealed","envelope_bytes":342,"ciphertext_bytes":62,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":34}
 {"status":"sealed","envelope_bytes":346,"ciphertext_bytes":66,"recipient_secret_input":false}
 {"status":"resigned_envelope","mode":"body"}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"ciphertext authentication failed\")"}
 {"status":"rejected"}
-control=malformed_ciphertext rejected guard=ciphertext authentication failed receive_state_sha256=f47d0d6068300587a68802356627ecc6d902d5cf0f6ca7bce43fc01b3b0b61a3
+control=malformed_ciphertext rejected guard=ciphertext authentication failed receive_state_sha256=a20c85e6e569ae095e152b2d5e1fcf007a50e6440d90e6e91d026c8203e03409
 {"status":"sealed","envelope_bytes":341,"ciphertext_bytes":61,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":33}
 {"status":"sealed","envelope_bytes":345,"ciphertext_bytes":65,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"unsupported version 3\")"}
 {"status":"rejected"}
-control=unsupported_version rejected guard=unsupported version 3 receive_state_sha256=e0020aeb299c3f3f8fd4a2a05e83f80442a5bde6f5ec59b5ab3eb6954d2d86c8
+control=unsupported_version rejected guard=unsupported version 3 receive_state_sha256=8668536a9df3db0c5b335c46da9de5b50697689ab26a9ded1262b9f0b0e01a3a
 {"status":"sealed","envelope_bytes":340,"ciphertext_bytes":60,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":32}
 {"status":"sealed","envelope_bytes":344,"ciphertext_bytes":64,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"sender authentication failed\")"}
 {"status":"rejected"}
-control=modified_signature rejected guard=sender authentication failed receive_state_sha256=ea30d985d23df1d1927e0f6725cba436fe95a5a0c826da6ec2400abb1070d2a3
+control=modified_signature rejected guard=sender authentication failed receive_state_sha256=c3a856d7148a2b8ee49f30ddd9f06ae0e22f6ea7d9b65e1af7ba2056a502b6c8
 {"status":"sealed","envelope_bytes":346,"ciphertext_bytes":66,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":38}
 {"status":"sealed","envelope_bytes":350,"ciphertext_bytes":70,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"sender authentication failed\")"}
 {"status":"rejected"}
-control=modified_sender_instance rejected guard=sender authentication failed receive_state_sha256=1f04149975de355a495b50b9cf33c97b925bb1640e96357e1d6feae788b732ec
+control=modified_sender_instance rejected guard=sender authentication failed receive_state_sha256=fb386ff8088becfe1570b9f736dcd10da29d4bf3b24e39958a66445900c3a4a0
 {"status":"sealed","envelope_bytes":336,"ciphertext_bytes":56,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":28}
 {"status":"sealed","envelope_bytes":340,"ciphertext_bytes":60,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"contact authorization failed\")"}
 {"status":"rejected"}
-control=contact_tamper rejected guard=contact authorization failed receive_state_sha256=5cd3755b8197b59fa1190cf8603492f2fd2294a1d716ece945a8fd2bf5477b70
+control=contact_tamper rejected guard=contact authorization failed receive_state_sha256=93cf702be7daf86204719c178f4cd86fb7a1f4952a0f7038d0cd92a6e6bfb7e7
 {"status":"sealed","envelope_bytes":341,"ciphertext_bytes":61,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"sender authentication failed\")"}
 {"status":"rejected"}
-control=unexpected_sender rejected guard=sender authentication failed receive_state_sha256=aad870a31d098a01709488a0e751c98c4d60f44ffa31bfd3c30f400ab11ad9a0
+control=unexpected_sender rejected guard=sender authentication failed receive_state_sha256=e7cbb5660328b0ff9d447031ee61c32e207ffe88272007c8f6540829a44e2625
 {"status":"sealed","envelope_bytes":348,"ciphertext_bytes":68,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":40}
 {"status":"sealed","envelope_bytes":352,"ciphertext_bytes":72,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"recipient key version is not accepted\")"}
 {"status":"rejected"}
-control=old_version_after_rotation rejected guard=recipient key version is not accepted receive_state_sha256=b3b241c89ea9034bf39ef5b2877197a91320ebe84b30803c536037526a2ffab8
+control=old_version_after_rotation rejected guard=recipient key version is not accepted receive_state_sha256=c55dc53e38e7d806cf409f652226d1947e1e25f8733baa12e09d9242b35c5e0c
 {"status":"sealed","envelope_bytes":328,"ciphertext_bytes":48,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":20}
 {"status":"sealed","envelope_bytes":332,"ciphertext_bytes":52,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":24}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"replay rejected\")"}
 {"status":"rejected"}
-control=replay_duplicate rejected guard=replay rejected receive_state_sha256=0af0336bf768c665c1acf17d4a0bd32f22f427b04b6c3a9b6b7303bfda919e42
+control=replay_duplicate rejected guard=replay rejected receive_state_sha256=c31ac6b2c27782169e351a232146175defacb6bd42e0fe9040b4d8e2122697f8
 {"status":"sealed","envelope_bytes":342,"ciphertext_bytes":62,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":34}
 {"status":"sealed","envelope_bytes":346,"ciphertext_bytes":66,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"key version outside uint32\")"}
-control=key_version_overflow rejected guard=key_version_uint32 receive_state_sha256=4684a4e48f337c45fda893933b32be6fed0fd64bc9ee6730202d02b5520b8088
+control=key_version_overflow rejected guard=key_version_uint32 receive_state_sha256=b06e935022d7b58178c2abeee217f55b2780d9f7e9e0eb41f5b7790fb2d74cd0
 {"status":"sealed","envelope_bytes":2999574,"ciphertext_bytes":2999294,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":2999266}
 positive=plaintext_cap_exact_round_trip envelope_bytes=2999574 wire_bytes=3999434
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"plaintext outside limits\")"}
-control=plaintext_cap_plus_one rejected guard=plaintext_outside_limits receive_state_sha256=ea44b65b1b2f63cc0080ec6c81940f7b42e3082ff80cdae29f1b729c0a1ad463
+control=plaintext_cap_plus_one rejected guard=plaintext_outside_limits receive_state_sha256=8f4353875a475d1f802a10f2eb0c137bb61f319fb09aeebcd6ce51dc388f79ba
 {"status":"sealed","envelope_bytes":332,"ciphertext_bytes":52,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":24}
 {"status":"sealed","envelope_bytes":336,"ciphertext_bytes":56,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"replay rejected\")"}
 {"status":"opened","plaintext_bytes":28}
-positive=concurrent_duplicate_one_commit state_before_sha256=079fac44c8b85fe43f5bc4a91393997b6e5042c9472b6f2aa817bf778ead73b0 state_after_sha256=5cf831735025ec13e772251357cf1f70496d503374fb533dee6a8f16164b566b
+positive=concurrent_duplicate_one_commit state_before_sha256=e019632785524b20683a145578d8725f94c1b392643a03fb6ab5ee374966c36f state_after_sha256=ecf8f7fce18ab4ef88e3127a47d7b8a231fc2ffe8ee4f7a0a3a9a6a2da1cef3a
 {"status":"sealed","envelope_bytes":338,"ciphertext_bytes":58,"recipient_secret_input":false}
 {"status":"sealed","envelope_bytes":338,"ciphertext_bytes":58,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":30}
@@ -1379,23 +1379,23 @@ positive=concurrent_distinct_messages_no_lost_update
 {"status":"sealed","envelope_bytes":342,"ciphertext_bytes":62,"recipient_secret_input":false}
 Fatal error: exception Failure("injected failure before rename")
 {"status":"opened","plaintext_bytes":34}
-control=crash_after_temp_no_commit_then_restart_recover state_sha256=dd4f0004971b28a021ea9fda2dd91c5ef88de966e7f05c5d53ed949d74df2982
+control=crash_after_temp_no_commit_then_restart_recover state_sha256=58434d2036651be3ab080382b7bccceb4803c2dbe677459036a9fa43e297586c
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"replay rejected\")"}
 {"status":"rejected"}
-control=crash_after_temp_replay rejected guard=replay rejected receive_state_sha256=6fe4e04caf242dbeeb8cf6e09515ccd28f9e0839cd79245f987fe3541608cc63
+control=crash_after_temp_replay rejected guard=replay rejected receive_state_sha256=d7d5bc7f8131bdbef61680a54d5f2e556ba3e4e820c4b86021a842fc67983343
 {"status":"sealed","envelope_bytes":340,"ciphertext_bytes":60,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":32}
 {"status":"sealed","envelope_bytes":344,"ciphertext_bytes":64,"recipient_secret_input":false}
 Fatal error: exception Failure("injected crash after rename")
-control=crash_after_rename_committed_before_restart state_before_sha256=63127d3e73bb735be18650563a2d40e0ae0aec845240fed8f0c46da9a661c3ea state_after_sha256=502878a8fa6d0bf08f15103fd982257c7cdaca5bf3f3c4cc2ecad749178a8b85
+control=crash_after_rename_committed_before_restart state_before_sha256=01dcff9b9bd3c747d9e15022d56d548e4afc9082a8f1729731c688a21b9ed95f state_after_sha256=9348a7d37af94bf1a9f6dc10fd5ef0c38fa8e78843b37c09e323a4e59e88556e
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"replay rejected\")"}
 {"status":"rejected"}
-control=crash_after_rename_replay rejected guard=replay rejected receive_state_sha256=502878a8fa6d0bf08f15103fd982257c7cdaca5bf3f3c4cc2ecad749178a8b85
+control=crash_after_rename_replay rejected guard=replay rejected receive_state_sha256=9348a7d37af94bf1a9f6dc10fd5ef0c38fa8e78843b37c09e323a4e59e88556e
 {"status":"sealed","envelope_bytes":335,"ciphertext_bytes":55,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":27}
 {"status":"sealed","envelope_bytes":339,"ciphertext_bytes":59,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"envelope exceeds receive limit\")"}
-control=receive_limit rejected guard=envelope exceeds receive limit receive_state_sha256=957dfa48f91f920555a2da66cbd7ec18ac885d203b498fceed50c2ccd9e8131e
+control=receive_limit rejected guard=envelope exceeds receive limit receive_state_sha256=a13059dd4ca7dfb996b41b3446673bcf180fe2a6590107ba5c6970d829a3e671
 {"status":"sealed","envelope_bytes":344,"ciphertext_bytes":64,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":36}
 {"status":"sealed","envelope_bytes":348,"ciphertext_bytes":68,"recipient_secret_input":false}
@@ -1414,7 +1414,7 @@ positive=replay_after_pruning_high_water_retained
 {"status":"sealed","envelope_bytes":343,"ciphertext_bytes":63,"recipient_secret_input":false}
 {"status":"error","reason":"Invalid_argument(\"invalid receive state field windows\")"}
 {"status":"rejected"}
-control=malformed_windows rejected guard=invalid receive state field windows receive_state_sha256=647c9fbe0a9a5e1ccd4e053ef1bc86f0a177d07f297e342b562692e22ec8e82a
+control=malformed_windows rejected guard=invalid receive state field windows receive_state_sha256=5121fc380ee2553985dcc7ff8264ff6554bb7865a1d991c616685bc7e4e2d123
 {"status":"sealed","envelope_bytes":341,"ciphertext_bytes":61,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":33}
 {"status":"sealed","envelope_bytes":345,"ciphertext_bytes":65,"recipient_secret_input":false}
@@ -1429,7 +1429,7 @@ positive=out_of_order_inside_window
 {"status":"sealed","envelope_bytes":339,"ciphertext_bytes":59,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"sender sequence rollback\")"}
 {"status":"rejected"}
-control=out_of_window rejected guard=sender sequence rollback receive_state_sha256=62e241eea89201f80a00775692b63554898f0ea4cf2983574b971b9f9faba178
+control=out_of_window rejected guard=sender sequence rollback receive_state_sha256=c4b4f3bb5d45de84b93e418d8c09887e1a6f5c2df78e68b4e6c66bc84d69bbb0
 {"status":"sealed","envelope_bytes":334,"ciphertext_bytes":54,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":26}
 {"status":"sealed","envelope_bytes":338,"ciphertext_bytes":58,"recipient_secret_input":false}
@@ -1467,7 +1467,7 @@ positive=forward_distance_int64 distance=4097 high_water=4098 bitmap_bits=1
 {"status":"opened","plaintext_bytes":29}
 {"status":"sealed","envelope_bytes":337,"ciphertext_bytes":57,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":29}
-{"status":"recipient_initialized","view_public":"tt+yNMJ4WgAKZPdQkaEAcOHSkXPvsP4vmiYcKEFzbkA=","key_version":1}
+{"status":"recipient_initialized","view_public":"e1/5hM7ok/fVbabZREwBZVcSeglKZb9NuBowNQ8LrWU=","key_version":1}
 {"status":"sealed","envelope_bytes":328,"ciphertext_bytes":48,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":20}
 {"status":"sealed","envelope_bytes":337,"ciphertext_bytes":57,"recipient_secret_input":false}
@@ -1476,11 +1476,11 @@ positive=forward_distance_int64 distance=4097 high_water=4098 bitmap_bits=1
 {"status":"opened","plaintext_bytes":29}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"replay rejected\")"}
 {"status":"rejected"}
-control=forward_max_duplicate rejected guard=replay rejected receive_state_sha256=5d1b07562395ca2506c661c4250fe3e547b4ed7ec7b93e9b98dc5de667c67778
+control=forward_max_duplicate rejected guard=replay rejected receive_state_sha256=d047c266de2a868f3f3eb5d70a77b16d28db84d02e1e74f7262b30fb0e579a1d
 {"status":"sealed","envelope_bytes":337,"ciphertext_bytes":57,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"sender sequence rollback\")"}
 {"status":"rejected"}
-control=forward_max_too_old rejected guard=sender sequence rollback receive_state_sha256=5d1b07562395ca2506c661c4250fe3e547b4ed7ec7b93e9b98dc5de667c67778
+control=forward_max_too_old rejected guard=sender sequence rollback receive_state_sha256=d047c266de2a868f3f3eb5d70a77b16d28db84d02e1e74f7262b30fb0e579a1d
 {"status":"sealed","envelope_bytes":337,"ciphertext_bytes":57,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":29}
 positive=populated_window_max_int_next_unseen_duplicate_too_old independent_contact=unchanged
@@ -1504,29 +1504,29 @@ positive=populated_window_max_int_next_unseen_duplicate_too_old independent_cont
 {"status":"sealed","envelope_bytes":347,"ciphertext_bytes":67,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"invalid receive replay high-water\")"}
 {"status":"rejected"}
-control=corrupt_hw_zero rejected guard=invalid receive replay high-water receive_state_sha256=6c67f2e193305b723b94006e6af8ba1e56e869e1169629307ac83234730b7995
+control=corrupt_hw_zero rejected guard=invalid receive replay high-water receive_state_sha256=494c87db36badb349eee01ce1e84a996e6d2c8380f0695d8f8be6047aa77a281
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"invalid receive replay high-water\")"}
 {"status":"rejected"}
-control=corrupt_hw_negative rejected guard=invalid receive replay high-water receive_state_sha256=a9bd992af4bc6d31260cfb7cd645ddacae2430b08be34c813a6fdd658c7bef09
+control=corrupt_hw_negative rejected guard=invalid receive replay high-water receive_state_sha256=9d981c1dd17bb31885806718372c93d32a94d70f73d3b0f1b909ab822aff125c
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"invalid integer field high_water\")"}
 {"status":"rejected"}
-control=corrupt_hw_overflow rejected guard=invalid integer field high_water receive_state_sha256=7fd318156b281a49826b8d73c47df7b6fdf29fca4aa9001fc84e19f02295ff99
+control=corrupt_hw_overflow rejected guard=invalid integer field high_water receive_state_sha256=b17aeb4a12bad76a6ba101bd062d19777df3b6e64db60bdc737cfa9fdef2e357
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"invalid receive replay bitmap size\")"}
 {"status":"rejected"}
-control=corrupt_bitmap_short rejected guard=invalid receive replay bitmap size receive_state_sha256=68aeaf61479e773b53fb664bae70890ba2a0ccac6a3169f2777d700c3378e7d8
+control=corrupt_bitmap_short rejected guard=invalid receive replay bitmap size receive_state_sha256=4bc936bc83450d369a8654d530ff550ed238911d7ac17aaf56c321b61fb8d228
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"invalid receive replay bitmap size\")"}
 {"status":"rejected"}
-control=corrupt_bitmap_long rejected guard=invalid receive replay bitmap size receive_state_sha256=98e4a2201ba8d1e7f928486778fff8511e2c4737ea315f1fa2ef224354e5e9b8
+control=corrupt_bitmap_long rejected guard=invalid receive replay bitmap size receive_state_sha256=cc938cc59b122360bc0f6614b68c000ef9a5edc699346569db5b4e4229fe554a
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"invalid receive replay bitmap encoding\")"}
 {"status":"rejected"}
-control=corrupt_bitmap_base64 rejected guard=invalid receive replay bitmap encoding receive_state_sha256=61f7f3d345b7d1b0a2c99fc1ad23e2be4e5becc17231e81b1753d9dac82c8795
+control=corrupt_bitmap_base64 rejected guard=invalid receive replay bitmap encoding receive_state_sha256=d263a5836e4d70ec5f88b341bb599da5e42e4804bee4dd0cffb70251ef067cca
 {"status":"sealed","envelope_bytes":334,"ciphertext_bytes":54,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":26}
 {"status":"sealed","envelope_bytes":338,"ciphertext_bytes":58,"recipient_secret_input":false}
 {"status":"sealed","envelope_bytes":338,"ciphertext_bytes":58,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"sender epoch exceeds live future tolerance\")"}
 {"status":"rejected"}
-control=future_epoch rejected guard=sender epoch exceeds live future tolerance receive_state_sha256=0a893589b4b4962739536384db7fb75ce65453b5166c788a2a6579d7a2bb59d2
+control=future_epoch rejected guard=sender epoch exceeds live future tolerance receive_state_sha256=f41baa3687c0d989c576d69d8c80920936bed92f2656361ce631d0899328c0a7
 {"status":"sealed","envelope_bytes":338,"ciphertext_bytes":58,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":30}
 {"status":"sealed","envelope_bytes":342,"ciphertext_bytes":62,"recipient_secret_input":false}
@@ -1539,46 +1539,46 @@ positive=live_future_tolerance_two_epochs
 {"status":"sealed","envelope_bytes":337,"ciphertext_bytes":57,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"sender epoch is stale for live delivery\")"}
 {"status":"rejected"}
-control=stale_epoch rejected guard=sender epoch is stale for live delivery receive_state_sha256=b6aa38c501808ae09e82661d44046b696753a6e20ce10b92d272e290bc7d9158
+control=stale_epoch rejected guard=sender epoch is stale for live delivery receive_state_sha256=f7e109da20b0b027684f3b3ae79f70a25d4fd674c9551ede57b3226550fb1d7c
 {"status":"opened","plaintext_bytes":29}
 positive=archive_uses_commit_epoch_not_live_age
 {"status":"sealed","envelope_bytes":337,"ciphertext_bytes":57,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"sender epoch is after frame commit epoch\")"}
-control=stale_archive_future rejected guard=sender epoch is after frame commit epoch receive_state_sha256=0b0cfd50a0bd1ba2c05b8c5b91331a01f7c1b72424c4a52f2fa0a094fce4fa89
+control=stale_archive_future rejected guard=sender epoch is after frame commit epoch receive_state_sha256=6cf57c9b75deaf4e64f41bd0018b52cff892c24dc43ea528bc9c433ac0124d9d
 {"status":"sealed","envelope_bytes":337,"ciphertext_bytes":57,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":29}
 {"status":"sealed","envelope_bytes":341,"ciphertext_bytes":61,"recipient_secret_input":false}
 {"status":"resigned_envelope","mode":"sender-instance"}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"ciphertext authentication failed\")"}
 {"status":"rejected"}
-control=sender_instance rejected guard=ciphertext authentication failed receive_state_sha256=7476c084ffe15e7c2d1c4b1bd25a2bcb6bae804438c40980d896cb684b47dfad
+control=sender_instance rejected guard=ciphertext authentication failed receive_state_sha256=41168f132649f12438916d56d057430bbfd22a314c7ee1c3ea44510e365fc077
 {"status":"sealed","envelope_bytes":344,"ciphertext_bytes":64,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":36}
 {"status":"sealed","envelope_bytes":348,"ciphertext_bytes":68,"recipient_secret_input":false}
-{"status":"outbox_prepared","record_id":"c3c0f52eac393e0324ba65b1c2a41ea6d1ddd5ef26e6da1caac281f2af89c519","sequence":"1"}
+{"status":"outbox_prepared","record_id":"961917137a2d3fe051918355b50006eef924b48b7a5ca4749d29ea4b5881aa62","sequence":"1"}
 {"status":"opened","plaintext_bytes":40}
-{"status":"outbox_prepared","record_id":"c3c0f52eac393e0324ba65b1c2a41ea6d1ddd5ef26e6da1caac281f2af89c519","sequence":"1"}
+{"status":"outbox_prepared","record_id":"961917137a2d3fe051918355b50006eef924b48b7a5ca4749d29ea4b5881aa62","sequence":"1"}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"replay rejected\")"}
 {"status":"rejected"}
-control=rollback_after_restart rejected guard=replay rejected receive_state_sha256=5ff6d715955d5878172c68684392659e409e1ed75db1a26e05d213aecdc79e64
+control=rollback_after_restart rejected guard=replay rejected receive_state_sha256=8e61cb8ee4707ab485fb488878d99fa5c1b7cee4a004ac0daef651f34e3a6ea3
 {"status":"sealed","envelope_bytes":331,"ciphertext_bytes":51,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":23}
 {"status":"sealed","envelope_bytes":335,"ciphertext_bytes":55,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"unsupported version 1\")"}
 {"status":"rejected"}
-control=v1_rewrap_a rejected guard=unsupported version 1 receive_state_sha256=986e52073a55971c962baa38d8b6ccb09b17adc8bde5aa13749e96b9acba6849
+control=v1_rewrap_a rejected guard=unsupported version 1 receive_state_sha256=18d3363ea8011751e023b8da49399c8431e0b9effbe1b6dd221357c381c05fb8
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"unsupported version 1\")"}
 {"status":"rejected"}
-control=v1_rewrap_b rejected guard=unsupported version 1 receive_state_sha256=986e52073a55971c962baa38d8b6ccb09b17adc8bde5aa13749e96b9acba6849
-{"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"unsupported version 1\")"}
+control=v1_rewrap_b rejected guard=unsupported version 1 receive_state_sha256=18d3363ea8011751e023b8da49399c8431e0b9effbe1b6dd221357c381c05fb8
+{"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"unsupported version 12546\")"}
 {"status":"rejected"}
-control=v1_legacy_tag rejected guard=unsupported version 1 receive_state_sha256=986e52073a55971c962baa38d8b6ccb09b17adc8bde5aa13749e96b9acba6849
+control=v1_legacy_tag rejected guard=unsupported version 12546 receive_state_sha256=18d3363ea8011751e023b8da49399c8431e0b9effbe1b6dd221357c381c05fb8
 {"status":"sealed","envelope_bytes":331,"ciphertext_bytes":51,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":23}
 {"status":"sealed","envelope_bytes":335,"ciphertext_bytes":55,"recipient_secret_input":false}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"unsupported version 1\")"}
 {"status":"rejected"}
-control=downgrade rejected guard=unsupported version 1 receive_state_sha256=ec9ed7167115416d42d81e1fe1836b0482d89325248241b0019996578928df8b
+control=downgrade rejected guard=unsupported version 1 receive_state_sha256=37ea6d564a5628a0400644ffe507c2f56b036602b6767bfad78d9ce0fc871bdc
 {"status":"sealed","envelope_bytes":333,"ciphertext_bytes":53,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":25}
 {"status":"sealed","envelope_bytes":337,"ciphertext_bytes":57,"recipient_secret_input":false}
@@ -1591,7 +1591,7 @@ positive=dedup_out_of_grace_pruning_allows_receive plaintext_files_fsynced state
 {"status":"receive_seeded","records":1000,"high_water":1}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"receive sender state capacity reached\")"}
 {"status":"rejected"}
-control=sender_dedup_cap rejected guard=receive sender state capacity reached receive_state_sha256=817ee0b63071f2813c0454209a3f28659bb28556f351b823d1c821086a8c2b95
+control=sender_dedup_cap rejected guard=receive sender state capacity reached receive_state_sha256=4b1d3f12589322109a292c21e6f6e5a527e26881ee5b582c18409b945b759d6b
 {"status":"sealed","envelope_bytes":342,"ciphertext_bytes":62,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":34}
 positive=sender_dedup_cap_does_not_block_other_sender
@@ -1601,7 +1601,7 @@ positive=sender_dedup_cap_does_not_block_other_sender
 {"status":"receive_seeded","records":1,"high_water":1}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"receive sender byte capacity reached\")"}
 {"status":"rejected"}
-control=sender_byte_cap rejected guard=receive sender byte capacity reached receive_state_sha256=1aa8db828f3000d8ea3a9f0502dc533d36d4998c9155b2aa4e7cc332afee16d8
+control=sender_byte_cap rejected guard=receive sender byte capacity reached receive_state_sha256=81f6de9fc0b503b9db2b0c392b0eb97baa8578abcb7a2bd62455c9b2956d3c0d
 {"status":"sealed","envelope_bytes":341,"ciphertext_bytes":61,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":33}
 positive=sender_byte_cap_does_not_block_other_sender
@@ -1611,14 +1611,14 @@ positive=sender_byte_cap_does_not_block_other_sender
 {"status":"receive_seeded","records":10000,"high_water":1}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"receive state capacity reached\")"}
 {"status":"rejected"}
-control=dedup_cap rejected guard=receive state capacity reached receive_state_sha256=70b04de16000e3bd47fa4f12fd268edc0f25cc779a98f25d9fb29b0634520ce3
+control=dedup_cap rejected guard=receive state capacity reached receive_state_sha256=315b10f25123266e1e4e5adf20ce7443ed9942b0faa5f0e3a572c192ac309329
 {"status":"sealed","envelope_bytes":330,"ciphertext_bytes":50,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":22}
 {"status":"sealed","envelope_bytes":334,"ciphertext_bytes":54,"recipient_secret_input":false}
 {"status":"receive_seeded","records":1,"high_water":1}
 {"status":"error","reason":"Dune__exe__Recipient_endpoint.Rejection(\"receive byte capacity reached\")"}
 {"status":"rejected"}
-control=byte_cap rejected guard=receive byte capacity reached receive_state_sha256=78b97d966ea6b03cd6a98fc39c10214e73269ab2f37c3b34697f38306da2c990
+control=byte_cap rejected guard=receive byte capacity reached receive_state_sha256=1463e2fc9cf38e2aa1eadeee53e6753a8d464a761a98743cba0d83704a7aea79
 {"status":"sealed","envelope_bytes":334,"ciphertext_bytes":54,"recipient_secret_input":false}
 {"status":"opened","plaintext_bytes":26}
 {"status":"sealed","envelope_bytes":338,"ciphertext_bytes":58,"recipient_secret_input":false}

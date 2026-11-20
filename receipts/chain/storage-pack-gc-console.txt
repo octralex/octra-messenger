@@ -1,6 +1,0 @@
-opening
-opened
-collecting
-{"status":"started","floor":1133,"tags_removed":1033}
-2026-11-14T19:27:23.928Z INFO component = gc event = pack_gc status = complete epoch = 1320 seconds = 0.079
-{"status":"complete"}

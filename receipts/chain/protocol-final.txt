@@ -1,1 +1,0 @@
-protocol = pass frames = 5001 context = canonical cursor = canonical pages = bounded

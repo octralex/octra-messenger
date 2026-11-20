@@ -1,0 +1,53 @@
+// SPDX-License-Identifier: BSD-3-Clause
+// Copyright (c) 2023-2026 Octra Labs <dev@octra.org>
+
+program MailboxSegmentRegistry {
+  state {
+    owner: address
+    next_id: int
+    current: address
+    segments: map[string]address
+    activations: map[string]int
+  }
+
+  event Published(segment_id: int)
+
+  constructor() {
+    self.owner = caller
+  }
+
+  public fn publish(segment: address, activation_epoch: int): int {
+    require(caller == self.owner, "not registry owner")
+    require(activation_epoch >= 0, "invalid activation epoch")
+    let segment_id = self.next_id
+    self.segments[to_string(segment_id)] = segment
+    self.activations[to_string(segment_id)] = activation_epoch
+    self.current = segment
+    self.next_id = segment_id + 1
+    emit Published(segment_id)
+    return segment_id
+  }
+
+  public view fn owner(): address {
+    return self.owner
+  }
+
+  public view fn count(): int {
+    return self.next_id
+  }
+
+  public view fn current(): address {
+    require(self.next_id > 0, "registry empty")
+    return self.current
+  }
+
+  public view fn segment(segment_id: int): address {
+    require(segment_id >= 0 && segment_id < self.next_id, "segment outside registry")
+    return self.segments[to_string(segment_id)]
+  }
+
+  public view fn activation_epoch(segment_id: int): int {
+    require(segment_id >= 0 && segment_id < self.next_id, "segment outside registry")
+    return self.activations[to_string(segment_id)]
+  }
+}

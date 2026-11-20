@@ -5,14 +5,14 @@ Target product language, valid only after the corresponding behavior is implemen
 > Messages are end-to-end encrypted and stored on Octra. Sending accounts and transaction activity are public.
 > Initial contact setup may reveal who is contacting whom.
 
-A recipient-only native path is demonstrated in the lab through a thin X25519/AES-GCM/Ed25519 binding. The sender
+A recipient-only native path is implemented through a thin X25519/AES-GCM/Ed25519 binding. The sender
 uses an ephemeral X25519 key and public recipient view material; the recipient opens later with a typed view secret.
-That is not a deployed messenger, independent security acceptance or anonymity guarantee. The same-key PVAC spike
+That is not a production messenger or an anonymity guarantee. The same-key PVAC spike
 is removed from the active message path.
 
 ## Public and observable information
 
-- Sending account, on-chain writer address, wallet Ed25519 key/signature, account nonce, fee, target circle,
+- Sending account, on-chain writer address, wallet Ed25519 key/signature, account nonce, fee, target program,
   inclusion order and funding trail. Signatures make messages non-deniable and transferable to a third party.
 - Recipient view-key registration, key versions, initial contact setup, rotation, reply timing and traffic volume.
 - The random 16-byte sender instance, sequence and sender epoch. A stable instance per outbox contact links messages

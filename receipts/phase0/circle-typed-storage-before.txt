@@ -1,3 +1,0 @@
-native_circle_append={"success":false,"effort_used":47,"error":"execution reverted","events":[]}
-native_circle_rejected_pc=64 instruction=NEQ r3, r2, r3 effort=47 reverted=true
-Fatal error: exception Failure("native Circle append: execution reverted")

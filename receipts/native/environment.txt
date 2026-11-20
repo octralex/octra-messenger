@@ -1,7 +1,0 @@
-source_commit=c49de45cf49ebbc2e5c0697eb956cbcada5845e7
-webcli_commit=28208507bf704b9d2726dd48cb6597319c594688
-ocaml=4.14.2
-dune=3.23.0
-kernel=Linux 7.0.0-43-generic x86_64 GNU/Linux
-driver_sha256=8ff2c8d215738f1b2f9abc3f0a2b76c5426b18cc5cd7d3f0f93bd82e18544c0d
-module_sha256=8dca57d63bd49ce22f3b63c9c25946165606ffe0dbc141bba2aec668a565f0da

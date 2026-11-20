@@ -1,8 +1,7 @@
 # Native protocol profile v2 — experimental
 
-This document describes implemented codecs and lab evidence, not a final wire specification, independent security
-acceptance or production readiness. Compatibility begins at v2; no v1 reader remains. `docs/SCHEME.md` is the short
-design summary for maintainer review after the current code and independent reviews clear.
+This document describes the implemented codecs and what was measured. It is not a final wire specification or a
+production profile. Compatibility begins at v2; no v1 reader exists. `docs/SCHEME.md` is the short design summary.
 
 ## Native encoding, hashing and signatures
 
@@ -11,7 +10,8 @@ reads. `Octra_net.Hash_domain.hash_encoded` supplies `SHA256(tag ‖ 0 ‖ OCE1(
 bytes. There is no messenger-specific parallel encoder. HMAC-SHA256 is retained only for HKDF-style key derivation,
 with OCE1 field encoding and no extra package.
 
-`lib/protocol/frame.ml` accepts exact 2,048- or 4,096-byte frames and uses the labelled frame digest for dedup keys.
+`lib/protocol/frame.ml` accepts exact 2,048- or 4,096-byte frames and gives each a labelled digest. The
+segment program stores 2,048-byte frames only.
 `lib/protocol/cursor.ml` writes `OCMCUR` with explicit u16 version, epoch, sequence, segment and root. The current
 cursor is 131 bytes; older cursor versions reject. Pages remain capped at 64 records and 262,144 bytes, with exact
 whole-frame accounting; a cursor is a scan bookmark, not a completeness proof.
@@ -94,31 +94,39 @@ wrapper is exposed. Public modules have `.mli` interfaces and SPDX headers. `tes
 library with no legacy encoder or production test constructors. Tagged typed-key loading and atomic secret-file
 writes live in `Recipient_keys`; raw construction and deterministic fixtures are not exported.
 
-## On-chain sender binding
+## On-chain store and sender binding
 
-Native `CircleDeploy` does not execute the AML constructor, so segment and registry source templates embed the owner
-address before compilation. Segment `append` accepts that owner or an owner-granted writer; registry `publish` is
-owner-only. No first-use initialization transaction exists. Segment frames store `caller`; clients bind it to the
-contact wallet and fixed-header sender key before full decoding. Non-owner writes reject without state mutation.
-Registry and segment tests cover owner, non-owner rejection, descriptors and restart reads in both compiler profiles.
+`programs/segment.aml` and `programs/registry.aml` are deployed with `ProgramDeploy` as source packages. The node
+compiles the source and compares the result, so deployment needs no release signature. Each constructor records the
+deployer as owner.
 
-The current segment accepts exactly 2,048 bytes of base64 text per frame and retains that exact body once. Its
-64-character dedup key is the `octra:msg:frame:v2` digest used by `Frame.hash`. Registry descriptors use bounded
-OCE1 fields and reject truncation or trailing bytes. A pinned lab-only `\xHH` lexer patch supplies the binary
-prefixes; it adds no VM opcode. Large envelopes require a chunking design not yet implemented.
+| call | who | rule |
+|---|---|---|
+| `segment.append(frame)` | owner or granted writer | exactly 2,048 bytes, not closed, under 1,024 frames, not a repeat |
+| `segment.grant_writer(writer)` | owner | segment not closed |
+| `segment.close()` | owner | once |
+| `registry.publish(segment, activation_epoch)` | owner | epoch not negative |
+
+Views are public: `get`, `sender`, `owner`, `count`, `used_bytes`, `closed` and `dedup_key` on a segment;
+`segment`, `activation_epoch`, `current`, `count` and `owner` on the registry. Integer views return decimal strings.
+
+A frame is 2,048 bytes of base64 text: the encoded envelope padded with spaces. The program keeps
+`sha256("octra:msg:segment-dedup:v1:" ‖ frame)` for each accepted frame and rejects a repeat. Each frame stores its
+caller. The client requires that caller to be the contact's wallet, and the envelope's sender key to derive that
+address, before it decodes the envelope. Envelopes larger than one frame need a chunking design that does not exist
+yet.
 
 ## Measured caps and evidence
 
 With a maximum 512-byte context, the plaintext cap is 2,999,266 bytes. With the 86-byte test context, exact-cap
 plaintext is 2,999,266 bytes, the envelope is 2,999,574 bytes and base64 plus quotes is 3,999,434 bytes. The default
-65,536-byte receive cap accepts 65,228 plaintext bytes in this context and rejects a 65,537-byte envelope. The segment
-still rejects whole large envelopes; encoding headroom is not chain storage evidence.
+65,536-byte receive cap accepts 65,228 plaintext bytes in this context and rejects a 65,537-byte envelope. The
+segment stores one 2,048-byte frame per append; encoding headroom is not chain storage.
 
-The current small-message signed sizes and native OU base costs are in `receipts/chain/devnet-feasibility.json`.
-These OU values are not receipt effort, explicit fee burn or a production fee schedule. Binary I/O evidence belongs
-to the separately disclosed older lab profile and is not rebound to the new native recipient library or to a
-production activation. Historical pruning, index rebuild and fresh-sync results are not silently rebound either;
-revised large-retention and recovery evidence remains open.
+`receipts/devnet/devnet-program.json` is one devnet run at lite_node `8f785a93`: both deployments, the append,
+public read, caller binding and archive decryption, and every rejection control with its transaction hash and
+terminal status. Declared OU was 1,000,000 per deployment and 100,000 per call; these are declared limits, not
+measured fees. `receipts/recipient/` holds the library suites.
 
 ## Security limits
 

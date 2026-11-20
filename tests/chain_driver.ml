@@ -128,6 +128,15 @@ let deploy kind url wallet_path nonce ou payload_path params output_path =
     ~public_key ~message:(parameter_text params) ~encrypted_data:(Some payload) in
   submit_tx ~url ~output_path tx priv
 
+let program_deploy url wallet_path nonce ou package_path envelope_path params output_path =
+  let from, public_key, priv = load_wallet wallet_path in
+  let package = String.trim (read_file package_path) in
+  let envelope = Base64.decode_exn (String.trim (read_file envelope_path)) in
+  let target = Octra_vm.Contract.addr_from_code envelope from nonce in
+  let tx = base_tx ~op:Octra_core.Transaction.ProgramDeploy ~from ~to_:target ~nonce ~ou
+    ~public_key ~message:(parameter_text params) ~encrypted_data:(Some package) in
+  submit_tx ~url ~output_path tx priv
+
 let circle_deploy url wallet_path nonce ou payload_path output_path =
   let from, public_key, priv = load_wallet wallet_path in
   let payload = match Octra_core.Circles.deploy_payload_of_yojson
@@ -166,6 +175,8 @@ let () =
     deploy kind url wallet (int_of_string nonce) ou payload params output
   | [_; (("exec" | "legacy-exec" | "circle-exec") as kind); url; wallet; nonce; ou; target; method_name; params; output] ->
     exec kind url wallet (int_of_string nonce) ou target method_name params output
+  | [_; "program-deploy"; url; wallet; nonce; ou; package; envelope; params; output] ->
+    program_deploy url wallet (int_of_string nonce) ou package envelope params output
   | [_; "circle-deploy"; url; wallet; nonce; ou; payload; output] ->
     circle_deploy url wallet (int_of_string nonce) ou payload output
   | [_; "circle-view"; url; target; method_name; params] -> circle_view url target method_name params

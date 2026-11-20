@@ -1,14 +1,14 @@
 {
   "receipt_schema": 3,
-  "control_commit": "cf8d4714926e8ebd0192145333936cd6449533c1",
-  "messenger_tree_hash": "79640790c6eaaaa9ea767cd41495966765be8cfb",
+  "control_commit": "7e675a5b216830f23b11df2404cfb74d26414d0f",
+  "messenger_tree_hash": "a1e17a7a7684cd3b4715ab752d460768a0d5dad2",
   "lite_node_commit": "8f785a93a4e7392a0f3e65674f9de89854d33dbc",
   "lite_node_crypto_ml_sha256": "b29d9cf2588a3dd5a593d6f418916cc77b491c4113bc063e1e6193638a3d716b",
   "webcli_commit": "28208507bf704b9d2726dd48cb6597319c594688",
   "webcli_executable_sha256": "97206c40ffc27fe53912139fb2cb743f2c6756529a6c646fb72c673f441ad2c3",
   "lite_node_running_executable_sha256": "edacd044c3d2a362f3c317656b28c1d39af02c328dd68b711a92ee2c4b59773a",
-  "venue": "/srv/octra-node/fakenet-kimi-messenger",
-  "build_command": "python3 /srv/octra-node/fakenet-kimi-messenger/devnet-src/lite_node/controls/lib/gc_build.py -- dune build --root /home/kimi/workspace/octra-egregore/projects/onchain-messenger --build-dir /srv/octra-node/fakenet-kimi-messenger/library-build --profile release -j 2 tests/recipient_endpoint.exe tests/size_sweep.exe",
+  "venue": "/venue",
+  "build_command": "python3 /venue/devnet-src/lite_node/controls/lib/gc_build.py -- dune build --root /project --build-dir /venue/library-build --profile release -j 2 tests/recipient_endpoint.exe tests/size_sweep.exe",
   "ocaml": "4.14.2",
   "dune": "3.23.0",
   "opam_lock_sha256": "60ee5231da943fd8ef2ad2bddba6a9b1409ce20f321069c02ddcb95db516465e",
@@ -31,7 +31,7 @@
   "kernel": "Linux 7.0.0-43-generic x86_64 GNU/Linux",
   "cpu_arch_flags": "-march=x86-64-v3 -maes",
   "synthetic_keys_only": true,
-  "endpoint_executable_sha256": "695c8e5f68f331c3905da3e52e358938ccd579aa73d8b2cfba9c36f8ca8a7b29",
-  "endpoint_command": "/home/kimi/workspace/octra-egregore/projects/onchain-messenger/tests/run_recipient_spike.sh",
+  "endpoint_executable_sha256": "a6b748f6162a0f78f73ece3c9df49d1966e51e1b6c770ac2c254357960350ba5",
+  "endpoint_command": "tests/run_recipient_spike.sh",
   "receipt": "receipts/recipient/endpoint.txt"
 }

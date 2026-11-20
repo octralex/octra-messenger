@@ -1,8 +1,0 @@
-Traceback (most recent call last):
-  File "/home/kimi/workspace/octra-egregore/projects/onchain-messenger/tests/run_devnet_feasibility.py", line 250, in <module>
-    main()
-    ~~~~^^
-  File "/home/kimi/workspace/octra-egregore/projects/onchain-messenger/tests/run_devnet_feasibility.py", line 151, in main
-    assert deploy["status"] == "confirmed" and append["status"] == "confirmed", (deploy, append)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AssertionError: ({'status': 'rejected', 'tx_hash': 'e0d89d192039519303b760442f6a4a4b2d63c02dec96da90e035235a523b181f', 'epoch': 1874030, 'error': {'type': 'circle_program_invalid', 'reason': 'circle creation work refused'}, 'from': 'oct3JwTPt2hCWB4YUHaET2XPou9QM5azvu3yuzJBtWGDvqz', 'to': 'octFEpnoxXdWUKnMvk3DWkHjNYrugMJjWVdzTZF9NvoXAeW', 'amount': '0', 'nonce': 12, 'rejected_at': 1795084245.967051, 'source': 'rejected_txs'}, {'status': 'rejected', 'tx_hash': '075d5b729de918052d733c4bf1edb31e01e74d2c5ec727441b5fde21a0c4e53f', 'epoch': 1874032, 'error': {'type': 'circle_call_failed', 'reason': 'circle not found'}, 'from': 'oct3JwTPt2hCWB4YUHaET2XPou9QM5azvu3yuzJBtWGDvqz', 'to': 'octFEpnoxXdWUKnMvk3DWkHjNYrugMJjWVdzTZF9NvoXAeW', 'amount': '0', 'nonce': 12, 'rejected_at': 1795084282.419794, 'source': 'rejected_txs'})

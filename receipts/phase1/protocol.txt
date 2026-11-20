@@ -1,3 +1,0 @@
-protocol = pass frames = 5001 context = canonical cursor = canonical pages = bounded
-ocaml=4.14.2
-dune=3.23.0
