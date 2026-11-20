@@ -96,7 +96,8 @@ writes live in `Recipient_keys`; raw construction and deterministic fixtures are
 
 ## On-chain store and sender binding
 
-`programs/segment.aml` and `programs/registry.aml` are deployed with `ProgramDeploy` as source packages. The node
+`programs/segment.aml`, `programs/registry.aml` and `programs/directory.aml` are deployed with `ProgramDeploy` as
+source packages. The node
 compiles the source and compares the result, so deployment needs no release signature. Each constructor records the
 deployer as owner.
 
@@ -104,11 +105,19 @@ deployer as owner.
 |---|---|---|
 | `segment.append(frame)` | owner or granted writer | exactly 2,048 bytes, not closed, under 1,024 frames, not a repeat |
 | `segment.grant_writer(writer)` | owner | segment not closed |
+| `segment.set_card(contact, card)` | owner | card of 1 to 4,096 bytes |
 | `segment.close()` | owner | once |
 | `registry.publish(segment, activation_epoch)` | owner | epoch not negative |
+| `directory.register(segment)` | anyone | sets the caller's own entry |
 
-Views are public: `get`, `sender`, `owner`, `count`, `used_bytes`, `closed` and `dedup_key` on a segment;
-`segment`, `activation_epoch`, `current`, `count` and `owner` on the registry. Integer views return decimal strings.
+Views are public: `get`, `sender`, `epoch_of`, `has_card`, `card`, `owner`, `count`, `used_bytes`, `closed` and `dedup_key` on
+a segment; `segment`, `activation_epoch`, `current`, `count` and `owner` on the registry; `has` and `segment_of` on
+the directory. Integer views return decimal strings.
+
+`append` records the epoch it ran in, and `epoch_of` returns it; a reader uses it as the commit epoch for archive
+decryption. A card is the recipient key material the owner publishes for one contact, so a sender needs only the
+recipient's wallet address: the directory gives the mailbox and the mailbox gives the card. Cards are not yet
+bound to a registration the contact controls.
 
 A frame is 2,048 bytes of base64 text: the encoded envelope padded with spaces. The program keeps
 `sha256("octra:msg:segment-dedup:v1:" ‖ frame)` for each accepted frame and rejects a repeat. Each frame stores its

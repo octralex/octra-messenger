@@ -2,6 +2,17 @@
   "call_ou": 100000,
   "chain_id": "octra-devnet-9871-cluster",
   "controls": {
+    "card": {
+      "non_owner_set": {
+        "error": {
+          "reason": "execution reverted [not segment owner]",
+          "type": "program_exec_failed"
+        },
+        "status": "rejected",
+        "tx": "3589f2929213ebca323d97ed6d5f5fc23f2addb55ff1140649b0169bc4b004f8"
+      },
+      "set_tx": "3ef3e18f9e3c0f2f67a3b13a0f389b3fcb857028963481468a2d73abb3ef096a"
+    },
     "close": {
       "append_after_close": {
         "error": {
@@ -9,12 +20,12 @@
           "type": "program_exec_failed"
         },
         "status": "rejected",
-        "tx": "5235d3d2f9ed2b112132ec1b0af5fb34e2be87e40d0f9d7c4da2b7d1020cf989"
+        "tx": "a36b2c6bd662fd6d4f73d58184d23ea3be301f4bad87ccf6323f6ecab56539be"
       },
-      "close_tx": "654667efac8579f40197c32403c31468f462796479847c5a61d12bc94e8477bb",
+      "close_tx": "75f3ab09d2f2ce5c3e35da2ee241a4ef5afaf07ca5f2b525f50f6054a758702b",
       "non_owner_close": {
         "status": "rejected",
-        "tx": "a96388d7b48d48c9cda0d47a77cac3c3f02f9859afb318c00f7476b94a4a2874"
+        "tx": "1045c9bb5d568f352a23497d4c54d2f0a676285f1fce2a2efbbdd654490ee933"
       }
     },
     "duplicate_frame": {
@@ -23,13 +34,13 @@
         "type": "program_exec_failed"
       },
       "status": "rejected",
-      "tx": "6be986683eca29db7f2d978d148ec31dffedc7f5d63fe8b17344dd4d592c4a42"
+      "tx": "330c027740d59d9c6a261798d8f17f2a1dd4662ed781fc16f716876c31b57a93"
     },
     "frame_and_count_unchanged_after_rejections": true,
     "granted_writer": {
-      "append_tx": "6e5e5f5d8ff46f15fd29e85c63e5149a02471cab90e50aa2eb895b264b3b7663",
+      "append_tx": "e2d9b0ef1cc5ceaebc3bd2a80779f2e084e4249bf786863c6d9f18f8849b8225",
       "client_binding_rejects_signer_writer_mismatch": true,
-      "grant_tx": "4789402071b523c9d3efe597f4d3fb8a6a14f17f8f20a7e64e0baf683a140850",
+      "grant_tx": "b69b871f08afb6d3eea2ea89c2f28039118848651e120a16a8cfc7b04d8f3cda",
       "stored_sender": "oct16CXeJRsxyqYeJJeLVVpoiSnQuRJBJYTHybFQQbevie3"
     },
     "non_owner_grant": {
@@ -38,7 +49,7 @@
         "type": "program_exec_failed"
       },
       "status": "rejected",
-      "tx": "55aa846b0578b5f6f41c81093339266bc07cb546a14c69170980fa99679204dc"
+      "tx": "fcaf974e420095d2617b372346819a59a0a60d4e2d080251e5b91c2e3a16534f"
     },
     "non_writer_append": {
       "error": {
@@ -46,7 +57,7 @@
         "type": "program_exec_failed"
       },
       "status": "rejected",
-      "tx": "1682c261146903ad41759134ff837183c6ad477f4ac95f5c096f7ca004c635d8"
+      "tx": "6be2ff28326910c19a44eee6f6509c1ba0c3686446dc2f5cdb174d98514ca2ef"
     },
     "oversize_2049": {
       "argument_bytes": 2049,
@@ -55,19 +66,32 @@
         "type": "program_exec_failed"
       },
       "status": "rejected",
-      "tx": "a0e210d8712b06cb6be4826fd28058f1a8204918e09abe50860e2c0e7b17dcfd"
+      "tx": "30f40478ea3cba83f92ff5794748865f5429d3ff7a7f0c5b3223c550f80d872d"
     }
   },
   "deploy_ou": 1000000,
-  "end_epoch": 1878484,
+  "directory": {
+    "address": "oct6iAGPsfRr2bu7YwC5i5FAczuQWi6ZJgsuuKAQnS4sJcB",
+    "deploy_tx": "895fcfa338e6ebb79695ae52ab248492f378a42da6acdeaa68b5aa6746b47564",
+    "register_tx": "77d20794c4d0091126b125eb9ca2479284b7e73e17b6895becf6cddbf6bd9298"
+  },
+  "directory_package": {
+    "bytecode_bytes": 1484,
+    "compiler_version": "2.0 AML-preview",
+    "instructions": 89,
+    "package_base64_bytes": 2860,
+    "package_sha256": "fe672c43f7d3c3eb8ce3d93a480617f8b91ba24cb23914dbfcca8859de7a4c2e",
+    "source_sha256": "88eeb7ef4e6230071b166ac9633a92db3ab79057216cab5b09b46f4f2956c31f"
+  },
+  "end_epoch": 1881627,
   "message": {
-    "append_epoch": 1878471,
-    "append_tx": "642336e79bc8323e7ac533db08128367d85b809b3c6f82afc64ae29ca1c80e98",
+    "append_epoch": 1881604,
+    "append_tx": "cca46301f5cd81ea6830590f77463b55cec42b29d3cf3a40d8bf7763540154d6",
     "archive_decryption_equals_plaintext": true,
     "envelope_bytes": 381,
-    "envelope_sha256": "163aa8e34c15654554ec66614a87e20ea9d75ad67ec15c0ed42b58ef19040f5f",
+    "envelope_sha256": "a338da980dc6d5d6e5aa65a9cbb03bb490671d9d7ebf47dfc961aeb46bd6ab0f",
     "frame_bytes": 2048,
-    "frame_dedup_key": "c6de022d3cf3b64ba1ac68c507861c1fd8c98a7dd96cadaadb862e3c3fe50e8a",
+    "frame_dedup_key": "90b7697af9cc40b42bb084f387e13ff20fd815ce46cbdeb1b6d7a5ad2a3be4b6",
     "plaintext_bytes": 73,
     "public_read_equals_frame": true,
     "stored_sender_equals_signer": true
@@ -76,17 +100,17 @@
   "other": "oct16CXeJRsxyqYeJJeLVVpoiSnQuRJBJYTHybFQQbevie3",
   "owner": "octGrhFvFFvaeVTzkGn87UyA8ZzZm9vTXgnbuiLiFBS5iUE",
   "registry": {
-    "address": "octGLRE3TU9Zk4xPj38eLRotCaixvC7UQUaPGJqWfdQ774N",
-    "deploy_tx": "9c202fe50933d143cd804caf893d864366801716635f4214d3b3bc5c69ccc208",
+    "address": "octGFuJzVH7gsEuRBKARBnCnzi56t7zqwt71hsvfZK95aPX",
+    "deploy_tx": "84cb0a6b8e32fe0655588901ff48ccbae85eeff7d5487d10efd9cee3861fe8dd",
     "non_owner_publish": {
       "error": {
         "reason": "execution reverted [not registry owner]",
         "type": "program_exec_failed"
       },
       "status": "rejected",
-      "tx": "644a3ebdeef7a0ff264f63df33f12185f6a5a9b72fbaaf62d33407cfbc45b942"
+      "tx": "ced22e689d1ea92cf854d6916913abb07640b1167535ea7ac3edb54f66dcb1ca"
     },
-    "publish_tx": "737e34bf4708669d8972f76ffed2158ed655881a0802f13a743f3c8f3e238d65"
+    "publish_tx": "1c373d8f54213001fbae4624adfbb8098bd3e1795902b3378daa8b0d7a611070"
   },
   "registry_package": {
     "bytecode_bytes": 2358,
@@ -103,132 +127,164 @@
     "version": null
   },
   "segment": {
-    "address": "octJBtrVxiDLw93CwXkemEVwjq9GaZXNTs5785uVMXacozY",
-    "deploy_epoch": 1878470,
-    "deploy_tx": "c2c3c7e005ec56fc58132c0fc64ac86d20798999683da261ebbc58cb83d48496"
+    "address": "octA8DHk1tupaLQpcEcosCGmdW81bLbvW5eG4Pfgu9H3w2c",
+    "deploy_epoch": 1881603,
+    "deploy_tx": "7948cb32439dc7d2c5092aa43f718a9220cc9d1f78b022d22d9ddd49dc521e84"
   },
   "segment_package": {
-    "bytecode_bytes": 3616,
+    "bytecode_bytes": 4870,
     "compiler_version": "2.0 AML-preview",
-    "instructions": 339,
-    "package_base64_bytes": 7976,
-    "package_sha256": "6e31ebb2ef3af6beb9fd3c0bb73cd0b83f06a605459ba57958f641e0d460d857",
-    "source_sha256": "1521e84a8f990a88b4d2f2970a9d366debae08cb51bd37e877fe1d4bf599657e"
+    "instructions": 502,
+    "package_base64_bytes": 10700,
+    "package_sha256": "88dd53549c12053c72341885304be5f078b25514db0d8febe25edf4dcd21aa38",
+    "source_sha256": "dba7f036a790da46b5bc9e0a18c693ab4ea62adfafcba74f2dec42dd61712e72"
   },
-  "start_epoch": 1878468,
+  "start_epoch": 1881601,
   "status": "devnet_program_pass",
   "transactions": {
     "append": {
       "effort_used": null,
-      "epoch": 1878471,
+      "epoch": 1881604,
       "fee": null,
       "ou": "100000",
       "status": "confirmed",
-      "tx_hash": "642336e79bc8323e7ac533db08128367d85b809b3c6f82afc64ae29ca1c80e98"
+      "tx_hash": "cca46301f5cd81ea6830590f77463b55cec42b29d3cf3a40d8bf7763540154d6"
     },
     "append-after-close": {
       "effort_used": null,
-      "epoch": 1878481,
+      "epoch": 1881619,
       "fee": null,
       "ou": null,
       "status": "rejected",
-      "tx_hash": "5235d3d2f9ed2b112132ec1b0af5fb34e2be87e40d0f9d7c4da2b7d1020cf989"
+      "tx_hash": "a36b2c6bd662fd6d4f73d58184d23ea3be301f4bad87ccf6323f6ecab56539be"
+    },
+    "card": {
+      "effort_used": null,
+      "epoch": 1881615,
+      "fee": null,
+      "ou": "100000",
+      "status": "confirmed",
+      "tx_hash": "3ef3e18f9e3c0f2f67a3b13a0f389b3fcb857028963481468a2d73abb3ef096a"
     },
     "close": {
       "effort_used": null,
-      "epoch": 1878480,
+      "epoch": 1881617,
       "fee": null,
       "ou": "100000",
       "status": "confirmed",
-      "tx_hash": "654667efac8579f40197c32403c31468f462796479847c5a61d12bc94e8477bb"
+      "tx_hash": "75f3ab09d2f2ce5c3e35da2ee241a4ef5afaf07ca5f2b525f50f6054a758702b"
+    },
+    "directory-deploy": {
+      "effort_used": null,
+      "epoch": 1881625,
+      "fee": null,
+      "ou": "1000000",
+      "status": "confirmed",
+      "tx_hash": "895fcfa338e6ebb79695ae52ab248492f378a42da6acdeaa68b5aa6746b47564"
     },
     "duplicate": {
       "effort_used": null,
-      "epoch": 1878473,
+      "epoch": 1881606,
       "fee": null,
       "ou": null,
       "status": "rejected",
-      "tx_hash": "6be986683eca29db7f2d978d148ec31dffedc7f5d63fe8b17344dd4d592c4a42"
+      "tx_hash": "330c027740d59d9c6a261798d8f17f2a1dd4662ed781fc16f716876c31b57a93"
     },
     "grant": {
       "effort_used": null,
-      "epoch": 1878477,
+      "epoch": 1881611,
       "fee": null,
       "ou": "100000",
       "status": "confirmed",
-      "tx_hash": "4789402071b523c9d3efe597f4d3fb8a6a14f17f8f20a7e64e0baf683a140850"
+      "tx_hash": "b69b871f08afb6d3eea2ea89c2f28039118848651e120a16a8cfc7b04d8f3cda"
+    },
+    "non-owner-card": {
+      "effort_used": null,
+      "epoch": 1881613,
+      "fee": null,
+      "ou": null,
+      "status": "rejected",
+      "tx_hash": "3589f2929213ebca323d97ed6d5f5fc23f2addb55ff1140649b0169bc4b004f8"
     },
     "non-owner-close": {
       "effort_used": null,
-      "epoch": 1878479,
+      "epoch": 1881616,
       "fee": null,
       "ou": null,
       "status": "rejected",
-      "tx_hash": "a96388d7b48d48c9cda0d47a77cac3c3f02f9859afb318c00f7476b94a4a2874"
+      "tx_hash": "1045c9bb5d568f352a23497d4c54d2f0a676285f1fce2a2efbbdd654490ee933"
     },
     "non-owner-grant": {
       "effort_used": null,
-      "epoch": 1878476,
+      "epoch": 1881610,
       "fee": null,
       "ou": null,
       "status": "rejected",
-      "tx_hash": "55aa846b0578b5f6f41c81093339266bc07cb546a14c69170980fa99679204dc"
+      "tx_hash": "fcaf974e420095d2617b372346819a59a0a60d4e2d080251e5b91c2e3a16534f"
     },
     "non-owner-publish": {
       "effort_used": null,
-      "epoch": 1878483,
+      "epoch": 1881621,
       "fee": null,
       "ou": null,
       "status": "rejected",
-      "tx_hash": "644a3ebdeef7a0ff264f63df33f12185f6a5a9b72fbaaf62d33407cfbc45b942"
+      "tx_hash": "ced22e689d1ea92cf854d6916913abb07640b1167535ea7ac3edb54f66dcb1ca"
     },
     "non-writer": {
       "effort_used": null,
-      "epoch": 1878475,
+      "epoch": 1881609,
       "fee": null,
       "ou": null,
       "status": "rejected",
-      "tx_hash": "1682c261146903ad41759134ff837183c6ad477f4ac95f5c096f7ca004c635d8"
+      "tx_hash": "6be2ff28326910c19a44eee6f6509c1ba0c3686446dc2f5cdb174d98514ca2ef"
     },
     "oversize": {
       "effort_used": null,
-      "epoch": 1878474,
+      "epoch": 1881608,
       "fee": null,
       "ou": null,
       "status": "rejected",
-      "tx_hash": "a0e210d8712b06cb6be4826fd28058f1a8204918e09abe50860e2c0e7b17dcfd"
+      "tx_hash": "30f40478ea3cba83f92ff5794748865f5429d3ff7a7f0c5b3223c550f80d872d"
     },
     "publish": {
       "effort_used": null,
-      "epoch": 1878484,
+      "epoch": 1881623,
       "fee": null,
       "ou": "100000",
       "status": "confirmed",
-      "tx_hash": "737e34bf4708669d8972f76ffed2158ed655881a0802f13a743f3c8f3e238d65"
+      "tx_hash": "1c373d8f54213001fbae4624adfbb8098bd3e1795902b3378daa8b0d7a611070"
+    },
+    "register": {
+      "effort_used": null,
+      "epoch": 1881627,
+      "fee": null,
+      "ou": "100000",
+      "status": "confirmed",
+      "tx_hash": "77d20794c4d0091126b125eb9ca2479284b7e73e17b6895becf6cddbf6bd9298"
     },
     "registry-deploy": {
       "effort_used": null,
-      "epoch": 1878482,
+      "epoch": 1881620,
       "fee": null,
       "ou": "1000000",
       "status": "confirmed",
-      "tx_hash": "9c202fe50933d143cd804caf893d864366801716635f4214d3b3bc5c69ccc208"
+      "tx_hash": "84cb0a6b8e32fe0655588901ff48ccbae85eeff7d5487d10efd9cee3861fe8dd"
     },
     "segment-deploy": {
       "effort_used": null,
-      "epoch": 1878470,
+      "epoch": 1881603,
       "fee": null,
       "ou": "1000000",
       "status": "confirmed",
-      "tx_hash": "c2c3c7e005ec56fc58132c0fc64ac86d20798999683da261ebbc58cb83d48496"
+      "tx_hash": "7948cb32439dc7d2c5092aa43f718a9220cc9d1f78b022d22d9ddd49dc521e84"
     },
     "writer-append": {
       "effort_used": null,
-      "epoch": 1878478,
+      "epoch": 1881612,
       "fee": null,
       "ou": "100000",
       "status": "confirmed",
-      "tx_hash": "6e5e5f5d8ff46f15fd29e85c63e5149a02471cab90e50aa2eb895b264b3b7663"
+      "tx_hash": "e2d9b0ef1cc5ceaebc3bd2a80779f2e084e4249bf786863c6d9f18f8849b8225"
     }
   }
 }

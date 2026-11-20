@@ -181,6 +181,7 @@ def main():
     stored_sender = view(segment, "sender", [0])
     assert stored_sender == owner["address"]
     assert int(view(segment, "count", [])) == 1 and int(view(segment, "used_bytes", [])) == FRAME_BYTES
+    assert int(view(segment, "epoch_of", [0])) == appended["epoch"]
     expected_key = hashlib.sha256(LABEL + frame).hexdigest()
     assert view(segment, "dedup_key", [frame.decode("ascii")]) == expected_key
     recovered = root / "recovered.ocm"
@@ -242,6 +243,17 @@ def main():
         "grant_tx": granted["tx_hash"], "append_tx": written["tx_hash"], "stored_sender": other["address"],
         "client_binding_rejects_signer_writer_mismatch": True}
 
+    card = json.dumps({"example": "card for " + other["address"]})
+    _, stranger_card = call(other_wallet, segment, "set_card", [owner["address"], card], "non-owner-card")
+    expect_rejected(stranger_card, "not segment owner", "non-owner card")
+    assert view(segment, "has_card", [owner["address"]]) is False
+    _, carded = call(owner_wallet, segment, "set_card", [other["address"], card], "card")
+    expect_confirmed(carded, "card")
+    assert view(segment, "has_card", [other["address"]]) is True and view(segment, "card", [other["address"]]) == card
+    assert view(segment, "has_card", [owner["address"]]) is False
+    report["controls"]["card"] = {"set_tx": carded["tx_hash"], "non_owner_set": {
+        "tx": stranger_card["tx_hash"], "status": stranger_card["status"], "error": stranger_card.get("error")}}
+
     _, stranger_close = call(other_wallet, segment, "close", [], "non-owner-close")
     expect_rejected(stranger_close, "not segment owner", "non-owner close")
     _, closed = call(owner_wallet, segment, "close", [], "close")
@@ -278,6 +290,18 @@ def main():
                           "publish_tx": published["tx_hash"],
                           "non_owner_publish": {"tx": stranger_publish["tx_hash"], "status": stranger_publish["status"],
                                                 "error": stranger_publish.get("error")}}
+
+    directory_package, directory_envelope, report["directory_package"] = compile_program("directory")
+    _, directory_deployed = deploy(owner_wallet, "directory-deploy", directory_package, directory_envelope)
+    expect_confirmed(directory_deployed, "directory deploy")
+    directory = directory_deployed["to"]
+    assert view(directory, "has", [owner["address"]]) is False
+    _, registered = call(owner_wallet, directory, "register", [segment], "register")
+    expect_confirmed(registered, "register")
+    assert view(directory, "has", [owner["address"]]) is True and view(directory, "has", [other["address"]]) is False
+    assert view(directory, "segment_of", [owner["address"]]) == segment
+    report["directory"] = {"address": directory, "deploy_tx": directory_deployed["tx_hash"],
+                           "register_tx": registered["tx_hash"]}
 
     transactions = sorted(WORK.glob("*-final.json"))
     report["transactions"] = {path.name[:-len("-final.json")]: {

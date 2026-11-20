@@ -1,0 +1,109 @@
+// SPDX-License-Identifier: BSD-3-Clause
+// Copyright (c) 2023-2026 Octra Labs <dev@octra.org>
+
+program MailboxSegment {
+  state {
+    owner: address
+    count: int
+    used_bytes: int
+    closed: bool
+    frames: map[string]bytes
+    senders: map[string]address
+    epochs: map[string]int
+    cards: map[address]string
+    carded: map[address]bool
+    writers: map[address]bool
+    seen: map[string]bool
+  }
+
+  event Appended(sequence: int)
+  event Closed()
+
+  constructor() {
+    self.owner = caller
+  }
+
+  public fn grant_writer(writer: address) {
+    require(caller == self.owner, "not segment owner")
+    require(!self.closed, "segment closed")
+    self.writers[writer] = true
+  }
+
+  public fn append(frame: bytes): int {
+    require(!self.closed, "segment closed")
+    require(caller == self.owner || self.writers[caller], "not segment writer")
+    require(len(frame) == 2048, "frame must be 2048 bytes")
+    require(self.count < 1024, "segment record capacity reached")
+    require(self.used_bytes + len(frame) <= 8388608, "segment byte capacity reached")
+    let sequence = self.count
+    let dedup = sha256(concat("octra:msg:segment-dedup:v1:", frame))
+    require(!self.seen[dedup], "duplicate frame")
+    self.seen[dedup] = true
+    self.frames[to_string(sequence)] = frame
+    self.senders[to_string(sequence)] = caller
+    self.epochs[to_string(sequence)] = epoch
+    self.count = sequence + 1
+    self.used_bytes += len(frame)
+    emit Appended(sequence)
+    return sequence
+  }
+
+  public fn set_card(contact: address, card: string) {
+    require(caller == self.owner, "not segment owner")
+    require(len(card) > 0 && len(card) <= 4096, "card outside limits")
+    self.cards[contact] = card
+    self.carded[contact] = true
+  }
+
+  public fn close() {
+    require(caller == self.owner, "not segment owner")
+    require(!self.closed, "segment already closed")
+    self.closed = true
+    emit Closed()
+  }
+
+  public view fn owner(): address {
+    return self.owner
+  }
+
+  public view fn get(sequence: int): bytes {
+    require(sequence >= 0 && sequence < self.count, "sequence outside segment")
+    return self.frames[to_string(sequence)]
+  }
+
+  public view fn sender(sequence: int): address {
+    require(sequence >= 0 && sequence < self.count, "sequence outside segment")
+    return self.senders[to_string(sequence)]
+  }
+
+  public view fn epoch_of(sequence: int): int {
+    require(sequence >= 0 && sequence < self.count, "sequence outside segment")
+    return self.epochs[to_string(sequence)]
+  }
+
+  public view fn has_card(contact: address): bool {
+    return self.carded[contact]
+  }
+
+  public view fn card(contact: address): string {
+    require(self.carded[contact], "no card for contact")
+    return self.cards[contact]
+  }
+
+  public view fn dedup_key(frame: bytes): string {
+    require(len(frame) == 2048, "frame must be 2048 bytes")
+    return sha256(concat("octra:msg:segment-dedup:v1:", frame))
+  }
+
+  public view fn count(): int {
+    return self.count
+  }
+
+  public view fn used_bytes(): int {
+    return self.used_bytes
+  }
+
+  public view fn closed(): bool {
+    return self.closed
+  }
+}

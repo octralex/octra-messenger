@@ -1,0 +1,15 @@
+{
+  "status": "rejected",
+  "tx_hash": "3589f2929213ebca323d97ed6d5f5fc23f2addb55ff1140649b0169bc4b004f8",
+  "epoch": 1881613,
+  "error": {
+    "type": "program_exec_failed",
+    "reason": "execution reverted [not segment owner]"
+  },
+  "from": "oct16CXeJRsxyqYeJJeLVVpoiSnQuRJBJYTHybFQQbevie3",
+  "to": "octA8DHk1tupaLQpcEcosCGmdW81bLbvW5eG4Pfgu9H3w2c",
+  "amount": "0",
+  "nonce": 37,
+  "rejected_at": 1795170731.377493,
+  "source": "rejected_txs"
+}

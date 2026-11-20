@@ -1,15 +1,15 @@
 {
   "status": "rejected",
-  "tx_hash": "55aa846b0578b5f6f41c81093339266bc07cb546a14c69170980fa99679204dc",
-  "epoch": 1878476,
+  "tx_hash": "fcaf974e420095d2617b372346819a59a0a60d4e2d080251e5b91c2e3a16534f",
+  "epoch": 1881610,
   "error": {
     "type": "program_exec_failed",
     "reason": "execution reverted [not segment owner]"
   },
   "from": "oct16CXeJRsxyqYeJJeLVVpoiSnQuRJBJYTHybFQQbevie3",
-  "to": "octJBtrVxiDLw93CwXkemEVwjq9GaZXNTs5785uVMXacozY",
+  "to": "octA8DHk1tupaLQpcEcosCGmdW81bLbvW5eG4Pfgu9H3w2c",
   "amount": "0",
-  "nonce": 26,
-  "rejected_at": 1795134708.016534,
+  "nonce": 35,
+  "rejected_at": 1795170697.745901,
   "source": "rejected_txs"
 }

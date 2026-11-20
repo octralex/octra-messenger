@@ -13,8 +13,10 @@ not use it for real conversations or on mainnet. `docs/SCHEME.md` is the one-pag
   - `storage/`: the outbox journal (a sequence is persisted before sealing) and the receive store (one locked,
     fsynced commit of plaintext, replay window and inbox record).
   - `chain/`: binds a frame's on-chain caller to the envelope's sender key.
-- `programs/` holds the segment and registry programs. They are deployed from source, so no release signature or
-  node change is needed.
+- `programs/` holds the segment, registry and directory programs. They are deployed from source, so no release
+  signature or node change is needed.
+- `webcli/` is a fork of octra-labs/webcli with the messenger in its apps list, including private payments in chat.
+  `webcli/MESSENGER.md` explains how to install and use it.
 - `tests/` holds the endpoint, size and protocol suites, the transaction driver and the devnet run.
 - `receipts/` holds the outputs of those runs.
 
@@ -27,11 +29,13 @@ All hashes and signing payloads use `Octra_net.Hash_domain` with `Octra_net.Oce1
   19-row size sweep.
 - The full path runs on devnet: deploy both programs, append a 2,048-byte frame, read it back through the public
   view, bind the stored caller to the signer and decrypt. The same run records terminal rejections for a duplicate
-  frame, a 2,049-byte frame, a non-writer append, non-owner grant, close and publish, and an append after close.
+  frame, a 2,049-byte frame, a non-writer append, non-owner grant, key card, close and publish, and an append
+  after close. It also checks the stored frame epoch, the per-contact key card and the directory.
   See `receipts/devnet/devnet-program.json`.
 
-Not done: contact and key registration on chain, chunking of large messages, packing several envelopes per frame,
-encrypted key storage and backup, retention and load measurements, a client and a relay. There is no forward
+Not done: authenticated contact and key registration, chunking of large messages, packing several envelopes per frame,
+encrypted key storage and backup, retention and load measurements, and a relay for real-time delivery. The webcli
+app is the only client. There is no forward
 secrecy, post-compromise recovery, recipient anonymity or post-quantum protection.
 
 ## Run
@@ -41,6 +45,7 @@ The suites build against a lite_node checkout at the pinned commit with its OCam
 ```bash
 tests/run_recipient_spike.sh      # endpoint suite
 tests/run_size_sweep.sh           # size sweep
+tests/build_endpoint.sh           # endpoint binary only, used by the webcli app
 tests/build_chain_driver.sh       # transaction driver
 tests/run_devnet_program.py       # devnet run, needs two funded test wallets
 ```
